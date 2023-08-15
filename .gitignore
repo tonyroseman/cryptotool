@@ -14,3 +14,4 @@ env
 
 .env
 /core/settings.py
+/README.md
