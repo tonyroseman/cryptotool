@@ -7,13 +7,17 @@ from django.urls import include
 urlpatterns = [
     #pages
     path('', views.index, name = 'index'),
-    path('bc-typography/', views.bc_typography, name = 'bc_typography'),
+    
     path('icon-feather/', views.icon_feather, name = 'icon_feather'),
-    path('tbl-bootstrap/', views.tbl_bootstrap, name = 'tbl_bootstrap'),
-    path('chart-apex/', views.chart_apex, name = 'chart_apex'),
-    path('map-google/', views.map_google, name = 'map_google'),
-    path('sample-page/', views.sample_page, name = 'sample_page'),
+    path('records/', views.records, name = 'records'),
+    
+    path('setting_page/', views.setting_page, name = 'setting_page'),
+    path('save_settings/', views.save_settings, name = 'save_settings'),
     path('user-profile/', views.user_profile, name = 'user_profile'),
+    path('get_coindata_all/', views.get_coindata_all, name = 'get_coindata_all'),
+    path('send_telegram_message/', views.send_telegram_message, name = 'send_telegram_message'),
+    
+    path('get_coindata_user/', views.get_coindata_user, name = 'get_coindata_user'),
     path('accounts/auth-signup/', views.auth_signup, name = 'auth_signup'),
     path('accounts/auth-signin/', views.AuthSignin.as_view(), name='auth_signin'),
     path('accounts/forgot-password/', views.UserPasswordResetView.as_view(), name='forgot_password'),
@@ -30,6 +34,7 @@ urlpatterns = [
     path('accounts/password-change-done/', auth_views.PasswordChangeDoneView.as_view(
         template_name='accounts/password_change_done.html'
     ), name="password_change_done" ),
+
     
 ]
 

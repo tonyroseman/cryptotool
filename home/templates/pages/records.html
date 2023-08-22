@@ -1,0 +1,387 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% block content %}
+<!-- [ Main Content ] start -->
+<!-- [ breadcrumb ] start -->
+<div class="page-header">
+    <div class="row align-items-center">
+        <div class="col-md-12">
+            <div class="page-header-title">
+                <h5 class="m-b-10">Records</h5>
+            </div>
+            
+        </div>
+    </div>
+    
+</div>
+<!-- [ breadcrumb ] end -->
+<div class="row">
+    
+
+    <table id="myDataTable" class="table table-striped table-bordered custom-row-height">
+        <thead>
+            <tr>
+                <th rowspan="2" class="fit-content custom-row-height">No.</th>
+                <th rowspan="2" class="fit-content custom-row-height">Coin Symbol</th>
+                <th rowspan="2" class="fit-content custom-row-height">Current Price (USD)</th>
+                <th rowspan="2" class="fit-content custom-row-height">Market cap (millions $)</th>
+                <th rowspan="2" class="fit-content custom-row-height">Volume change 48H</th>
+                <th colspan="5" class="fit-content custom-row-height">% change</th>
+                <th colspan="2" class="fit-content custom-row-height">candle count</th>
+                <th colspan="5" class="fit-content custom-row-height">% change BTC</th>
+                
+                <!-- Add more table headers as needed -->
+            </tr>
+            <tr>
+                
+                <th class="fit-content custom-row-height">3'</th>
+                <th class="fit-content custom-row-height">5'</th>
+                <th class="fit-content custom-row-height">15'</th>
+                <th class="fit-content custom-row-height">1H</th>
+                <th class="fit-content custom-row-height">4H</th>
+                <th class="fit-content custom-row-height">7d</th>
+                <th class="fit-content custom-row-height">14d</th>
+                <th class="fit-content custom-row-height">3'</th>
+                <th class="fit-content custom-row-height">5'</th>
+                <th class="fit-content custom-row-height">15'</th>
+                <th class="fit-content custom-row-height">1H</th>
+                <th class="fit-content custom-row-height">4H</th>
+                
+                <!-- Add more table headers as needed -->
+            </tr>
+        </thead>
+        
+    </table>
+    
+</div>
+
+<!-- [ Main Content ] end -->
+
+<script>
+    $(document).ready(function() {
+        $.fn.dataTable.ext.errMode = 'none';
+        m3 = '{{settings.m3}}';
+        coindataTable = $('#myDataTable').DataTable(
+            {
+                "paging": true,
+                "autoWidth": true,
+                suppressWarnings: false,
+                
+                columns: [
+                    { data: 'no'},
+                    { data: 'symbol' }, //or { data: 'MONTH', title: 'Month' }`
+                    { data: 'price' },
+                    { data: 'market_cap',
+                        render: function(data, type, row) {
+                            if(row.fmc != undefined && row.fmc == true){
+                                var backgroundColor = 'pink'; // Example color value
+                    
+                                // Return the cell content with the specified background color
+                                return '<span style="background-color: ' + backgroundColor + ';display: block; width: 100%; height: 100%;">' + data + '</span>';
+                            }
+                            else{
+                                return data;
+                            }
+                    } },
+                    { data: 'vol' ,
+                        render: function(data, type, row) {
+                            if(row.fvol != undefined && row.fvol == true){
+                                var backgroundColor = 'pink'; // Example color value
+                    
+                                // Return the cell content with the specified background color
+                                return '<span style="background-color: ' + backgroundColor + ';display: block; width: 100%; height: 100%;">' + data + '</span>';
+                            }
+                            else{
+                                return data;
+                            }
+                            
+                        }},
+                    { data: 'm3',
+                        render: function(data, type, row) {
+                            if(row.fm3 != undefined && row.fm3 == true){
+                                var backgroundColor = 'pink'; // Example color value
+                    
+                                // Return the cell content with the specified background color
+                                return '<span style="background-color: ' + backgroundColor + ';display: block; width: 100%; height: 100%;">' + data + '</span>';
+                            }
+                            else{
+                                return data;
+                            }
+                            
+                        }
+                    },
+                    { data: 'm5' ,
+                        render: function(data, type, row) {
+                            if(row.fm5 != undefined && row.fm5 == true){
+                                var backgroundColor = 'pink'; // Example color value
+                    
+                                // Return the cell content with the specified background color
+                                return '<span style="background-color: ' + backgroundColor + ';display: block; width: 100%; height: 100%;">' + data + '</span>';
+                            }
+                            else{
+                                return data;
+                            }
+                            
+                        }},
+                    { data: 'm15' ,
+                        render: function(data, type, row) {
+                            if(row.fm15 != undefined && row.fm15 == true){
+                                var backgroundColor = 'pink'; // Example color value
+                    
+                                // Return the cell content with the specified background color
+                                return '<span style="background-color: ' + backgroundColor + ';display: block; width: 100%; height: 100%;">' + data + '</span>';
+                            }
+                            else{
+                                return data;
+                            }
+                            
+                        }},
+                    { data: 'h1' ,
+                        render: function(data, type, row) {
+                            if(row.fh1 != undefined && row.fh1 == true){
+                                var backgroundColor = 'pink'; // Example color value
+                    
+                                // Return the cell content with the specified background color
+                                return '<span style="background-color: ' + backgroundColor + ';display: block; width: 100%; height: 100%;">' + data + '</span>';
+                            }
+                            else{
+                                return data;
+                            }
+                            
+                        }},
+                    { data: 'h4' ,
+                        render: function(data, type, row) {
+                            if(row.fh4 != undefined && row.fh4 == true){
+                                var backgroundColor = 'pink'; // Example color value
+                    
+                                // Return the cell content with the specified background color
+                                return '<span style="background-color: ' + backgroundColor + ';display: block; width: 100%; height: 100%;">' + data + '</span>';
+                            }
+                            else{
+                                return data;
+                            }
+                            
+                        }},
+                    { data: 'c7' ,
+                        render: function(data, type, row) {
+                            if(row.fc7 != undefined && row.fc7 == true){
+                                var backgroundColor = 'pink'; // Example color value
+                    
+                                // Return the cell content with the specified background color
+                                return '<span style="background-color: ' + backgroundColor + ';display: block; width: 100%; height: 100%;">' + data + '</span>';
+                            }
+                            else{
+                                return data;
+                            }
+                            
+                        }},
+                    { data: 'c14' ,
+                        render: function(data, type, row) {
+                            if(row.fc14 != undefined && row.fc14 == true){
+                                var backgroundColor = 'pink'; // Example color value
+                    
+                                // Return the cell content with the specified background color
+                                return '<span style="background-color: ' + backgroundColor + ';display: block; width: 100%; height: 100%;">' + data + '</span>';
+                            }
+                            else{
+                                return data;
+                            }
+                            
+                        }},
+                    { data: 'm3BTC' ,
+                        render: function(data, type, row) {
+                            if(row.fm3BTC != undefined && row.fm3BTC == true){
+                                var backgroundColor = 'pink'; // Example color value
+                    
+                                // Return the cell content with the specified background color
+                                return '<span style="background-color: ' + backgroundColor + ';display: block; width: 100%; height: 100%;">' + data + '</span>';
+                            }
+                            else{
+                                return data;
+                            }
+                            
+                        }},
+                    { data: 'm5BTC' ,
+                        render: function(data, type, row) {
+                            if(row.fm5BTC != undefined && row.fm5BTC == true){
+                                var backgroundColor = 'pink'; // Example color value
+                    
+                                // Return the cell content with the specified background color
+                                return '<span style="background-color: ' + backgroundColor + ';display: block; width: 100%; height: 100%;">' + data + '</span>';
+                            }
+                            else{
+                                return data;
+                            }
+                            
+                        }},
+                    { data: 'm15BTC' ,
+                        render: function(data, type, row) {
+                            if(row.fm15BTC != undefined && row.fm15BTC == true){
+                                var backgroundColor = 'pink'; // Example color value
+                    
+                                // Return the cell content with the specified background color
+                                return '<span style="background-color: ' + backgroundColor + ';display: block; width: 100%; height: 100%;">' + data + '</span>';
+                            }
+                            else{
+                                return data;
+                            }
+                            
+                        }},
+                    { data: 'h1BTC' ,
+                        render: function(data, type, row) {
+                            if(row.fh1BTC != undefined && row.fh1BTC == true){
+                                var backgroundColor = 'pink'; // Example color value
+                    
+                                // Return the cell content with the specified background color
+                                return '<span style="background-color: ' + backgroundColor + ';display: block; width: 100%; height: 100%;">' + data + '</span>';
+                            }
+                            else{
+                                return data;
+                            }
+                            
+                        }},
+                    { data: 'h4BTC' ,
+                        render: function(data, type, row) {
+                            if(row.fh4BTC != undefined && row.fh4BTC == true){
+                                var backgroundColor = 'pink'; // Example color value
+                    
+                                // Return the cell content with the specified background color
+                                return '<span style="background-color: ' + backgroundColor + ';display: block; width: 100%; height: 100%;">' + data + '</span>';
+                            }
+                            else{
+                                return data;
+                            }
+                            
+                        }},
+
+                ],
+                
+            }
+            
+        );
+        $('#myDataTable').on( 'error.dt', function ( e, settings, techNote, message ) {
+            console.log( 'An error has been reported by DataTables: ', message );
+        } ) ;
+        function requestTlg(coin_symbols){
+            // Make an AJAX request to get updated data from the server
+            
+            $.ajax({
+                url: '{% url 'send_telegram_message'%}', // Replace with your server endpoint URL
+                type: 'GET',
+                dataType: 'json',
+                data: { 
+                    symbols:coin_symbols.toString()
+                },
+                success: function(response) {
+                    
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+        }
+        function updateDataTable() {
+            // Make an AJAX request to get updated data from the server
+            $.ajax({
+                url: '{% url 'get_coindata_user'%}', // Replace with your server endpoint URL
+                type: 'GET',
+                dataType: 'json',
+                
+                success: function(response) {
+                    
+                    // Clear existing DataTable data
+                    coindataTable.clear();
+                    var coindata = response.data;
+                    var settings = response.settings;
+                    
+                    var count = 0;
+                    for(var key in settings)
+                        if(settings.hasOwnProperty(key))
+                            count++;
+                    
+                    count = count -1;
+                    var ok_symbols = [];
+                    coindata.forEach(function(rowData) {
+                        var ok_count = 0;
+                        rowflag = false;
+                        for (var key in settings) {
+                            if (key != 'tlg' && key.substring(0,1) != 't' && key != 'mc') {
+                                operand = parseInt(settings[key]);
+                                flag = false;
+                                switch (operand) {
+                                    case 1:
+                                        rowData['f' + key] = flag = rowData[key] > parseFloat(settings['t' + key]);
+                                        break;
+                                    case 2:
+                                        rowData['f' + key] = flag = rowData[key] < parseFloat(settings['t' + key]);
+                                        break;
+                                    case 3:
+                                        rowData['f' + key] = flag = rowData[key] >= parseFloat(settings['t' + key]);
+                                        break;
+                                    case 4:
+                                        rowData['f' + key] = flag = rowData[key] <= parseFloat(settings['t' + key]);
+                                        break;
+                                }
+
+                                if(flag){
+                                    rowflag = true;
+                                    ok_count++;
+                                }
+
+                            }
+                            if (key == 'mc') {
+                                operand = parseInt(settings[key]);
+                                flag = false;
+                                switch (operand) {
+                                    case 1:
+                                        rowData['f' + key] = flag = rowData['market_cap'] > parseFloat(settings['t' + key]);
+                                        break;
+                                    case 2:
+                                        rowData['f' + key] = flag = rowData['market_cap'] < parseFloat(settings['t' + key]);
+                                        break;
+                                    case 3:
+                                        rowData['f' + key] = flag = rowData['market_cap'] >= parseFloat(settings['t' + key]);
+                                        break;
+                                    case 4:
+                                        rowData['f' + key] = flag = rowData['market_cap'] <= parseFloat(settings['t' + key]);
+                                        break;
+                                }
+
+                                if(flag){
+                                    rowflag = true;
+                                    ok_count++;
+                                }
+
+                            }
+
+                        }
+                        // console.log(rowData);
+                        // console.log(settings);
+                        if(rowflag)
+                            coindataTable.row.add(rowData);
+                       
+                        if(ok_count == count/2){
+                            ok_symbols.push(rowData['symbol']);
+                            
+                        }
+                    });
+                    
+                    
+                    // Redraw the DataTable
+                    coindataTable.draw();
+                    console.log("tlg-" + ok_symbols)
+                    if(ok_symbols.length > 0){
+                        requestTlg(ok_symbols);
+                    }
+                    
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+        }
+        updateDataTable()
+        setInterval(updateDataTable, 60000);
+    });
+</script>
+{% endblock content %}

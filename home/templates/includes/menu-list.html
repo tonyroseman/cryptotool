@@ -1,5 +1,6 @@
 {% load i18n static admin_gradient %}
 <ul class="nav pcoded-inner-navbar ">
+  {% if not request.user.is_superuser %}
   <li class="nav-item pcoded-menu-caption">
     <label>Navigation</label>
   </li>
@@ -7,7 +8,7 @@
     <a href="{% url 'index' %}" class="nav-link "><span class="pcoded-micon"><i
           class="feather icon-home"></i></span><span class="pcoded-mtext">Dashboard</span></a>
   </li>
-
+  {% endif %}
   {% if not request.user.is_authenticated %}
   <li class="nav-item pcoded-hasmenu">
     <a href="#" class="nav-link "><span class="pcoded-micon"><i class="feather icon-lock"></i></span><span
@@ -53,23 +54,16 @@
 
   {% if request.user.is_authenticated and not request.user.is_superuser %}
   
+  <li class="nav-item"><a href="{% url 'setting_page' %}" class="nav-link "><span class="pcoded-micon"><i
+    class="feather icon-settings"></i></span><span class="pcoded-mtext">Settings</span></a></li>
+  
   <li class="nav-item">
-    <a href="{% url 'tbl_bootstrap' %}" class="nav-link "><span class="pcoded-micon"><i
-          class="feather icon-align-justify"></i></span><span class="pcoded-mtext">Bootstrap table</span></a>
+    <a href="{% url 'records' %}" class="nav-link "><span class="pcoded-micon"><i
+          class="feather icon-align-justify"></i></span><span class="pcoded-mtext">Records</span></a>
   </li>
+  
   <li class="nav-item pcoded-menu-caption">
-    <label>Chart & Maps</label>
-  </li>
-  <li class="nav-item">
-    <a href="{% url 'chart_apex' %}" class="nav-link "><span class="pcoded-micon"><i
-          class="feather icon-pie-chart"></i></span><span class="pcoded-mtext">Chart</span></a>
-  </li>
-  <li class="nav-item">
-    <a href="{% url 'map_google' %}" class="nav-link "><span class="pcoded-micon"><i
-          class="feather icon-map"></i></span><span class="pcoded-mtext">Maps</span></a>
-  </li>
-  <li class="nav-item pcoded-menu-caption">
-    <label>Pages</label>
+    <label>Account Pages</label>
   </li>
   <li class="nav-item">
     <a href="{% url 'user_profile' %}" class="nav-link "><span class="pcoded-micon"><i
@@ -84,7 +78,6 @@
     </ul>
   </li>
   
-  <li class="nav-item"><a href="{% url 'sample_page' %}" class="nav-link "><span class="pcoded-micon"><i
-          class="feather icon-sidebar"></i></span><span class="pcoded-mtext">Sample page</span></a></li>
+  
   {% endif %}
 </ul>

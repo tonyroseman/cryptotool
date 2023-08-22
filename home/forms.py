@@ -13,9 +13,16 @@ class RegistrationForm(UserCreationForm):
       label=_("Password Confirmation"),
       widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Retype password'}),
   )
+#   telegram = forms.URLField(
+#         widget=forms.URLInput(attrs={
+#             'class': 'form-control',
+#             'placeholder': 'Telegram'
+#         }),
+#         initial=''
+#     )
   class Meta:
     model = CustomUser
-    fields = ('username', 'email','telegram' )
+    fields = ('username', 'email' )
 
     widgets = {
       'username': forms.TextInput(attrs={
@@ -26,10 +33,7 @@ class RegistrationForm(UserCreationForm):
           'class': 'form-control',
           'placeholder': 'Email'
       }),
-      'telegram': forms.URLInput(attrs={
-          'class': 'form-control',
-          'placeholder': 'Telegram'
-      })
+      
     }
 
 class LoginForm(AuthenticationForm):

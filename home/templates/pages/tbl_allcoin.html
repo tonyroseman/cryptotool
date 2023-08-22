@@ -1,0 +1,56 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% block content %}
+<!-- [ Main Content ] start -->
+<!-- [ breadcrumb ] start -->
+<div class="page-header">
+    <div class="page-block">
+        <div class="row align-items-center">
+            <div class="col-md-12">
+                <div class="page-header-title">
+                    <h5 class="m-b-10">Top 1000 coins</h5>
+                </div>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'index' %}"><i class="feather icon-home"></i></a></li>
+                    <li class="breadcrumb-item"><a href="#">All coins</a></li>
+                    
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- [ breadcrumb ] end -->
+<div class="row">
+    
+
+    <table id="myDataTable" class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>Coin Name</th>
+                <th>Coin Symbol</th>
+                <th>Current Price</th>
+                <!-- Add more table headers as needed -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for coin in coins %}
+                <tr>
+                    <td>{{ coin.name }}</td>
+                    <td>{{ coin.symbol }}</td>
+                    <td>{{ coin.price }}</td>
+                    <!-- Add more table cells as needed -->
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+</div>
+
+<!-- [ Main Content ] end -->
+
+<script>
+    $(document).ready(function() {
+        $('#myDataTable').DataTable();
+    });
+</script>
+{% endblock content %}
