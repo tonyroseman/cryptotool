@@ -1,0 +1,161 @@
+{% extends 'layouts/base_admin.html' %}
+{% load static %}
+{% block content %}
+<!-- [ Main Content ] start -->
+<!-- [ breadcrumb ] start -->
+<div class="page-header">
+    <div class="row align-items-center">
+        <div class="col-md-12">
+            <div class="page-header-title">
+                <h5 class="m-b-10">Notify History</h5>
+            </div>
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><i class="feather icon-user"></i>&nbsp;&nbsp;{{username}}</li>
+                
+                
+            </ul>
+        </div>
+    </div>
+    
+</div>
+<!-- [ breadcrumb ] end -->
+<div class="row">
+    
+
+    <table id="myDataTable" class="table table-striped table-bordered custom-row-height">
+        <thead>
+            <tr>
+                <th rowspan="2" class="fit-content custom-row-height">No.</th>
+                <th rowspan="2" class="fit-content custom-row-height">Symbol</th>
+                <th rowspan="2" class="fit-content custom-row-height">Price</th>
+                <th rowspan="2" class="fit-content custom-row-height">Market cap<br>(millions $)</th>
+                <th rowspan="2" class="fit-content custom-row-height">Volume change<br>24H (%)</th>
+                <th colspan="5" class="fit-content custom-row-height">% change</th>
+                <th colspan="2" class="fit-content custom-row-height">candle<br> count</th>
+                <th colspan="5" class="fit-content custom-row-height">% change BTC</th>
+
+                
+                <!-- Add more table headers as needed -->
+            </tr>
+            <tr>
+                
+                <th class="fit-content custom-row-height">3'</th>
+                <th class="fit-content custom-row-height">5'</th>
+                <th class="fit-content custom-row-height">15'</th>
+                <th class="fit-content custom-row-height">1H</th>
+                <th class="fit-content custom-row-height">4H</th>
+                <th class="fit-content custom-row-height">7d</th>
+                <th class="fit-content custom-row-height">14d</th>
+                <th class="fit-content custom-row-height">3'</th>
+                <th class="fit-content custom-row-height">5'</th>
+                <th class="fit-content custom-row-height">15'</th>
+                <th class="fit-content custom-row-height">1H</th>
+                <th class="fit-content custom-row-height">4H</th>
+                <th class="fit-content custom-row-height">Sending Time</th>
+                
+                <!-- Add more table headers as needed -->
+            </tr>
+        </thead>
+        
+    </table>
+    
+</div>
+
+<!-- [ Main Content ] end -->
+
+<script>
+    $(document).ready(function() {
+        $.fn.dataTable.ext.errMode = 'none';
+        
+        function numberRender(data, type, row) {
+            if(data != undefined){
+                return '' +  Math.round(data * 10000) / 10000;
+                
+            }
+        }
+        function linkRender(data, type, row) {
+            if(data != undefined){
+                return "<a href='https://www.binance.com/en/trade/" + data + "_USDT?theme=dark&type=spot' target='_blank'>" + data + "</a>";
+                
+            }
+        }
+        coindataTable = $('#myDataTable').DataTable(
+            {
+                "paging": true,
+                "autoWidth": true,
+                suppressWarnings: false,
+                
+                columns: [
+                    { data: 'no'},
+                    { data: 'symbol' ,
+                        render: linkRender}, //or { data: 'MONTH', title: 'Month' }`
+                    { data: 'price' ,
+                        render: numberRender},
+                    
+                    { data: 'market_cap' ,
+                        render: numberRender},
+                    { data: 'vol' ,
+                        render: numberRender},
+                    { data: '3m' ,
+                        render: numberRender},
+                    { data: '5m' ,
+                        render: numberRender},
+                    { data: '15m' ,
+                        render: numberRender},
+                    { data: '1h' ,
+                        render: numberRender},
+                    { data: '4h' ,
+                        render: numberRender},
+                    { data: 'c7' },
+                    { data: 'c14' },
+                    { data: '3mBTC' ,
+                        render: numberRender},
+                    { data: '5mBTC' ,
+                        render: numberRender},
+                    { data: '15mBTC' ,
+                        render: numberRender},
+                    { data: '1hBTC' ,
+                        render: numberRender},
+                    { data: '4hBTC' ,
+                        render: numberRender},
+                    {
+                        data: 'time'
+                    }
+
+                ],
+                
+            }
+            
+        );
+        $('#myDataTable').on( 'error.dt', function ( e, settings, techNote, message ) {
+            console.log( 'An error has been reported by DataTables: ', message );
+        } ) ;
+        
+        function updateDataTable() {
+            // Make an AJAX request to get updated data from the server
+            $.ajax({
+                url: '{% url 'get_notifydata_user'%}', // Replace with your server endpoint URL
+                type: 'GET',
+                dataType: 'json',
+                data:{'user_id':'{{user_id}}'},
+                success: function(response) {
+                    
+                    // Clear existing DataTable data
+                    coindataTable.clear();
+                    
+                    
+                    coindataTable.rows.add(response.data);
+                    // Redraw the DataTable
+                    // console.log(response.data.length);
+                    coindataTable.draw();
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+        }
+        updateDataTable()
+        setInterval(updateDataTable, 5000);
+    });
+</script>
+{% endblock content %}

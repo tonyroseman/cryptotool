@@ -1,0 +1,172 @@
+{% extends 'layouts/base_admin.html' %}
+{% load static %}
+{% block content %}
+<!-- [ Main Content ] start -->
+<!-- [ breadcrumb ] start -->
+<div class="page-header">
+    <div class="row align-items-center">
+        <div class="col-md-12">
+            <div class="page-header-title">
+                <h5 class="m-b-10">User Monitor Page</h5>
+            </div>
+            
+        </div>
+    </div>
+    
+</div>
+<!-- [ breadcrumb ] end -->
+<div class="row">
+    
+
+    <table id="myDataTable" class="table table-striped table-bordered custom-row-height">
+        <thead>
+            <tr>
+                <th rowspan="1" class="fit-content custom-row-height">No.</th>
+                <th rowspan="1" class="fit-content custom-row-height">Name</th>
+                <th rowspan="1" class="fit-content custom-row-height">Account Type</th>
+                <th rowspan="1" class="fit-content custom-row-height">Is Using Telegram</th>
+                <th rowspan="1" class="fit-content custom-row-height">Active</th>
+                
+                
+                
+                <!-- Add more table headers as needed -->
+            </tr>
+            
+        </thead>
+        
+    </table>
+    
+</div>
+
+<!-- [ Main Content ] end -->
+
+<script>
+    
+	
+    function deactive(userid){
+        $.ajax({
+                url: '{% url 'set_deactive_user'%}', // Replace with your server endpoint URL
+                type: 'GET',
+                dataType: 'json',
+				data: {'userid': userid},
+                
+                success: function(response) {
+                    
+                    // Clear existing DataTable data
+                    coindataTable.clear();
+                    
+                    
+                    coindataTable.rows.add(response.data);
+                    // Redraw the DataTable
+                    // console.log(response.data.length);
+                    coindataTable.draw(false);
+                    
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+    }
+    $(document).ready(function() {
+        $.fn.dataTable.ext.errMode = 'none';
+        const dataMap = new Map();
+        function numberRender(data, type, row) {
+            if(data != undefined){
+                return '' +  Math.round(data * 10000) / 10000;
+                
+            }
+        }
+		function typeRender(data, type, row) {
+            if(data != undefined){
+				if(data == 0)
+                	return "Website";
+				else
+				return "Admin";
+                
+            }
+			
+        }
+        function isTlgRender(data, type, row) {
+            if(data != undefined){
+				if(data == 0)
+                	return "No";
+				else
+				return "Yes";
+                
+            }
+			
+        }
+        function nameRender(data, type, row) {
+            if(data != undefined){
+                return "<a href='http://127.0.0.1:8000/admin/home/customuser/" + row.id + "/change/' >" + data + "</a>";
+                
+            }
+        }
+		function activeRender(data, type, row) {
+            if(data != undefined){
+                return '<button type="button" class="btn btn-danger" onclick="deactive(' +row.id + ')"><i class="feather mr-2 icon-slash"></i>De-Active</button>';
+                
+            }
+        }
+		
+        
+        coindataTable = $('#myDataTable').DataTable(
+            {
+                "paging": true,
+                "autoWidth": true,
+                suppressWarnings: false,
+                
+                columns: [
+                    { data: 'no'},
+                    { data: 'username' }, //or { data: 'MONTH', title: 'Month' }`
+                    { data: 'type' ,
+                        render: typeRender},
+                    { data: 'istlg' ,
+                        render: isTlgRender},
+                    { data: 'active' ,
+                        render: activeRender},
+                    
+                    
+
+                ],
+                
+            }
+            
+        );
+        $('#myDataTable').on( 'error.dt', function ( e, settings, techNote, message ) {
+            console.log( 'An error has been reported by DataTables: ', message );
+            
+            
+
+        } ) ;    
+        
+        function updateDataTable() {
+            // Make an AJAX request to get updated data from the server
+            $.ajax({
+                url: '{% url 'get_active_users'%}', // Replace with your server endpoint URL
+                type: 'GET',
+                dataType: 'json',
+				
+                
+                success: function(response) {
+                    
+                    // Clear existing DataTable data
+                    coindataTable.clear();
+                    
+                    
+                    coindataTable.rows.add(response.data);
+                    // Redraw the DataTable
+                    // console.log(response.data.length);
+                    coindataTable.draw(false);
+                    
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+        }
+        updateDataTable()
+        
+    });
+</script>
+{% endblock content %}

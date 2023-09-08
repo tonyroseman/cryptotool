@@ -22,30 +22,33 @@
         <thead>
             <tr>
                 <th rowspan="2" class="fit-content custom-row-height">No.</th>
-                <th rowspan="2" class="fit-content custom-row-height">Coin Symbol</th>
-                <th rowspan="2" class="fit-content custom-row-height">Current Price (USD)</th>
-                <th rowspan="2" class="fit-content custom-row-height">Market cap (millions $)</th>
-                <th rowspan="2" class="fit-content custom-row-height">Volume change 48H</th>
-                <th colspan="5" class="fit-content custom-row-height">% change</th>
-                <th colspan="2" class="fit-content custom-row-height">candle count</th>
-                <th colspan="5" class="fit-content custom-row-height">% change BTC</th>
+                <th rowspan="2" class="fit-content custom-row-height">Symbol</th>
+                <th rowspan="2" class="fit-content custom-row-height">Current<br> Price<br>(USD)</th>
+                <th rowspan="2" class="fit-content custom-row-height">Market cap<br>(millions $)</th>
+                <th rowspan="2" class="fit-content custom-row-height">Volume 24H<br>(millions $)</th>
+                <th rowspan="2" class="fit-content custom-row-height">Volume <br>change<br>24H (%)</th>
+                <th rowspan="2" class="fit-content custom-row-height">Volume/<br>Market<br> cap</th>
+                <th rowspan="2" class="fit-content custom-row-height">Funding <br>rate</th>
+                <th rowspan="2" class="fit-content custom-row-height">Long <br>Short<br>Ratio</th>
+                <th colspan="6" class="fit-content custom-row-height">% change</th>
+                <th colspan="2" class="fit-content custom-row-height">3m candle<br> count</th>
+                <th colspan="2" class="fit-content custom-row-height">1H candle<br> count</th>
+                
                 
                 <!-- Add more table headers as needed -->
             </tr>
             <tr>
-                
+                <th class="fit-content custom-row-height">1'</th>
                 <th class="fit-content custom-row-height">3'</th>
                 <th class="fit-content custom-row-height">5'</th>
                 <th class="fit-content custom-row-height">15'</th>
                 <th class="fit-content custom-row-height">1H</th>
                 <th class="fit-content custom-row-height">4H</th>
+                <th class="fit-content custom-row-height">1d</th>
+                <th class="fit-content custom-row-height">2d</th>
                 <th class="fit-content custom-row-height">7d</th>
                 <th class="fit-content custom-row-height">14d</th>
-                <th class="fit-content custom-row-height">3'</th>
-                <th class="fit-content custom-row-height">5'</th>
-                <th class="fit-content custom-row-height">15'</th>
-                <th class="fit-content custom-row-height">1H</th>
-                <th class="fit-content custom-row-height">4H</th>
+                
                 
                 <!-- Add more table headers as needed -->
             </tr>
@@ -60,7 +63,45 @@
 <script>
     $(document).ready(function() {
         $.fn.dataTable.ext.errMode = 'none';
-        m3 = '{{settings.m3}}';
+        function numberRender(data, type, row) {
+            if(data != undefined){
+                return '&nbsp;&nbsp;' + ' ' + Math.round(data * 10000) / 10000;
+                
+            }
+        }
+        function FundingRateRender(data, type, row) {
+            
+            if(data != undefined){
+                if(row.ffr != undefined && row.ffr == true){
+                    var backgroundColor = 'pink'; // Example color value
+                    if(row.allok != undefined && row.allok == true){
+                        backgroundColor = 'lightgreen'; // Example color value
+                    }
+                    if(row.c1000 == 0){
+
+                        return '<span style="background-color: ' + backgroundColor + ';display: block; width: 100%; height: 100%;">' + "<a href='https://www.binance.com/en/futures/" + row.symbol + "USDT' target='_blank'>" + Math.round(data * 10000) / 10000 + "</a>" + '</span>';
+                    }
+                    else{
+                        return '<span style="background-color: ' + backgroundColor + ';display: block; width: 100%; height: 100%;">' + "<a href='https://www.binance.com/en/futures/1000" + row.symbol + "USDT' target='_blank'>" + Math.round(data * 10000) / 10000 + "</a>" + '</span>';
+                    }
+                    
+                }
+                else{
+
+                    if(row.c1000 == 0){
+
+                        return "<a href='https://www.binance.com/en/futures/" + row.symbol + "USDT' target='_blank'>" + Math.round(data * 10000) / 10000 + "</a>";
+                    }
+                    else{
+                        return "<a href='https://www.binance.com/en/futures/1000" + row.symbol + "USDT' target='_blank'>" + Math.round(data * 10000) / 10000 + "</a>";
+                    }
+                    
+                }
+                
+                
+            }
+            
+        }
         coindataTable = $('#myDataTable').DataTable(
             {
                 "paging": true,
@@ -69,96 +110,258 @@
                 
                 columns: [
                     { data: 'no'},
-                    { data: 'symbol' }, //or { data: 'MONTH', title: 'Month' }`
-                    { data: 'price' },
-                    { data: 'market_cap',
+                    { data: 'symbol',
                         render: function(data, type, row) {
-                            if(row.fmc != undefined && row.fmc == true){
+                            if(data != undefined){
+                                return "<a href='https://www.binance.com/en/trade/" + data + "_USDT?theme=dark&type=spot' target='_blank'>" + data + "</a>";
+                            
+                            }
+                    } }, //or { data: 'MONTH', title: 'Month' }`
+                    { data: 'price' ,
+                        render: function(data, type, row) {
+                            
+                            if(row.fprice != undefined && row.fprice == true){
                                 var backgroundColor = 'pink'; // Example color value
-                    
+                                if(row.allok != undefined && row.allok == true){
+                                    backgroundColor = 'lightgreen'; // Example color value
+                                }
                                 // Return the cell content with the specified background color
-                                return '<span style="background-color: ' + backgroundColor + ';display: block; width: 100%; height: 100%;">' + data + '</span>';
+                                return '<span style="background-color: ' + backgroundColor + ';display: block; width: 100%; height: 100%;">' + Math.round(data * 10000) / 10000 + '</span>';
                             }
                             else{
-                                return data;
+                                if(data != undefined){
+                                        return Math.round(data * 10000) / 10000;
+                                }
+                            }
+                    }},
+                    { data: 'market_cap',
+                        render: function(data, type, row) {
+                            
+                            if(row.fmc != undefined && row.fmc == true){
+                                var backgroundColor = 'pink'; // Example color value
+                                if(row.allok != undefined && row.allok == true){
+                                    backgroundColor = 'lightgreen'; // Example color value
+                                }
+                                // Return the cell content with the specified background color
+                                return '<span style="background-color: ' + backgroundColor + ';display: block; width: 100%; height: 100%;">' + Math.round(data * 10000) / 10000 + '</span>';
+                            }
+                            else{
+                                if(data != undefined){
+                                        return Math.round(data * 10) / 10;
+                                }
+                            }
+                    } },
+                    { data: 'vol_24h',
+                        render: function(data, type, row) {
+                            
+                            if(row.fvol_24h != undefined && row.fvol_24h == true){
+                                var backgroundColor = 'pink'; // Example color value
+                                if(row.allok != undefined && row.allok == true){
+                                    backgroundColor = 'lightgreen'; // Example color value
+                                }
+                                // Return the cell content with the specified background color
+                                return '<span style="background-color: ' + backgroundColor + ';display: block; width: 100%; height: 100%;">' + Math.round(data * 10000) / 10000 + '</span>';
+                            }
+                            else{
+                                if(data != undefined){
+                                        return Math.round(data * 10) / 10;
+                                }
                             }
                     } },
                     { data: 'vol' ,
                         render: function(data, type, row) {
                             if(row.fvol != undefined && row.fvol == true){
                                 var backgroundColor = 'pink'; // Example color value
-                    
+                                if(row.allok != undefined && row.allok == true){
+                                    backgroundColor = 'lightgreen'; // Example color value
+                                }
                                 // Return the cell content with the specified background color
-                                return '<span style="background-color: ' + backgroundColor + ';display: block; width: 100%; height: 100%;">' + data + '</span>';
+                                return '<span style="background-color: ' + backgroundColor + ';display: block; width: 100%; height: 100%;">' + Math.round(data * 10000) / 10000 + '</span>';
                             }
                             else{
-                                return data;
+                                if(data != undefined){
+                                        return Math.round(data * 10) / 10;
+                                }
+                                
                             }
                             
                         }},
-                    { data: 'm3',
+                        { data: 'vm' ,
                         render: function(data, type, row) {
-                            if(row.fm3 != undefined && row.fm3 == true){
+                            if(row.fvm != undefined && row.fvm == true){
                                 var backgroundColor = 'pink'; // Example color value
-                    
+                                if(row.allok != undefined && row.allok == true){
+                                    backgroundColor = 'lightgreen'; // Example color value
+                                }
                                 // Return the cell content with the specified background color
-                                return '<span style="background-color: ' + backgroundColor + ';display: block; width: 100%; height: 100%;">' + data + '</span>';
+                                return '<span style="background-color: ' + backgroundColor + ';display: block; width: 100%; height: 100%;">' + Math.round(data * 10000) / 10000 + '</span>';
                             }
                             else{
-                                return data;
+                                if(data != undefined){
+                                        return Math.round(data * 10000) / 10000;
+                                }
+                                
+                            }
+                            
+                        }},
+                        { data: 'fr' ,
+                            render: FundingRateRender,
+                            
+                        },
+                           
+                        { data: 'ls' ,
+                            render: function(data, type, row) {
+                                if(row.fls != undefined && row.fls == true){
+                                    var backgroundColor = 'pink'; // Example color value
+                                    if(row.allok != undefined && row.allok == true){
+                                        backgroundColor = 'lightgreen'; // Example color value
+                                    }
+                                    // Return the cell content with the specified background color
+                                    return '<span style="background-color: ' + backgroundColor + ';display: block; width: 100%; height: 100%;">' + Math.round(data * 10000) / 10000 + '</span>';
+                                }
+                                else{
+                                    if(data != undefined){
+                                        return Math.round(data * 10) / 10;
+                                    }
+                                }
+                            
+                        }},
+                        { data: '1m',
+                        render: function(data, type, row) {
+                            if(row.f1m != undefined && row.f1m == true){
+                                var backgroundColor = 'pink'; // Example color value
+                                if(row.allok != undefined && row.allok == true){
+                                    backgroundColor = 'lightgreen'; // Example color value
+                                }
+                                // Return the cell content with the specified background color
+                                return '<span style="background-color: ' + backgroundColor + ';display: block; width: 100%; height: 100%;">' + Math.round(data * 10000) / 10000 + '</span>';
+                            }
+                            else{
+                                if(data != undefined){
+                                        return Math.round(data * 10000) / 10000;
+                                }
+                                
                             }
                             
                         }
                     },
-                    { data: 'm5' ,
+                    { data: '3m',
                         render: function(data, type, row) {
-                            if(row.fm5 != undefined && row.fm5 == true){
+                            if(row.f3m != undefined && row.f3m == true){
                                 var backgroundColor = 'pink'; // Example color value
-                    
+                                if(row.allok != undefined && row.allok == true){
+                                    backgroundColor = 'lightgreen'; // Example color value
+                                }
                                 // Return the cell content with the specified background color
-                                return '<span style="background-color: ' + backgroundColor + ';display: block; width: 100%; height: 100%;">' + data + '</span>';
+                                return '<span style="background-color: ' + backgroundColor + ';display: block; width: 100%; height: 100%;">' + Math.round(data * 10000) / 10000 + '</span>';
                             }
                             else{
-                                return data;
+                                if(data != undefined){
+                                        return Math.round(data * 10000) / 10000;
+                                }
+                            }
+                            
+                        }
+                    },
+                    { data: '5m' ,
+                        render: function(data, type, row) {
+                            if(row.f5m != undefined && row.f5m == true){
+                                var backgroundColor = 'pink'; // Example color value
+                                if(row.allok != undefined && row.allok == true){
+                                    backgroundColor = 'lightgreen'; // Example color value
+                                }
+                                // Return the cell content with the specified background color
+                                return '<span style="background-color: ' + backgroundColor + ';display: block; width: 100%; height: 100%;">' + Math.round(data * 10000) / 10000 + '</span>';
+                            }
+                            else{
+                                if(data != undefined){
+                                        return Math.round(data * 10000) / 10000;
+                                }
                             }
                             
                         }},
-                    { data: 'm15' ,
+                    { data: '15m' ,
                         render: function(data, type, row) {
-                            if(row.fm15 != undefined && row.fm15 == true){
+                            if(row.f15m != undefined && row.f15m == true){
                                 var backgroundColor = 'pink'; // Example color value
-                    
+                                if(row.allok != undefined && row.allok == true){
+                                    backgroundColor = 'lightgreen'; // Example color value
+                                }
                                 // Return the cell content with the specified background color
-                                return '<span style="background-color: ' + backgroundColor + ';display: block; width: 100%; height: 100%;">' + data + '</span>';
+                                return '<span style="background-color: ' + backgroundColor + ';display: block; width: 100%; height: 100%;">' + Math.round(data * 10000) / 10000 + '</span>';
                             }
                             else{
-                                return data;
+                                if(data != undefined){
+                                        return Math.round(data * 10000) / 10000;
+                                }
                             }
                             
                         }},
-                    { data: 'h1' ,
+                    { data: '1h' ,
                         render: function(data, type, row) {
-                            if(row.fh1 != undefined && row.fh1 == true){
+                            if(row.f1h != undefined && row.f1h == true){
                                 var backgroundColor = 'pink'; // Example color value
-                    
+                                if(row.allok != undefined && row.allok == true){
+                                    backgroundColor = 'lightgreen'; // Example color value
+                                }
                                 // Return the cell content with the specified background color
-                                return '<span style="background-color: ' + backgroundColor + ';display: block; width: 100%; height: 100%;">' + data + '</span>';
+                                return '<span style="background-color: ' + backgroundColor + ';display: block; width: 100%; height: 100%;">' + Math.round(data * 10000) / 10000 + '</span>';
                             }
                             else{
-                                return data;
+                                if(data != undefined){
+                                        return Math.round(data * 10000) / 10000;
+                                }
                             }
                             
                         }},
-                    { data: 'h4' ,
+                    { data: '4h' ,
                         render: function(data, type, row) {
-                            if(row.fh4 != undefined && row.fh4 == true){
+                            if(row.f4h != undefined && row.f4h == true){
                                 var backgroundColor = 'pink'; // Example color value
-                    
+                                if(row.allok != undefined && row.allok == true){
+                                    backgroundColor = 'lightgreen'; // Example color value
+                                }
                                 // Return the cell content with the specified background color
-                                return '<span style="background-color: ' + backgroundColor + ';display: block; width: 100%; height: 100%;">' + data + '</span>';
+                                return '<span style="background-color: ' + backgroundColor + ';display: block; width: 100%; height: 100%;">' + Math.round(data * 10000) / 10000 + '</span>';
                             }
                             else{
-                                return data;
+                                if(data != undefined){
+                                        return Math.round(data * 10000) / 10000;
+                                }
+                            }
+                            
+                        }},
+                        { data: 'c1' ,
+                        render: function(data, type, row) {
+                            if(row.fc1 != undefined && row.fc1 == true){
+                                var backgroundColor = 'pink'; // Example color value
+                                if(row.allok != undefined && row.allok == true){
+                                    backgroundColor = 'lightgreen'; // Example color value
+                                }
+                                // Return the cell content with the specified background color
+                                return '<span style="background-color: ' + backgroundColor + ';display: block; width: 100%; height: 100%;">' + Math.round(data * 10000) / 10000 + '</span>';
+                            }
+                            else{
+                                if(data != undefined){
+                                        return Math.round(data * 10000) / 10000;
+                                }
+                            }
+                            
+                        }},
+                    { data: 'c2' ,
+                        render: function(data, type, row) {
+                            if(row.fc2 != undefined && row.fc2 == true){
+                                var backgroundColor = 'pink'; // Example color value
+                                if(row.allok != undefined && row.allok == true){
+                                    backgroundColor = 'lightgreen'; // Example color value
+                                }
+                                // Return the cell content with the specified background color
+                                return '<span style="background-color: ' + backgroundColor + ';display: block; width: 100%; height: 100%;">' + Math.round(data * 10000) / 10000 + '</span>';
+                            }
+                            else{
+                                if(data != undefined){
+                                        return Math.round(data * 10000) / 10000;
+                                }
                             }
                             
                         }},
@@ -166,12 +369,16 @@
                         render: function(data, type, row) {
                             if(row.fc7 != undefined && row.fc7 == true){
                                 var backgroundColor = 'pink'; // Example color value
-                    
+                                if(row.allok != undefined && row.allok == true){
+                                    backgroundColor = 'lightgreen'; // Example color value
+                                }
                                 // Return the cell content with the specified background color
-                                return '<span style="background-color: ' + backgroundColor + ';display: block; width: 100%; height: 100%;">' + data + '</span>';
+                                return '<span style="background-color: ' + backgroundColor + ';display: block; width: 100%; height: 100%;">' + Math.round(data * 10000) / 10000 + '</span>';
                             }
                             else{
-                                return data;
+                                if(data != undefined){
+                                        return Math.round(data * 10000) / 10000;
+                                }
                             }
                             
                         }},
@@ -179,80 +386,24 @@
                         render: function(data, type, row) {
                             if(row.fc14 != undefined && row.fc14 == true){
                                 var backgroundColor = 'pink'; // Example color value
-                    
+                                if(row.allok != undefined && row.allok == true){
+                                    backgroundColor = 'lightgreen'; // Example color value
+                                }
                                 // Return the cell content with the specified background color
-                                return '<span style="background-color: ' + backgroundColor + ';display: block; width: 100%; height: 100%;">' + data + '</span>';
+                                return '<span style="background-color: ' + backgroundColor + ';display: block; width: 100%; height: 100%;">' + Math.round(data * 10000) / 10000 + '</span>';
                             }
                             else{
-                                return data;
+                                if(data != undefined){
+                                        return Math.round(data * 10000) / 10000;
+                                }
                             }
                             
                         }},
-                    { data: 'm3BTC' ,
-                        render: function(data, type, row) {
-                            if(row.fm3BTC != undefined && row.fm3BTC == true){
-                                var backgroundColor = 'pink'; // Example color value
                     
-                                // Return the cell content with the specified background color
-                                return '<span style="background-color: ' + backgroundColor + ';display: block; width: 100%; height: 100%;">' + data + '</span>';
-                            }
-                            else{
-                                return data;
-                            }
-                            
-                        }},
-                    { data: 'm5BTC' ,
-                        render: function(data, type, row) {
-                            if(row.fm5BTC != undefined && row.fm5BTC == true){
-                                var backgroundColor = 'pink'; // Example color value
-                    
-                                // Return the cell content with the specified background color
-                                return '<span style="background-color: ' + backgroundColor + ';display: block; width: 100%; height: 100%;">' + data + '</span>';
-                            }
-                            else{
-                                return data;
-                            }
-                            
-                        }},
-                    { data: 'm15BTC' ,
-                        render: function(data, type, row) {
-                            if(row.fm15BTC != undefined && row.fm15BTC == true){
-                                var backgroundColor = 'pink'; // Example color value
-                    
-                                // Return the cell content with the specified background color
-                                return '<span style="background-color: ' + backgroundColor + ';display: block; width: 100%; height: 100%;">' + data + '</span>';
-                            }
-                            else{
-                                return data;
-                            }
-                            
-                        }},
-                    { data: 'h1BTC' ,
-                        render: function(data, type, row) {
-                            if(row.fh1BTC != undefined && row.fh1BTC == true){
-                                var backgroundColor = 'pink'; // Example color value
-                    
-                                // Return the cell content with the specified background color
-                                return '<span style="background-color: ' + backgroundColor + ';display: block; width: 100%; height: 100%;">' + data + '</span>';
-                            }
-                            else{
-                                return data;
-                            }
-                            
-                        }},
-                    { data: 'h4BTC' ,
-                        render: function(data, type, row) {
-                            if(row.fh4BTC != undefined && row.fh4BTC == true){
-                                var backgroundColor = 'pink'; // Example color value
-                    
-                                // Return the cell content with the specified background color
-                                return '<span style="background-color: ' + backgroundColor + ';display: block; width: 100%; height: 100%;">' + data + '</span>';
-                            }
-                            else{
-                                return data;
-                            }
-                            
-                        }},
+                        {
+                            data: 'count',
+                            visible: false
+                        }
 
                 ],
                 
@@ -262,24 +413,7 @@
         $('#myDataTable').on( 'error.dt', function ( e, settings, techNote, message ) {
             console.log( 'An error has been reported by DataTables: ', message );
         } ) ;
-        function requestTlg(coin_symbols){
-            // Make an AJAX request to get updated data from the server
-            
-            $.ajax({
-                url: '{% url 'send_telegram_message'%}', // Replace with your server endpoint URL
-                type: 'GET',
-                dataType: 'json',
-                data: { 
-                    symbols:coin_symbols.toString()
-                },
-                success: function(response) {
-                    
-                },
-                error: function(error) {
-                    console.log(error);
-                }
-            });
-        }
+        
         function updateDataTable() {
             // Make an AJAX request to get updated data from the server
             $.ajax({
@@ -298,14 +432,15 @@
                     for(var key in settings)
                         if(settings.hasOwnProperty(key))
                             count++;
-                    
-                    count = count -1;
+                    var rows = [];
+                    count = count -2;
                     var ok_symbols = [];
                     coindata.forEach(function(rowData) {
                         var ok_count = 0;
                         rowflag = false;
                         for (var key in settings) {
-                            if (key != 'tlg' && key.substring(0,1) != 't' && key != 'mc') {
+                            
+                            if (key != 'tlg' && key.substring(0,1) != 't' && key != 'mc' && key != 'coins') {
                                 operand = parseInt(settings[key]);
                                 flag = false;
                                 switch (operand) {
@@ -324,6 +459,7 @@
                                 }
 
                                 if(flag){
+                                    rowData['gg'] = key;
                                     rowflag = true;
                                     ok_count++;
                                 }
@@ -353,26 +489,49 @@
                                 }
 
                             }
+                            
+                            
 
                         }
                         // console.log(rowData);
                         // console.log(settings);
-                        if(rowflag)
-                            coindataTable.row.add(rowData);
-                       
-                        if(ok_count == count/2){
-                            ok_symbols.push(rowData['symbol']);
+                        
+                        if(rowflag == true && ok_count > 0){
+                            
+                            rowData['count'] = ok_count;
+                            if(ok_count == count/2){
+                                rowData['allok'] = true;
+                            }
+                            rows.push(rowData);
                             
                         }
+                        else{
+                            if(settings['coins'] != ""){
+                                rowflag = true;
+                                rows.push(rowData);
+                            }
+                        }
+                        // if(ok_count == count/2){
+                            
+                        //     ok_symbols.push(rowData['symbol']);
+                            
+                        // }
+                        // else if(count == 0){
+                        //     if(settings['coins'] != ""){
+                        //         ok_symbols.push(rowData['symbol']);
+                        //     }
+                        // }
                     });
                     
-                    
-                    // Redraw the DataTable
-                    coindataTable.draw();
-                    console.log("tlg-" + ok_symbols)
-                    if(ok_symbols.length > 0){
-                        requestTlg(ok_symbols);
+                    for(var i = 0; i < rows.length; i++){
+                        coindataTable.row.add(rows[i]);
                     }
+                    
+                    coindataTable.order([[19, 'desc']]).draw(false);// Redraw the DataTable
+                    // coindataTable.draw();
+                    $("li.paginate_button.page-item").blur();
+                    
+                    
                     
                 },
                 error: function(error) {
@@ -380,8 +539,15 @@
                 }
             });
         }
+        coindataTable.on('page.dt', function() {
+            // $('html, body').animate({
+            //     scrollTop: $(".dataTables_wrapper").offset().bottom
+            // }, 'slow');
+
+            $('thead tr th:first-child').focus().blur();
+        });
         updateDataTable()
-        setInterval(updateDataTable, 60000);
+        setInterval(updateDataTable, 2000);
     });
 </script>
 {% endblock content %}

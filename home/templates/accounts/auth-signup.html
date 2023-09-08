@@ -8,14 +8,14 @@
 			<div class="row align-items-center text-center">
 				<div class="col-md-12">
 					<div class="card-body">
-						<img src="{% static 'assets/images/logo-dark.png' %}" alt="" class="img-fluid mb-4">
+						<img src="{% static 'assets/images/logo.png' %}" alt="" class="img-fluid mb-4">
 						<h4 class="mb-3 f-w-400">Sign up</h4>
 						<form  method="post">
 							{% csrf_token %}
 							{% for field in form %}
 							<div class="input-group mb-3">
 								<span class="input-group-text">
-									<i class="feather {% if field.name == 'username' %} icon-user {% else %} {% if field.name == 'email' or field.name == 'telegram' %} icon-mail {% else %} icon-lock {% endif %} {% endif %}"></i>
+									<i class="feather {% if field.name == 'username' %} icon-user {% else %} {% if field.name == 'email' or field.name == 'telegram' %} icon-mail {% else %} {% if field.name == 'phone' %} icon-phone {% else %} icon-lock {% endif %} {% endif %} {% endif %}"></i>
 								</span>
 								{{field}}
 							</div>
@@ -31,5 +31,8 @@
 		</div>
 	</div>
 </div>
+<script>
+	
+</script>
 <!-- [ auth-signup ] end -->
 {% endblock content %}

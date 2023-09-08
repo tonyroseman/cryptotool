@@ -22,7 +22,7 @@ class RegistrationForm(UserCreationForm):
 #     )
   class Meta:
     model = CustomUser
-    fields = ('username', 'email' )
+    fields = ('username', 'email', 'phone')
 
     widgets = {
       'username': forms.TextInput(attrs={
@@ -34,6 +34,10 @@ class RegistrationForm(UserCreationForm):
           'placeholder': 'Email'
       }),
       
+      'phone': forms.TextInput(attrs={
+          'class': 'form-control',
+          'placeholder': 'Phone Number'
+      }),
     }
 
 class LoginForm(AuthenticationForm):

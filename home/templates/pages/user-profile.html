@@ -4,58 +4,28 @@
 <!-- [ Main Content ] start -->
 <!-- profile header start -->
 <div class="user-profile user-card mb-4">
-    <div class="card-header border-0 p-0 pb-0">
-        <div class="cover-img-block">
-            <img src="{% static 'assets/images/user/cover.jpg' %}" alt="" class="img-fluid">
-            <div class="overlay"></div>
-            <div class="change-cover">
-                <div class="dropdown">
-                    <a class="drp-icon dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false"><i class="icon feather icon-camera"></i></a>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#"><i class="feather icon-upload-cloud me-2"></i>upload
-                            new</a>
-                        <a class="dropdown-item" href="#"><i class="feather icon-image me-2"></i>from photos</a>
-                        <a class="dropdown-item" href="#"><i class="feather icon-film me-2"></i> upload
-                            video</a>
-                        <a class="dropdown-item" href="#"><i class="feather icon-trash-2 me-2"></i>remove</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <br><br><br>
     <div class="card-body pt-0">
         <div class="user-about-block m-0">
             <div class="row">
                 <div class="col-md-4 text-center mt-n5">
                     <div class="change-profile text-center">
                         <div class="dropdown w-auto d-inline-block">
-                            <a class="dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true"
-                                aria-expanded="false">
+                            <a aria-expanded="false">
                                 <div class="profile-dp">
                                     <div class="position-relative d-inline-block">
-                                        <img class="img-radius img-fluid wid-100"
-                                            src="{% static 'assets/images/user/avatar-tony.png' %}" alt="User image">
+                                        <img src="{% static 'assets/images/user/avatar-' %}{{ user.id|add:1|divisibleby:8|add:1 }}.png" class="img-radius img-fluid wid-100"
+                                        alt="User-Profile-Image">
+                                        
                                     </div>
-                                    <div class="overlay">
-                                        <span>change</span>
-                                    </div>
+                                    
                                 </div>
                                 <div class="certificated-badge">
                                     <i class="fas fa-certificate text-c-blue bg-icon"></i>
                                     <i class="fas fa-check front-icon text-white"></i>
                                 </div>
                             </a>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#"><i
-                                        class="feather icon-upload-cloud me-2"></i>upload new</a>
-                                <a class="dropdown-item" href="#"><i class="feather icon-image me-2"></i>from
-                                    photos</a>
-                                <a class="dropdown-item" href="#"><i
-                                        class="feather icon-shield me-2"></i>Protact</a>
-                                <a class="dropdown-item" href="#"><i
-                                        class="feather icon-trash-2 me-2"></i>remove</a>
-                            </div>
+                            
                         </div>
                     </div>
                     <h5 class="mb-1">{{user.username}}</h5>
@@ -65,12 +35,23 @@
                     <div class="row">
                         <div class="col-md-6">
                             
-                            <a href="mailto:demo@domain.com"
+                            <a href="mailto:{{user.email}}"
                                 class="mb-1 text-muted d-flex align-items-end text-h-primary"><i
                                     class="feather icon-mail me-2 f-18"></i>{{user.email}}</a>
-                            <div class="clearfix"></div>
                             <a href="{{user.telegram}}" class="mb-1 text-muted d-flex align-items-end text-h-primary"><i
-                                    class="feather icon-phone me-2 f-18"></i>{{user.telegram}}</a>
+                                class="feather icon-phone me-2 f-18"></i>{{user.telegram}}</a>
+                            
+                            
+                        </div>
+                        <div class="col-md-6">
+                            
+                           
+                            <a href="" class="mb-1 text-muted d-flex align-items-end text-h-primary"><i
+                                            class="feather icon-smartphone me-2 f-18"></i>{{user.phone}}</a>
+                            <a href="" class="mb-1 text-muted d-flex align-items-end text-h-primary"><i
+                                class="feather icon-clock f-18"></i>  &nbsp;&nbsp;Expired time {{user.expired_time}}</a>
+                            <div class="clearfix"></div>
+                            
                         </div>
                         
                     </div>
@@ -99,11 +80,18 @@
                         <div class="col-sm-9">
                             {{user.username}}
                         </div>
+                        
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-3 col-form-label font-weight-bolder">Email Address</label>
                         <div class="col-sm-9">
                             {{user.email}}
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label font-weight-bolder">Phone</label>
+                        <div class="col-sm-9">
+                            {{user.phone}}
                         </div>
                     </div>
                     <div class="form-group row">
@@ -115,26 +103,35 @@
                 </form>
             </div>
             <div class="card-body border-top pro-det-edit collapse " id="pro-det-edit-2">
-                <form>
+                <form action="/save_profile/" method="post">
+                    {% csrf_token %}
                     <div class="form-group row">
                         <label class="col-sm-3 col-form-label font-weight-bolder">Username</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" placeholder="Username" value="{{user.username}}">
+                            <input type="text" class="form-control" placeholder="Username" value="{{user.username}}" name="username">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-3 col-form-label font-weight-bolder">Email Address</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" placeholder="Email" value="{{user.email}}">
+                            <input type="text" class="form-control" placeholder="Email" value="{{user.email}}" name="email">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label font-weight-bolder">Phone</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" placeholder="Phone" 
+                                value="{{user.phone}}" name="phone">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-3 col-form-label font-weight-bolder">Telegram</label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control" placeholder="Telegram" 
-                                value="{{user.telegram}}">
+                                value="{{user.telegram}}" name="telegram">
                         </div>
                     </div>
+                    
                     <div class="form-group row">
                         <label class="col-sm-3 col-form-label"></label>
                         <div class="col-sm-9">

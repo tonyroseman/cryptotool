@@ -1,56 +1,24 @@
 {% load i18n static admin_gradient %}
 <ul class="nav pcoded-inner-navbar ">
-  {% if not request.user.is_superuser %}
-  <li class="nav-item pcoded-menu-caption">
-    <label>Navigation</label>
-  </li>
-  <li class="nav-item">
-    <a href="{% url 'index' %}" class="nav-link "><span class="pcoded-micon"><i
-          class="feather icon-home"></i></span><span class="pcoded-mtext">Dashboard</span></a>
-  </li>
+  {% if not request.user.is_superuser%}
+    
+    <li class="nav-item">
+      <a href="{% url 'index' %}" class="nav-link "><span class="pcoded-micon"><i
+            class="feather icon-home"></i></span><span class="pcoded-mtext">Dashboard</span></a>
+    </li>
   {% endif %}
-  {% if not request.user.is_authenticated %}
-  <li class="nav-item pcoded-hasmenu">
-    <a href="#" class="nav-link "><span class="pcoded-micon"><i class="feather icon-lock"></i></span><span
-        class="pcoded-mtext">Authentication</span></a>
-    <ul class="pcoded-submenu">
-      <li><a href="{% url 'auth_signin' %}" >Sign IN</a></li>
-      <li><a href="{% url 'auth_signup' %}" >Sign UP</a></li>
-    </ul>
-  </li>
-
-  {% endif %}
-
-  {% admin_get_menu as app_list %}
-  {% if app_list %}
-  {% for app in app_list %}
-  {% if app.has_perms and not app.pinned %}
-  <li class="nav-item pcoded-hasmenu">
-    <a class="nav-link">
-      <span class="pcoded-micon"><i class="feather {{ app.icon }}"></i></span>
-      <span
-        class="pcoded-mtext">{{ app.label|slice:10 }}{% if app.label|length > 10 %}..{% endif %}</span>
-    </a>
-
-    {% if app.models %}
-    <ul class="pcoded-submenu">
-      {% for model in app.models %}
-      {% if model.url %}
-      <li class="">
-        <a class="" href="{{ model.url }}">
-          {{ model.label }}
-        </a>
-      </li>
-      {% else %}
-      <li class="">{{ model.label }}</li>
-      {% endif %}
-      {% endfor %}
-    </ul>
+  {% if request.user.is_superuser %}
+    <li class="nav-item">
+      <a href="/admin/" class="nav-link "><span class="pcoded-micon"><i
+            class="feather icon-users"></i></span><span class="pcoded-mtext">All Users</span></a>
+    </li>
+    <li class="nav-item"><a href="{% url 'user_console' %}" class="nav-link "><span class="pcoded-micon"><i
+      class="feather icon-user-check"></i></span><span class="pcoded-mtext">Console Users</span></a></li>
+    <li class="nav-item"><a href="{% url 'user_website' %}" class="nav-link "><span class="pcoded-micon"><i
+      class="feather icon-user-check"></i></span><span class="pcoded-mtext">Website Users</span></a></li>
+    <li class="nav-item"><a href="{% url 'system_setting' %}" class="nav-link "><span class="pcoded-micon"><i
+      class="feather icon-settings"></i></span><span class="pcoded-mtext">System Setting</span></a></li>
     {% endif %}
-  </li>
-  {% endif %}
-  {% endfor %}
-  {% endif %}
 
   {% if request.user.is_authenticated and not request.user.is_superuser %}
   
@@ -61,10 +29,17 @@
     <a href="{% url 'records' %}" class="nav-link "><span class="pcoded-micon"><i
           class="feather icon-align-justify"></i></span><span class="pcoded-mtext">Records</span></a>
   </li>
-  
-  <li class="nav-item pcoded-menu-caption">
-    <label>Account Pages</label>
+  <li class="nav-item">
+    <a href="http://127.0.0.1:8000/usernotify/{{request.user.id}}" class="nav-link "><span class="pcoded-micon"><i
+          class="feather icon-book"></i></span><span class="pcoded-mtext">Notify History</span></a>
   </li>
+  <li class="nav-item">
+    <a href="{% url 'aboutus' %}" class="nav-link "><span class="pcoded-micon"><i
+      class="feather icon-help-circle"></i></span><span class="pcoded-mtext">About us</span></a>
+          
+  </li>
+  
+
   <li class="nav-item">
     <a href="{% url 'user_profile' %}" class="nav-link "><span class="pcoded-micon"><i
           class="feather icon-user"></i></span><span class="pcoded-mtext">User Profile</span></a>

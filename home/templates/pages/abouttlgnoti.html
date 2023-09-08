@@ -1,0 +1,38 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% block content %}
+<!-- [ Main Content ] start -->
+<!-- [ breadcrumb ] start -->
+<div class="page-header">
+    <div class="row align-items-center">
+        <div class="col-md-12">
+            <div class="page-header-title">
+                <h5 class="m-b-10">About Telegram Notification</h5>
+            </div>
+            
+        </div>
+    </div>
+    
+</div>
+<div class="row">
+    <h4 class="m-b-10">Cách lấy link Telegram cá nhân của mình</h4>
+    <h5 class="m-b-10">Để lấy link Telegram cá nhân của mình trên điện thoại, bạn thực hiện theo hướng dẫn dưới đây:</h5>
+    <h6 class="m-b-10">
+        •	Đầu tiên, mở ứng dụng Telegram trên điện thoại của mình rồi đăng nhập tài khoản cần lấy link cá nhân vào hệ thống<br><br>
+        •	Trên giao diện chính, nhấn vào biểu tượng “Cài đặt” ở góc dưới bên phải màn hình<br><br>
+        <img src="{% static 'assets/images/tlg-1.png' %}" ><br><br>
+        •	Tiếp theo, nhấn vào mục “Edit” ở góc trên bên phải màn hình để chỉnh sửa trang cá nhân<br><br>
+        •	Kéo xuống mục “Username” và thiết lập tên người dùng theo ý mình (nếu đã đặt username rồi thì bỏ qua bước này)<br><br>
+        •	Sau khi đặt username thành công, nhấn vào mục “Done”<br><br>
+        <img src="{% static 'assets/images/tlg-2.png' %}" ><br><br>
+        •	Tiếp theo, nhấn lại vào mục Username, phía dưới màn hình sẽ hiển thị link Telegram cá nhân<br><br>
+        <img src="{% static 'assets/images/tlg-3.png' %}" ><br><br>
+        •	Nhấn giữ vào link Telegram cá nhân, sau đó chọn “Copy link”. Như vậy là bạn đã lấy link Telegram cá nhân của mình thành công<br>
+
+    </h6>
+
+
+
+</div>
+
+{% endblock content %}

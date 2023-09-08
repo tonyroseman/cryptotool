@@ -7,12 +7,9 @@
 		<div class="row align-items-center">
 			<div class="col-md-12">
 				<div class="page-header-title">
-					<h5 class="m-b-10">Setting Page</h5>
+					<h5 class="m-b-10">Setting Page </h5>
 				</div>
-				<ul class="breadcrumb">
-					<li class="breadcrumb-item"><a href="{% url 'index' %}"><i class="feather icon-home"></i></a></li>
-					<li class="breadcrumb-item"><a href="#">Setting Page</a></li>
-				</ul>
+				
 			</div>
 		</div>
 	</div>
@@ -21,176 +18,107 @@
 	<form class="form-horizontal" style="display: contents;" id="settinginfo" action="/save_settings/" method="post"> 
 	{% csrf_token %}
 	<!-- [ sample-page ] start -->
+	<div class="col-md-4" style="margin-top: 5px;">
+		<div class="input-group">
+			<div class="input-group-prepend" >
+				<span class="input-group-text" style="width: 190px;">% Change 1 mins</span>
+			</div>
+			<select class="custom-select" name="1m">
+				
+				<option value="1" style="text-align: center;" {% if data.1m == "1" %}selected{% endif %}> &gt;</option>
+				<option value="2" style="text-align: center;" {% if data.1m == "2" %}selected{% endif %}> &lt; </option>
+				<option value="3" style="text-align: center;" {% if data.1m == "3" %}selected{% endif %}>&gt;=</option>
+				<option value="4" style="text-align: center;" {% if data.1m == "4" %}selected{% endif %}>&lt;=</option>
+			</select>
+			<input type="number" step=any class="form-control floatNumber" name="t1m" value="{{data.t1m}}">
+		</div>
+	</div>
+	<div class="col-md-4" style="margin-top: 5px;">
+		<div class="input-group">
+			<div class="input-group-prepend" >
+				<span class="input-group-text" style="width: 190px;">% Change 3 mins</span>
+			</div>
+			<select class="custom-select" name="3m">
+				
+				<option value="1" style="text-align: center;" {% if data.3m == "1" %}selected{% endif %}> &gt;</option>
+				<option value="2" style="text-align: center;" {% if data.3m == "2" %}selected{% endif %}> &lt; </option>
+				<option value="3" style="text-align: center;" {% if data.3m == "3" %}selected{% endif %}>&gt;=</option>
+				<option value="4" style="text-align: center;" {% if data.3m == "4" %}selected{% endif %}>&lt;=</option>
+			</select>
+			<input type="number" step=any class="form-control" name="t3m" value="{{data.t3m}}" >
+		</div>
+	</div>
 	
-	<div class="col-md-6" style="margin-top: 5px;">
+	<div class="col-md-4" style="margin-top: 5px;">
 		<div class="input-group">
-			<div class="input-group-prepend" >
-				<span class="input-group-text" style="width: 180px;">% Change 3 mins</span>
+			<div class="input-group-prepend">
+				<span class="input-group-text" style="width: 190px;">% Change 5 mins</span>
 			</div>
-			<select class="custom-select" name="m3">
+			<select class="custom-select" name="5m">
 				
-				<option value="1" style="text-align: center;" {% if data.m3 == "1" %}selected{% endif %}> &gt;</option>
-				<option value="2" style="text-align: center;" {% if data.m3 == "2" %}selected{% endif %}> &lt; </option>
-				<option value="3" style="text-align: center;" {% if data.m3 == "3" %}selected{% endif %}>&gt;=</option>
-				<option value="4" style="text-align: center;" {% if data.m3 == "4" %}selected{% endif %}>&lt;=</option>
+				<option value="1" style="text-align: center;" {% if data.5m == "1" %}selected{% endif %}> &gt;</option>
+				<option value="2" style="text-align: center;" {% if data.5m == "2" %}selected{% endif %}> &lt; </option>
+				<option value="3" style="text-align: center;" {% if data.5m == "3" %}selected{% endif %}>&gt;=</option>
+				<option value="4" style="text-align: center;" {% if data.5m == "4" %}selected{% endif %}>&lt;=</option>
 			</select>
-			<input type="text" class="form-control" name="tm3" value="{{data.tm3}}">
+			<input type="number" step=any class="form-control" name="t5m" value="{{data.t5m}}">
 		</div>
 	</div>
-	<div class="col-md-6" style="margin-top: 5px;">
+	
+	<div class="col-md-4" style="margin-top: 5px;">
 		<div class="input-group">
-			<div class="input-group-prepend" >
-				<span class="input-group-text" style="width: 190px;">% Change BTC 3 mins</span>
+			<div class="input-group-prepend">
+				<span class="input-group-text" style="width: 190px;">% Change 15 mins</span>
 			</div>
-			<select class="custom-select" name="m3BTC">
+			<select class="custom-select" name="15m">
 				
-				<option value="1" style="text-align: center;" {% if data.m3BTC == "1" %}selected{% endif %}> &gt;</option>
-				<option value="2" style="text-align: center;" {% if data.m3BTC == "2" %}selected{% endif %}> &lt; </option>
-				<option value="3" style="text-align: center;" {% if data.m3BTC == "3" %}selected{% endif %}>&gt;=</option>
-				<option value="4" style="text-align: center;" {% if data.m3BTC == "4" %}selected{% endif %}>&lt;=</option>
+				<option value="1" style="text-align: center;" {% if data.15m == "1" %}selected{% endif %}> &gt;</option>
+				<option value="2" style="text-align: center;" {% if data.15m == "2" %}selected{% endif %}> &lt; </option>
+				<option value="3" style="text-align: center;" {% if data.15m == "3" %}selected{% endif %}>&gt;=</option>
+				<option value="4" style="text-align: center;" {% if data.15m == "4" %}selected{% endif %}>&lt;=</option>
 			</select>
-			<input type="text" class="form-control" name="tm3BTC" value="{{data.tm3BTC}}">
+			<input type="number" step=any class="form-control" name="t15m" value="{{data.t15m}}">
 		</div>
+	</div>
+	
+	<div class="col-md-4" style="margin-top: 5px;">
+		<div class="input-group">
+			<div class="input-group-prepend">
+				<span class="input-group-text" style="width: 190px;">% Change 1H</span>
+			</div>
+			<select class="custom-select" name="1h">
+				
+				<option value="1" style="text-align: center;" {% if data.1h == "1" %}selected{% endif %}> &gt;</option>
+				<option value="2" style="text-align: center;" {% if data.1h == "2" %}selected{% endif %}> &lt; </option>
+				<option value="3" style="text-align: center;" {% if data.1h == "3" %}selected{% endif %}>&gt;=</option>
+				<option value="4" style="text-align: center;" {% if data.1h == "4" %}selected{% endif %}>&lt;=</option>
+			</select>
+			<input type="number" step=any class="form-control" name="t1h" value="{{data.t1h}}">
+		</div>
+	</div>
+	
+	<div class="col-md-4" style="margin-top: 5px;">
+		<div class="input-group">
+			<div class="input-group-prepend">
+				<span class="input-group-text" style="width: 190px;">% Change 4H</span>
+			</div>
+			<select class="custom-select" name="4h">
+				
+				<option value="1" style="text-align: center;" {% if data.4h == "1" %}selected{% endif %}> &gt;</option>
+				<option value="2" style="text-align: center;" {% if data.4h == "2" %}selected{% endif %}> &lt; </option>
+				<option value="3" style="text-align: center;" {% if data.4h == "3" %}selected{% endif %}>&gt;=</option>
+				<option value="4" style="text-align: center;" {% if data.4h == "4" %}selected{% endif %}>&lt;=</option>
+			</select>
+			<input type="number" step=any class="form-control" name="t4h" value="{{data.t4h}}">
+		</div>
+	</div>
+	<div class="col-md-12" style="margin-top: 5px;">
+		<br>
 	</div>
 	<div class="col-md-6" style="margin-top: 5px;">
 		<div class="input-group">
 			<div class="input-group-prepend">
-				<span class="input-group-text" style="width: 180px;">% Change 5 mins</span>
-			</div>
-			<select class="custom-select" name="m5">
-				
-				<option value="1" style="text-align: center;" {% if data.m5 == "1" %}selected{% endif %}> &gt;</option>
-				<option value="2" style="text-align: center;" {% if data.m5 == "2" %}selected{% endif %}> &lt; </option>
-				<option value="3" style="text-align: center;" {% if data.m5 == "3" %}selected{% endif %}>&gt;=</option>
-				<option value="4" style="text-align: center;" {% if data.m5 == "4" %}selected{% endif %}>&lt;=</option>
-			</select>
-			<input type="text" class="form-control" name="tm5" value="{{data.tm5}}">
-		</div>
-	</div>
-	<div class="col-md-6" style="margin-top: 5px;">
-		<div class="input-group">
-			<div class="input-group-prepend">
-				<span class="input-group-text" style="width: 190px;">% Change BTC 5 mins</span>
-			</div>
-			<select class="custom-select" name="m5BTC">
-				
-				<option value="1" style="text-align: center;" {% if data.m5BTC == "1" %}selected{% endif %}> &gt;</option>
-				<option value="2" style="text-align: center;" {% if data.m5BTC == "2" %}selected{% endif %}> &lt; </option>
-				<option value="3" style="text-align: center;" {% if data.m5BTC == "3" %}selected{% endif %}>&gt;=</option>
-				<option value="4" style="text-align: center;" {% if data.m5BTC == "4" %}selected{% endif %}>&lt;=</option>
-			</select>
-			<input type="text" class="form-control" name="tm5BTC" value="{{data.tm5BTC}}">
-		</div>
-	</div>
-	<div class="col-md-6" style="margin-top: 5px;">
-		<div class="input-group">
-			<div class="input-group-prepend">
-				<span class="input-group-text" style="width: 180px;">% Change 15 mins</span>
-			</div>
-			<select class="custom-select" name="m15">
-				
-				<option value="1" style="text-align: center;" {% if data.m15 == "1" %}selected{% endif %}> &gt;</option>
-				<option value="2" style="text-align: center;" {% if data.m15 == "2" %}selected{% endif %}> &lt; </option>
-				<option value="3" style="text-align: center;" {% if data.m15 == "3" %}selected{% endif %}>&gt;=</option>
-				<option value="4" style="text-align: center;" {% if data.m15 == "4" %}selected{% endif %}>&lt;=</option>
-			</select>
-			<input type="text" class="form-control" name="tm15" value="{{data.tm15}}">
-		</div>
-	</div>
-	<div class="col-md-6" style="margin-top: 5px;">
-		<div class="input-group">
-			<div class="input-group-prepend">
-				<span class="input-group-text" style="width: 190px;">% Change BTC 15 mins</span>
-			</div>
-			<select class="custom-select" name="m15BTC">
-				
-				<option value="1" style="text-align: center;" {% if data.m15BTC == "1" %}selected{% endif %}> &gt;</option>
-				<option value="2" style="text-align: center;" {% if data.m15BTC == "2" %}selected{% endif %}> &lt; </option>
-				<option value="3" style="text-align: center;" {% if data.m15BTC == "3" %}selected{% endif %}>&gt;=</option>
-				<option value="4" style="text-align: center;" {% if data.m15BTC == "4" %}selected{% endif %}>&lt;=</option>
-			</select>
-			<input type="text" class="form-control" name="tm15BTC" value="{{data.tm15BTC}}">
-		</div>
-	</div>
-	<div class="col-md-6" style="margin-top: 5px;">
-		<div class="input-group">
-			<div class="input-group-prepend">
-				<span class="input-group-text" style="width: 180px;">% Change 1H</span>
-			</div>
-			<select class="custom-select" name="h1">
-				
-				<option value="1" style="text-align: center;" {% if data.h1 == "1" %}selected{% endif %}> &gt;</option>
-				<option value="2" style="text-align: center;" {% if data.h1 == "2" %}selected{% endif %}> &lt; </option>
-				<option value="3" style="text-align: center;" {% if data.h1 == "3" %}selected{% endif %}>&gt;=</option>
-				<option value="4" style="text-align: center;" {% if data.h1 == "4" %}selected{% endif %}>&lt;=</option>
-			</select>
-			<input type="text" class="form-control" name="th1" value="{{data.th1}}">
-		</div>
-	</div>
-	<div class="col-md-6" style="margin-top: 5px;">
-		<div class="input-group">
-			<div class="input-group-prepend">
-				<span class="input-group-text" style="width: 190px;">% Change BTC 1H</span>
-			</div>
-			<select class="custom-select" name="h1BTC">
-				
-				<option value="1" style="text-align: center;" {% if data.h1BTC == "1" %}selected{% endif %}> &gt;</option>
-				<option value="2" style="text-align: center;" {% if data.h1BTC == "2" %}selected{% endif %}> &lt; </option>
-				<option value="3" style="text-align: center;" {% if data.h1BTC == "3" %}selected{% endif %}>&gt;=</option>
-				<option value="4" style="text-align: center;" {% if data.h1BTC == "4" %}selected{% endif %}>&lt;=</option>
-			</select>
-			<input type="text" class="form-control" name="th1BTC" value="{{data.th1BTC}}">
-		</div>
-	</div>
-	<div class="col-md-6" style="margin-top: 5px;">
-		<div class="input-group">
-			<div class="input-group-prepend">
-				<span class="input-group-text" style="width: 180px;">% Change 4H</span>
-			</div>
-			<select class="custom-select" name="h4">
-				
-				<option value="1" style="text-align: center;" {% if data.h4 == "1" %}selected{% endif %}> &gt;</option>
-				<option value="2" style="text-align: center;" {% if data.h4 == "2" %}selected{% endif %}> &lt; </option>
-				<option value="3" style="text-align: center;" {% if data.h4 == "3" %}selected{% endif %}>&gt;=</option>
-				<option value="4" style="text-align: center;" {% if data.h4 == "4" %}selected{% endif %}>&lt;=</option>
-			</select>
-			<input type="text" class="form-control" name="th4" value="{{data.th4}}">
-		</div>
-	</div>
-	<div class="col-md-6" style="margin-top: 5px;">
-		<div class="input-group">
-			<div class="input-group-prepend">
-				<span class="input-group-text" style="width: 190px;">% Change BTC 4H</span>
-			</div>
-			<select class="custom-select" name="h4BTC">
-				
-				<option value="1" style="text-align: center;" {% if data.h4BTC == "1" %}selected{% endif %}> &gt;</option>
-				<option value="2" style="text-align: center;" {% if data.h4BTC == "2" %}selected{% endif %}> &lt; </option>
-				<option value="3" style="text-align: center;" {% if data.h4BTC == "3" %}selected{% endif %}>&gt;=</option>
-				<option value="4" style="text-align: center;" {% if data.h4BTC == "4" %}selected{% endif %}>&lt;=</option>
-			</select>
-			<input type="text" class="form-control" name="th4BTC"  value="{{data.th4BTC}}">
-		</div>
-	</div>
-	<div class="col-md-6" style="margin-top: 5px;">
-		<div class="input-group">
-			<div class="input-group-prepend">
-				<span class="input-group-text" style="width: 180px;">Candle count 7 days</span>
-			</div>
-			<select class="custom-select" name="c7">
-				
-				<option value="1" style="text-align: center;" {% if data.c7 == "1" %}selected{% endif %}> &gt;</option>
-				<option value="2" style="text-align: center;" {% if data.c7 == "2" %}selected{% endif %}> &lt; </option>
-				<option value="3" style="text-align: center;" {% if data.c7 == "3" %}selected{% endif %}>&gt;=</option>
-				<option value="4" style="text-align: center;" {% if data.c7 == "4" %}selected{% endif %}>&lt;=</option>
-			</select>
-			<input type="text" class="form-control" name="tc7" value="{{data.tc7}}">
-		</div>
-	</div>
-	<div class="col-md-6" style="margin-top: 5px;">
-		<div class="input-group">
-			<div class="input-group-prepend">
-				<span class="input-group-text" style="width: 190px;">% Change volume</span>
+				<span class="input-group-text" style="width: 190px;">% Change volume 24H</span>
 			</div>
 			<select class="custom-select" name="vol">
 				
@@ -199,28 +127,29 @@
 				<option value="3" style="text-align: center;" {% if data.vol == "3" %}selected{% endif %}>&gt;=</option>
 				<option value="4" style="text-align: center;" {% if data.vol == "4" %}selected{% endif %}>&lt;=</option>
 			</select>
-			<input type="text" class="form-control" name="tvol" value="{{data.tvol}}">
+			<input type="number" step=any class="form-control" name="tvol" value="{{data.tvol}}">
 		</div>
 	</div>
 	<div class="col-md-6" style="margin-top: 5px;">
 		<div class="input-group">
-			<div class="input-group-prepend">
-				<span class="input-group-text" style="width: 180px;">Candle count 14 days</span>
+			<div class="input-group-prepend" >
+				<span class="input-group-text" style="width: 190px;">Volume 24H (Millions $)</span>
 			</div>
-			<select class="custom-select" name="c14">
+			<select class="custom-select" name="vol_24h">
 				
-				<option value="1" style="text-align: center;" {% if data.c14 == "1" %}selected{% endif %}> &gt;</option>
-				<option value="2" style="text-align: center;" {% if data.c14 == "2" %}selected{% endif %}> &lt; </option>
-				<option value="3" style="text-align: center;" {% if data.c14 == "3" %}selected{% endif %}>&gt;=</option>
-				<option value="4" style="text-align: center;" {% if data.c14 == "4" %}selected{% endif %}>&lt;=</option>
+				<option value="1" style="text-align: center;" {% if data.vol_24h == "1" %}selected{% endif %}> &gt;</option>
+				<option value="2" style="text-align: center;" {% if data.vol_24h == "2" %}selected{% endif %}> &lt; </option>
+				<option value="3" style="text-align: center;" {% if data.vol_24h == "3" %}selected{% endif %}>&gt;=</option>
+				<option value="4" style="text-align: center;" {% if data.vol_24h == "4" %}selected{% endif %}>&lt;=</option>
 			</select>
-			<input type="text" class="form-control" name="tc14" value="{{data.tc14}}">
+			<input type="number" step=any class="form-control" name="tvol_24h" value="{{data.tvol_24h}}">
 		</div>
 	</div>
+	
 	<div class="col-md-6" style="margin-top: 5px;">
 		<div class="input-group">
 			<div class="input-group-prepend">
-				<span class="input-group-text" style="width: 190px;">Market cap</span>
+				<span class="input-group-text" style="width: 190px;">Market cap (Millions $)</span>
 			</div>
 			<select class="custom-select" name="mc">
 				
@@ -229,15 +158,153 @@
 				<option value="3" style="text-align: center;" {% if data.mc == "3" %}selected{% endif %}>&gt;=</option>
 				<option value="4" style="text-align: center;" {% if data.mc == "4" %}selected{% endif %}>&lt;=</option>
 			</select>
-			<input type="text" class="form-control" name="tmc" value="{{data.tmc}}">
+			<input type="number" step=any class="form-control" name="tmc" value="{{data.tmc}}">
 		</div>
 	</div>
-	<div class="col-md-6" style="margin-top: 15px;">
+	<div class="col-md-6" style="margin-top: 5px;">
+		<div class="input-group">
+			<div class="input-group-prepend">
+				<span class="input-group-text" style="width: 190px;">Volume / MarketCap</span>
+			</div>
+			<select class="custom-select" name="vm">
+				
+				<option value="1" style="text-align: center;" {% if data.vm == "1" %}selected{% endif %}> &gt;</option>
+				<option value="2" style="text-align: center;" {% if data.vm == "2" %}selected{% endif %}> &lt; </option>
+				<option value="3" style="text-align: center;" {% if data.vm == "3" %}selected{% endif %}>&gt;=</option>
+				<option value="4" style="text-align: center;" {% if data.vm == "4" %}selected{% endif %}>&lt;=</option>
+			</select>
+			<input type="number" step=any class="form-control" name="tvm" value="{{data.tvm}}">
+		</div>
+	</div>
+	
+	<div class="col-md-12" style="margin-top: 5px;">
+		<br>
+	</div>
+	
+	<div class="col-md-6" style="margin-top: 5px;">
+		<div class="input-group">
+			<div class="input-group-prepend">
+				<span class="input-group-text" style="width: 190px;">1H Candle count 7 days</span>
+			</div>
+			<select class="custom-select" name="c7">
+				
+				<option value="1" style="text-align: center;" {% if data.c7 == "1" %}selected{% endif %}> &gt;</option>
+				<option value="2" style="text-align: center;" {% if data.c7 == "2" %}selected{% endif %}> &lt; </option>
+				<option value="3" style="text-align: center;" {% if data.c7 == "3" %}selected{% endif %}>&gt;=</option>
+				<option value="4" style="text-align: center;" {% if data.c7 == "4" %}selected{% endif %}>&lt;=</option>
+			</select>
+			<input type="number" step=any class="form-control" name="tc7" value="{{data.tc7}}">
+		</div>
+	</div>
+	
+	<div class="col-md-6" style="margin-top: 5px;">
+		<div class="input-group">
+			<div class="input-group-prepend">
+				<span class="input-group-text" style="width: 190px;">1H Candle count 14 days</span>
+			</div>
+			<select class="custom-select" name="c14">
+				
+				<option value="1" style="text-align: center;" {% if data.c14 == "1" %}selected{% endif %}> &gt;</option>
+				<option value="2" style="text-align: center;" {% if data.c14 == "2" %}selected{% endif %}> &lt; </option>
+				<option value="3" style="text-align: center;" {% if data.c14 == "3" %}selected{% endif %}>&gt;=</option>
+				<option value="4" style="text-align: center;" {% if data.c14 == "4" %}selected{% endif %}>&lt;=</option>
+			</select>
+			<input type="number" step=any class="form-control" name="tc14" value="{{data.tc14}}">
+		</div>
+	</div>
+	
+	<div class="col-md-6" style="margin-top: 5px;">
+		<div class="input-group">
+			<div class="input-group-prepend">
+				<span class="input-group-text" style="width: 190px;">3M Candle count 1 day</span>
+			</div>
+			<select class="custom-select" name="c1">
+				
+				<option value="1" style="text-align: center;" {% if data.c1 == "1" %}selected{% endif %}> &gt;</option>
+				<option value="2" style="text-align: center;" {% if data.c1 == "2" %}selected{% endif %}> &lt; </option>
+				<option value="3" style="text-align: center;" {% if data.c1 == "3" %}selected{% endif %}>&gt;=</option>
+				<option value="4" style="text-align: center;" {% if data.c1 == "4" %}selected{% endif %}>&lt;=</option>
+			</select>
+			<input type="number" step=any class="form-control" name="tc1" value="{{data.tc1}}">
+		</div>
+	</div>
+	
+	<div class="col-md-6" style="margin-top: 5px;">
+		<div class="input-group">
+			<div class="input-group-prepend">
+				<span class="input-group-text" style="width: 190px;">3M Candle count 2 days</span>
+			</div>
+			<select class="custom-select" name="c2">
+				
+				<option value="1" style="text-align: center;" {% if data.c2 == "1" %}selected{% endif %}> &gt;</option>
+				<option value="2" style="text-align: center;" {% if data.c2 == "2" %}selected{% endif %}> &lt; </option>
+				<option value="3" style="text-align: center;" {% if data.c2 == "3" %}selected{% endif %}>&gt;=</option>
+				<option value="4" style="text-align: center;" {% if data.c2 == "4" %}selected{% endif %}>&lt;=</option>
+			</select>
+			<input type="number" step=any class="form-control" name="tc2" value="{{data.tc2}}">
+		</div>
+	</div>
+	<div class="col-md-12" style="margin-top: 5px;">
+		<br>
+	</div>
+	<div class="col-md-6" style="margin-top: 5px;">
+		<div class="input-group">
+			<div class="input-group-prepend">
+				<span class="input-group-text" style="width: 190px;">Funding rate (%)</span>
+			</div>
+			<select class="custom-select" name="fr">
+				
+				<option value="1" style="text-align: center;" {% if data.fr == "1" %}selected{% endif %}> &gt;</option>
+				<option value="2" style="text-align: center;" {% if data.fr == "2" %}selected{% endif %}> &lt; </option>
+				<option value="3" style="text-align: center;" {% if data.fr == "3" %}selected{% endif %}>&gt;=</option>
+				<option value="4" style="text-align: center;" {% if data.fr == "4" %}selected{% endif %}>&lt;=</option>
+			</select>
+			<input type="number" step=any class="form-control" name="tfr" value="{{data.tfr}}">
+		</div>
+	</div>
+	<div class="col-md-6" style="margin-top: 5px;">
+		<div class="input-group">
+			<div class="input-group-prepend">
+				<span class="input-group-text" style="width: 190px;">Long/Short Ratio</span>
+			</div>
+			<select class="custom-select" name="ls">
+				
+				<option value="1" style="text-align: center;" {% if data.ls == "1" %}selected{% endif %}> &gt;</option>
+				<option value="2" style="text-align: center;" {% if data.ls == "2" %}selected{% endif %}> &lt; </option>
+				<option value="3" style="text-align: center;" {% if data.ls == "3" %}selected{% endif %}>&gt;=</option>
+				<option value="4" style="text-align: center;" {% if data.ls == "4" %}selected{% endif %}>&lt;=</option>
+			</select>
+			<input type="number" step=any class="form-control" name="tls" value="{{data.tls}}">
+		</div>
+	</div>
+	<div class="col-md-12" style="margin-top: 5px;">
+		<br>
+	</div>
+	<div class="col-md-10" style="margin-top: 5px;">
+		<div class="input-group">
+			<div class="input-group-prepend">
+				<span class="input-group-text" style="width: 100px;">Coin name</span>
+			</div>
+			
+			<input type="text" class="form-control" name="coins" value="{{data.coins}}">
+		</div>
+	</div>
+	<div class="col-md-2" style="margin-top: 15px; display: -webkit-box;" >
+		<button type="submit" id="submit" class="btn  btn-primary" data-toggle="modal" data-target="#exampleModalCenter" style="width: 150px;">Save</button>
+		<div class="toast hide toast-3s " role="alert" aria-live="assertive" data-delay="2000" aria-atomic="true" style="margin-left:10px;width : 230px;height: 35px;">
+			
+			<div class="toast-body" style="margin-top: -5px;">
+				{{msg}}
+			</div>
+		</div>
+	</div>
+	{% if tlgactive == 1 %}
+	<div class="col-md-4" style="margin-top: 15px;">
 		<div class="input-group">
 			<div class="input-group-prepend">
 				<span class="input-group-text">Sending Telegram notification</span>
 			</div>
-			<select class="custom-select" name="tlg">
+			<select class="custom-select" name="tlg" id="'tlg"> 
 				
 				<option value="1" {% if data.tlg == "1" %}selected{% endif %}>Yes</option>
 				<option value="0" {% if data.tlg == "0" %}selected{% endif %}>No</option>
@@ -246,37 +313,256 @@
 			
 		</div>
 	</div>
-
-	<div class="col-md-6" style="margin-top: 15px; display: -webkit-box;" >
-		<button type="submit" id="submit" class="btn  btn-primary" style="width: 150px;">Save</button>
-		<div class="toast hide toast-3s " role="alert" aria-live="assertive" data-delay="2000" aria-atomic="true" style="margin-left:10px;width : 230px;height: 35px;">
+	{% endif%}
+	{% if tlgactive == 0 %}
+	<div class="col-md-4" style="margin-top: 15px;">
+		<div class="input-group">
+			<div class="input-group-prepend">
+				<span class="input-group-text">Sending Telegram notification</span>
+			</div>
+			<select class="custom-select" name="tlg" id="'tlg" disabled> 
+				
+				<option value="1" >Yes</option>
+				<option value="0" selected>No</option>
+				
+			</select>
 			
-			<div class="toast-body" style="margin-top: -5px;">
-				{{msg}}
+		</div>
+	</div>
+	{% endif%}
+
+
+	
+	<div class="col-md-8" style="margin-top: 15px;">
+	{% if tlgactive == 1 %}
+		Your Telegram URL is activated.	
+	{% else %}
+		Your Telegram URL is not activated. &nbsp;<button type="button" onclick="showHelp()" class="btn  btn-icon btn-info"><i class="feather icon-help-circle"></i></button>
+		
+
+	{% endif%}
+			
+			
+		
+	</div>
+	
+	</form>
+	<!-- Modal -->
+	<div id="exampleModalCenter" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalCenterTitle">Activate Telegram URL</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close" id="closeicon"><span aria-hidden="true">&times;</span></button>
+				</div>
+				<div class="modal-body">
+					<p id="msg">Step 1: Go to "User Profile" -> Edit -> Set up your telegram URL<br>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;For example : https://t.me/tradie2 <br>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;How to get your telegram URL. Click <a href="http://127.0.0.1:8000/abouttlgnoti/" target="_blank">Here</a><br>
+						Step 2: Click to <a href="https://t.me/cryto_tool_bot" target="_blank">this link</a> <br>
+						Step 3: Click "SEND MESSAGE" -> Click "START"
+					</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn  btn-secondary" data-dismiss="modal" id="closeModal">Close</button>
+					
+				</div>
 			</div>
 		</div>
 	</div>
-	<div class="col-md-6" style="margin-top: 15px;">
-		<div class="input-group">
-			You have to contact &nbsp;<a href="https://t.me/cryto_tool_bot">Me &nbsp;</a> to activate Telegram notification 
-			
-			
-		</div>
-	</div>
-	</form>
-	
 	
 	
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script>
+	var status = 0;
 	msg = '{{msg}}';
-	$(document).ready(function() {
+	alertMsg = '{{alertMsg}}';
+	function disableTlg() {
+            // Make an AJAX request to get updated data from the server
+		$.ajax({
+			url: '{% url 'disable_telegram'%}', // Replace with your server endpoint URL
+			type: 'GET',
+			dataType: 'json',
+			
+			success: function(response) {
+				
+				// Clear existing DataTable data
+				console.log(response);
+				
+				
+			},
+			error: function(error) {
+				console.log(error);
+			}
+		});
+	}
+	function checkData() {
+            // Make an AJAX request to get updated data from the server
+		$.ajax({
+			url: '{% url 'get_coindata_user'%}', // Replace with your server endpoint URL
+			type: 'GET',
+			dataType: 'json',
+			
+			success: function(response) {
+				
+				// Clear existing DataTable data
+				
+				var coindata = response.data;
+				var settings = response.settings;
+				
+				var count = 0;
+				for(var key in settings)
+					if(settings.hasOwnProperty(key))
+						count++;
+				
+				count = count -2;
+				var ok_symbols = [];
+				coindata.forEach(function(rowData) {
+					var ok_count = 0;
+					rowflag = false;
+					for (var key in settings) {
+						if (key != 'tlg' && key.substring(0,1) != 't' && key != 'mc' && key != 'coins') {
+							operand = parseInt(settings[key]);
+							flag = false;
+							switch (operand) {
+								case 1:
+									rowData['f' + key] = flag = rowData[key] > parseFloat(settings['t' + key]);
+									break;
+								case 2:
+									rowData['f' + key] = flag = rowData[key] < parseFloat(settings['t' + key]);
+									break;
+								case 3:
+									rowData['f' + key] = flag = rowData[key] >= parseFloat(settings['t' + key]);
+									break;
+								case 4:
+									rowData['f' + key] = flag = rowData[key] <= parseFloat(settings['t' + key]);
+									break;
+							}
+
+							if(flag){
+								rowflag = true;
+								ok_count++;
+							}
+
+						}
+						if (key == 'mc') {
+							operand = parseInt(settings[key]);
+							flag = false;
+							switch (operand) {
+								case 1:
+									rowData['f' + key] = flag = rowData['market_cap'] > parseFloat(settings['t' + key]);
+									break;
+								case 2:
+									rowData['f' + key] = flag = rowData['market_cap'] < parseFloat(settings['t' + key]);
+									break;
+								case 3:
+									rowData['f' + key] = flag = rowData['market_cap'] >= parseFloat(settings['t' + key]);
+									break;
+								case 4:
+									rowData['f' + key] = flag = rowData['market_cap'] <= parseFloat(settings['t' + key]);
+									break;
+							}
+
+							if(flag){
+								rowflag = true;
+								ok_count++;
+							}
+
+						}
+
+					}
+					// console.log(rowData);
+					// console.log(settings);
+					
+					
+					
+					if(ok_count == count/2){
+						ok_symbols.push(rowData['symbol']);
+						
+					}
+				});
+				
+				
+				// Redraw the DataTable
+				
+				console.log("tlg-" + ok_symbols)
+				if(settings['tlg'] == '1'){
+					if(ok_symbols.length > 5){
+						
+						$('#msg').text("Please re-config your settings, too many coins met the conditions");
+						disableTlg();
+						status = 1;
+						
+						$('#exampleModalCenter').modal("show");
+						
+						
+					}
+					else if(ok_symbols.length > 0 && ok_symbols.length <= 5){
+						$('#msg').text("There are some coins met the conditions, please check record table");
+						disableTlg();
+						status = 1;
+						$('#exampleModalCenter').modal("show");
+					}
+					else if(count > 0){
+						$('#msg').text("Start telegram server");
+						status = 2;
+						$('#exampleModalCenter').modal("show");
+					}
+					
+				}
+				
+			},
+			error: function(error) {
+				console.log(error);
+			}
+		});
+	}
+	function showHelp(){
 		
+		$('#exampleModalCenter').modal("show");
+	}
+	function refresh(){
+		location.href = location.protocol + "//" + location.host + "/setting_page/";
+	}
+	$(document).ready(function() {
+		$("#exampleModalCenter").on('hidden.bs.modal', function () {
+			if(status == 1){
+				
+				location.href = location.protocol + "//" + location.host + "/setting_page/";
+			}
+		});
 		if(msg != ''){
 			
 			$('.toast-3s').toast('show')
 		}
+		
+		if(alertMsg != ''){
+			if(alertMsg == '1'){
+				
+				checkData()
+			}
+			else{
+				$('#msg').text(alertMsg);
+				
+				$('#exampleModalCenter').modal("show");
+			}
+		}
+		$('#closeModal').click(function(){
+			$('#exampleModalCenter').modal('hide');
+			
+		});
+		$('#closeicon').click(function(){
+			$('#exampleModalCenter').modal('hide');
+			
+		});
+		$('#exampleModalCenter').on('hidden.bs.modal', function (e) {
+			location.href = location.protocol + "//" + location.host + "/setting_page/";// do something...
+		})
+		// setInterval(refresh, 2000);
+
+
+		
 	});
 	
 	

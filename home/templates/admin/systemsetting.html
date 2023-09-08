@@ -1,0 +1,299 @@
+{% extends 'layouts/base_admin.html' %}
+{% load static %}
+{% block content %}
+<!-- [ Main Content ] start -->
+<div class="page-header">
+	<div class="page-block">
+		<div class="row align-items-center">
+			<div class="col-md-12">
+				<div class="page-header-title">
+					<h5 class="m-b-10">System Setting Page</h5>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<form class="form-horizontal" style="display: contents;" id="settinginfo" action="/save_system_settings/" method="post"> 
+	{% csrf_token %}
+	<!-- [ sample-page ] start -->
+	
+	<div class="col-md-6" style="margin-top: 5px;">
+		<div class="input-group">
+			<div class="input-group-prepend" >
+				<span class="input-group-text" style="width: 180px;">Proxy Address 1</span>
+			</div>
+			
+			<input type="text" class="form-control" name="proxy1" value="{{data.proxy1}}">
+		</div>
+	</div>
+	<div class="col-md-6" style="margin-top: 5px;">
+		<div class="input-group">
+			<div class="input-group-prepend" >
+				<span class="input-group-text" style="width: 180px;">Proxy Address 2</span>
+			</div>
+			
+			<input type="text" class="form-control" name="proxy2" value="{{data.proxy2}}">
+		</div>
+	</div>
+	<div class="col-md-6" style="margin-top: 5px;">
+		<div class="input-group">
+			<div class="input-group-prepend" >
+				<span class="input-group-text" style="width: 180px;">Proxy Address 3</span>
+			</div>
+			
+			<input type="text" class="form-control" name="proxy3" value="{{data.proxy3}}">
+		</div>
+	</div>
+	<div class="col-md-6" style="margin-top: 5px;">
+		<div class="input-group">
+			<div class="input-group-prepend" >
+				<span class="input-group-text" style="width: 180px;">Proxy Address 4</span>
+			</div>
+			
+			<input type="text" class="form-control" name="proxy4" value="{{data.proxy4}}">
+		</div>
+	</div>
+	<div class="col-md-6" style="margin-top: 5px;">
+		<div class="input-group">
+			<div class="input-group-prepend" >
+				<span class="input-group-text" style="width: 180px;">Proxy Address 5</span>
+			</div>
+			
+			<input type="text" class="form-control" name="proxy5" value="{{data.proxy5}}">
+		</div>
+	</div>
+	<div class="col-md-6" style="margin-top: 5px;">
+		<div class="input-group">
+			
+		</div>
+	</div>
+	<div class="col-md-6" style="margin-top: 5px;">
+		<div class="input-group">
+			<div class="input-group-prepend" >
+				<span class="input-group-text" style="width: 180px;">CoinMarket API Key 1</span>
+			</div>
+			
+			<input type="text" class="form-control" name="cmckey1" value="{{data.cmckey1}}">
+		</div>
+	</div>
+	<div class="col-md-6" style="margin-top: 5px;">
+		<div class="input-group">
+			<div class="input-group-prepend" >
+				<span class="input-group-text" style="width: 180px;">CoinMarket API Key 2</span>
+			</div>
+			
+			<input type="text" class="form-control" name="cmckey2" value="{{data.cmckey2}}">
+		</div>
+	</div>
+
+	<div class="col-md-6" style="margin-top: 5px;">
+		<div class="input-group">
+			<div class="input-group-prepend" >
+				<span class="input-group-text" style="width: 180px;">CoinMarket API Key 3</span>
+			</div>
+			
+			<input type="text" class="form-control" name="cmckey3" value="{{data.cmckey3}}">
+		</div>
+	</div>
+	<div class="col-md-6" style="margin-top: 5px;">
+		<div class="input-group">
+			<div class="input-group-prepend" >
+				<span class="input-group-text" style="width: 180px;">CoinMarket API Key 4</span>
+			</div>
+			
+			<input type="text" class="form-control" name="cmckey4" value="{{data.cmckey4}}">
+		</div>
+	</div>
+	<div class="col-md-6" style="margin-top: 5px;">
+		<div class="input-group">
+			<div class="input-group-prepend" >
+				<span class="input-group-text" style="width: 180px;">CoinMarket API Key 5</span>
+			</div>
+			
+			<input type="text" class="form-control" name="cmckey5" value="{{data.cmckey5}}">
+		</div>
+	</div>
+	<div class="col-md-6" style="margin-top: 5px;">
+		<div class="input-group">
+			<div class="input-group-prepend" >
+				<span class="input-group-text" style="width: 180px;">CoinMarket API Key 6</span>
+			</div>
+			
+			<input type="text" class="form-control" name="cmckey6" value="{{data.cmckey6}}">
+		</div>
+	</div>
+	<div class="col-md-6" style="margin-top: 5px;">
+		<div class="input-group">
+			<div class="input-group-prepend" >
+				<span class="input-group-text" style="width: 180px;">CoinMarket API Key 7</span>
+			</div>
+			
+			<input type="text" class="form-control" name="cmckey7" value="{{data.cmckey7}}">
+		</div>
+	</div>
+	<div class="col-md-6" style="margin-top: 5px;">
+		<div class="input-group">
+			<div class="input-group-prepend" >
+				<span class="input-group-text" style="width: 180px;">CoinMarket API Key 8</span>
+			</div>
+			
+			<input type="text" class="form-control" name="cmckey8" value="{{data.cmckey8}}">
+		</div>
+	</div>
+	<div class="col-md-6" style="margin-top: 5px;">
+		<div class="input-group">
+			<div class="input-group-prepend" >
+				<span class="input-group-text" style="width: 180px;">CoinMarket API Key 9</span>
+			</div>
+			
+			<input type="text" class="form-control" name="cmckey9" value="{{data.cmckey9}}">
+		</div>
+	</div>
+	<div class="col-md-6" style="margin-top: 5px;">
+		<div class="input-group">
+			<div class="input-group-prepend" >
+				<span class="input-group-text" style="width: 180px;">CoinMarket API Key 10</span>
+			</div>
+			
+			<input type="text" class="form-control" name="cmckey10" value="{{data.cmckey10}}">
+		</div>
+	</div>
+	<div class="col-md-6" style="margin-top: 5px;">
+		<div class="input-group">
+			
+			<div class="input-group-prepend" >
+				<span class="input-group-text" style="width: 400px;">% Change For 1H Candle count 7 days and 14 days ago</span>
+			</div>
+			&nbsp;&nbsp;&nbsp;<font size="5">&lt;</font>&nbsp;&nbsp;&nbsp;
+			<input type="text" class="form-control" name="h1_downdelta" value="{{data.h1_downdelta}}">
+		</div>
+	</div>
+	<div class="col-md-6" style="margin-top: 5px;">
+		<div class="input-group">
+			
+			<div class="input-group-prepend" >
+				<span class="input-group-text" style="width: 400px;">% Change For 1H Candle count 7 days and 14 days ago</span>
+			</div>
+			&nbsp;&nbsp;&nbsp;<font size="5">&gt;</font>&nbsp;&nbsp;&nbsp;
+			<input type="text" class="form-control" name="h1_updelta" value="{{data.h1_updelta}}">
+		</div>
+	</div>
+	<div class="col-md-6" style="margin-top: 5px;">
+		<div class="input-group">
+			
+			<div class="input-group-prepend" >
+				<span class="input-group-text" style="width: 400px;">% Change For 3M Candle count 1 day and 2 days ago</span>
+			</div>
+			&nbsp;&nbsp;&nbsp;<font size="5">&lt;</font>&nbsp;&nbsp;&nbsp;
+			<input type="text" class="form-control" name="m3_downdelta" value="{{data.m3_downdelta}}">
+		</div>
+	</div>
+	<div class="col-md-6" style="margin-top: 5px;"> 
+		<div class="input-group">
+			
+			<div class="input-group-prepend" >
+				<span class="input-group-text" style="width: 400px;">% Change For 3M Candle count 1 day and 2 days ago</span>
+			</div>
+			&nbsp;&nbsp;&nbsp;<font size="5">&gt;</font>&nbsp;&nbsp;&nbsp;
+			<input type="text" class="form-control" name="m3_updelta" value="{{data.m3_updelta}}">
+		</div>
+	</div>
+	
+	
+	<div class="col-md-4" style="margin-top: 5px;">
+		<div class="input-group">
+			<div class="input-group-prepend" >
+				<span class="input-group-text" style="width: 230px;">Price period (Sec)</span>
+			</div>
+			
+			<input type="text" class="form-control" name="priceperiod" value="{{data.priceperiod}}">
+		</div>
+	</div>
+	<div class="col-md-4" style="margin-top: 5px;">
+		<div class="input-group">
+			<div class="input-group-prepend" >
+				<span class="input-group-text" style="width: 230px;">1H Candle period (Min)</span>
+			</div>
+			
+			<input type="text" class="form-control" name="h1period" value="{{data.h1period}}">
+		</div>
+	</div>
+	<div class="col-md-4" style="margin-top: 5px;">
+		<div class="input-group">
+			<div class="input-group-prepend" >
+				<span class="input-group-text" style="width: 230px;">3M Candle period (Min)</span>
+			</div>
+			
+			<input type="text" class="form-control" name="m3period" value="{{data.m3period}}">
+		</div>
+	</div>
+	<div class="col-md-3" style="margin-top: 5px;">
+		<div class="input-group">
+			<div class="input-group-prepend" >
+				<span class="input-group-text" style="width: 220px;">Long/Short ratio period (Min)</span>
+			</div>
+			
+			<input type="text" class="form-control" name="lsperiod" value="{{data.lsperiod}}">
+		</div>
+	</div>
+	<div class="col-md-3" style="margin-top: 5px;">
+		<div class="input-group">
+			<div class="input-group-prepend" >
+				<span class="input-group-text" style="width: 240px;">% Change module period (Sec)</span>
+			</div>
+			
+			<input type="text" class="form-control" name="cmperiod" value="{{data.cmperiod}}">
+		</div>
+	</div>
+	
+	<div class="col-md-3" style="margin-top: 5px;">
+		<div class="input-group">
+			<div class="input-group-prepend" >
+				<span class="input-group-text" style="width: 230px;">Telegram Notify Period (Min)</span>
+			</div>
+			
+			<input type="text" class="form-control" name="tlgperiod" value="{{data.tlgperiod}}">
+		</div>
+	</div>
+	<div class="col-md-3" style="margin-top: 10px; display: -webkit-box;" >
+		<button type="submit" id="submit" class="btn  btn-primary" data-toggle="modal" data-target="#exampleModalCenter" style="width: 150px;">Save</button>
+		<div class="toast hide toast-3s " role="alert" aria-live="assertive" data-delay="2000" aria-atomic="true" style="margin-left:10px;width : 230px;height: 35px;">
+			
+			<div class="toast-body" style="margin-top: -5px;">
+				{{msg}}
+			</div>
+		</div>
+	</div>
+	
+	</form>
+	<!-- Modal -->
+	
+	
+	
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script>
+	var status = 0;
+	msg = '{{msg}}';
+	
+	
+	$(document).ready(function() {
+		
+		if(msg != ''){
+			
+			$('.toast-3s').toast('show')
+		}
+		
+		
+
+
+		
+	});
+	
+	
+	
+</script>
+<!-- [ Main Content ] end -->
+{% endblock content %}
