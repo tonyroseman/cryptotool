@@ -30,7 +30,7 @@
           class="feather icon-align-justify"></i></span><span class="pcoded-mtext">Records</span></a>
   </li>
   <li class="nav-item">
-    <a href="http://127.0.0.1:8000/usernotify/{{request.user.id}}" class="nav-link "><span class="pcoded-micon"><i
+    <a href="{% url 'usernotify'  userid=request.user.id%}" class="nav-link "><span class="pcoded-micon"><i
           class="feather icon-book"></i></span><span class="pcoded-mtext">Notify History</span></a>
   </li>
   <li class="nav-item">

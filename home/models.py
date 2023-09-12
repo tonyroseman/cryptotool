@@ -8,7 +8,7 @@ class CustomUser(AbstractUser):
     telegram = models.URLField(default="", blank=True)
     tlgactive = models.DecimalField(default=0,max_digits=10, decimal_places=2)
     phone = models.CharField(default="", blank=True,max_length=20)
-    limitcount = models.DecimalField(default=100,max_digits=5, decimal_places=1)
+    limitcount = models.DecimalField(default=500,max_digits=5, decimal_places=1)
     # expired_time = models.DateField(default=timezone.now() + timezone.timedelta(days=365))
     expired_time = models.DateTimeField(default=datetime.datetime(2023, 12, 31, 23, 59, 59))
 

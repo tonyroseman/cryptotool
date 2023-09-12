@@ -53,7 +53,8 @@ urlpatterns = [
     path('usersettings/<int:userid>/', views.user_settings, name='user_settings'),
     path('admin_usernotify/<int:userid>/', views.admin_usernotify, name='admin_usernotify'),
     path('usernotify/<int:userid>/', views.usernotify, name='usernotify'),
-    
+    path(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+        views.activate, name='activate'),
 
     
 ]

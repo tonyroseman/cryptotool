@@ -9,22 +9,6 @@ import mysql.connector
 
 import telebot
 
-# BOT_TOKEN = os.environ.get('BOT_TOKEN')
-
-
-BOT_TOKEN = '6357010806:AAFXURf1_y1SV-xBH3KLdjGCUGgo6Tz7Mzk'
-bot = telebot.TeleBot(BOT_TOKEN)
-
-
-@bot.message_handler(commands=['start', 'hello'])
-def send_welcome(message):
-    username = message.from_user.username
-    bot.reply_to(message, f"{username}, Your Telegram notificaion function is activated. Thank you!")
-    set_tlgactive(username)
-@bot.message_handler(func=lambda msg: True)
-def echo_all(message):
-    username = message.from_user.username
-    bot.reply_to(message, message.text)
 
 def set_tlgactive(tlgname):
     cnx = connect_mysql()
@@ -173,7 +157,7 @@ def get_coins_of_user(coindatas, usersettings, coindataindex):
         data = json.loads(coindata[2:len(coindata)-1].replace("'", "\""))
         
         ok_count = 0
-        rowflag = False
+        
         for key in settings.keys():
             if key != 'tlg' and key[0:1] != 't' and key != 'mc' and key!='coins':
                 operand = int(settings[key])
@@ -194,15 +178,15 @@ def get_coins_of_user(coindatas, usersettings, coindataindex):
             if (key == 'mc'):
                 operand = int(settings[key])
                 flag = False
-                if(key in data):
+                if('market_cap' in data):
                     if operand == 1:
-                        flag = data[key] > float(settings['t' + key])
+                        flag = data['market_cap'] > float(settings['t' + key])
                     elif operand == 2:
-                        flag = data[key] < float(settings['t' + key])
+                        flag = data['market_cap'] < float(settings['t' + key])
                     elif operand == 3:
-                        flag = data[key] >= float(settings['t' + key])
+                        flag = data['market_cap'] >= float(settings['t' + key])
                     elif operand == 4:    
-                        flag = data[key] <= float(settings['t' + key])
+                        flag = data['market_cap'] <= float(settings['t' + key])
 
                 if(flag):
                     
@@ -212,6 +196,7 @@ def get_coins_of_user(coindatas, usersettings, coindataindex):
         if(ok_count == count/2):
             returns.append(data)
     if(len(returns) > 0):
+        
         return returns
     else:
         return None
@@ -235,6 +220,33 @@ def get_notify_peroid():
     
     cursor.close()
     return 60*10
+def get_telegram_info():
+    api_id = api_hash = bot_token = None
+    cnx = connect_mysql()
+    cursor = cnx.cursor()
+    
+    query = "SELECT * FROM home_systemsettingsdata "
+    cursor.execute(query)
+    result = cursor.fetchall()
+    if(len(result) > 0):
+        try:
+            syssettingsdata = str(result[0][1])
+            settings = json.loads(syssettingsdata[2:len(syssettingsdata)-1].replace("'", "\""))
+            
+            cursor.close()
+            if 'tlgtoken' in settings:
+                bot_token = settings['tlgtoken']
+            if 'tlgapiid' in settings:
+                api_id = int(settings['tlgapiid'])
+            if 'tlgapihash' in settings:
+                api_hash = settings['tlgapihash']                
+            return api_id, api_hash, bot_token
+        except KeyError:
+            cursor.close()
+            return api_id, api_hash, bot_token
+    
+    cursor.close()
+    return api_id, api_hash, bot_token
 def make_message(data):
     message = "This " + data['symbol'] + " matched all settings.\n"
     # for key in data.keys():
@@ -319,17 +331,34 @@ def start_bot():
 class telegramServer():
 
     def startServer(self):
-        api_id = 20557393
-        api_hash = '7d9060762cc54b56f5851c1069bf3dab'
+        
+        api_id, api_hash, bot_token = get_telegram_info()
         client = TelegramClient('anon', api_id, api_hash)
         bot_thread = threading.Thread(target=start_bot)
         bot_thread.start()
         with client:
             client.loop.run_until_complete(start_server(client))
 
-
-telegramserver = telegramServer()
-telegramserver.startServer()
+while(True):
+    api_id, api_hash, bot_token = get_telegram_info()
+    if api_id == None or api_hash == None or bot_token == None:
+        print('Please set Telegram Info : API ID, API Hash, BOT Token.')
+    else:
+        
+        bot = telebot.TeleBot(bot_token)
+        @bot.message_handler(commands=['start', 'hello'])
+        def send_welcome(message):
+            username = message.from_user.username
+            bot.reply_to(message, f"{username}, Your Telegram notificaion function is activated. Thank you!")
+            set_tlgactive(username)
+        @bot.message_handler(func=lambda msg: True)
+        def echo_all(message):
+            username = message.from_user.username
+            bot.reply_to(message, message.text)
+        telegramserver = telegramServer()
+        telegramserver.startServer()
+        break
+    time.sleep(5)
 
 
 

@@ -213,7 +213,7 @@ def save_coindatas():
             cursor.executemany(updatequery, updaterow)
         cnx.commit()
         cursor.close()
-        time.sleep(1)
+        time.sleep(0.5)
         
         # all_coindata.append(coindata_obj)
     
@@ -406,64 +406,72 @@ def get_candles_3m(symbol, down, up):
    
     
     return symbol
+def get_sub_candels(subsymbol, interval,pi, proxiesarr, ipstr):
+    url = "https://api.binance.com/api/v3/ticker"
+    api_url = f"{url}?symbols={subsymbol}&windowSize={interval}"
+    try:
+    # Send the GET request
+        
+        response = None
+        if (pi == 0):
+            response = requests.get(api_url)
+        
+        else:
+            proxies = {
+                'http': proxiesarr[pi-1],
+                'https': proxiesarr[pi-1]
+            }
+            response = requests.get(api_url, proxies=proxies)
+        # Check the response status code
+        if response.status_code == 200:
+            # Successful API request
+            ticker_data = response.json()
+            for data in ticker_data:
+            
+                try:
+                    sindex = cryptoServerModule.all_symbols.index(data["symbol"])
+                    if(sindex > -1):
+                        cryptoServerModule.all_candles[sindex][interval] = float(data['priceChangePercent'])
+                        # all_candles[sindex][interval+'BTC'] = all_candles[sindex][interval] - all_candles[0][interval]
+                except ValueError:
+                    continue
 
+            
+            # Process or use the ticker data as per your requirements
+            
+            remaining_weight = response.headers.get('X-MBX-USED-WEIGHT')
+            print(f"Remaining weight: {remaining_weight}", ipstr[pi-1])
+        else:
+            save_err_log(str(response.status_code),"Binance API - " + url + " Proxy : " + ipstr[pi-1],"Failed to fetch candles.")
+            print(f"API request failed with status code: {response.status_code}")
+            # Error in API request
+            time.sleep(120)
+    except requests.exceptions.Timeout:
+        save_err_log("Exception","Binance API - " + url + " Proxy : " + ipstr[pi-1],"Request timed out. Please check your network connection or try again later.")
+        print("Request timed out. Please check your network connection or try again later.")
+    except requests.exceptions.RequestException as e:
+        save_err_log("Exception","Binance API - " + url + " Proxy : " + ipstr[pi-1],f"An error occurred: RequestException")
+        print(f"An error occurred: {e}")
 
 def get_candles(symobls, pi, proxiesarr):
     
     # symbols = all_symbols[0:100]
-    url = "https://api.binance.com/api/v3/ticker"
+    
     # Format the symbols parameter
     ipstr = ["Proxy1", "Proxy2", "Proxy3", "Proxy4", "Proxy5", "local"]
     symbols_param = "[" + ",".join(f'"{symbol}"' for symbol in symobls) + "]"
     encoded_symbols_param = urllib.parse.quote(symbols_param)
+    can_threadings = []
     for interval in cryptoServerModule.interval_mh:
     # Set the windowSize
-        
+        can_thread = threading.Thread(target=get_sub_candels, args=(encoded_symbols_param,interval,pi,proxiesarr,ipstr,))
+        can_thread.start()
+        can_threadings.append(can_thread)
+        pi = (pi+1)%(len(proxiesarr)+1)
+    for tr in can_threadings:
+        tr.join()
         # Set the API endpoint URL
-        api_url = f"{url}?symbols={encoded_symbols_param}&windowSize={interval}"
-        try:
-        # Send the GET request
-            
-            response = None
-            if (pi == 0):
-                response = requests.get(api_url)
-            
-            else:
-                proxies = {
-                    'http': proxiesarr[pi-1],
-                    'https': proxiesarr[pi-1]
-                }
-                response = requests.get(api_url, proxies=proxies)
-            # Check the response status code
-            if response.status_code == 200:
-                # Successful API request
-                ticker_data = response.json()
-                for data in ticker_data:
-                
-                    try:
-                        sindex = cryptoServerModule.all_symbols.index(data["symbol"])
-                        if(sindex > -1):
-                            cryptoServerModule.all_candles[sindex][interval] = float(data['priceChangePercent'])
-                            # all_candles[sindex][interval+'BTC'] = all_candles[sindex][interval] - all_candles[0][interval]
-                    except ValueError:
-                        continue
-
-                
-                # Process or use the ticker data as per your requirements
-                
-                remaining_weight = response.headers.get('X-MBX-USED-WEIGHT')
-                print(f"Remaining weight: {remaining_weight}", ipstr[pi-1])
-            else:
-                save_err_log(str(response.status_code),"Binance API - " + url + " Proxy : " + ipstr[pi-1],"Failed to fetch candles.")
-                print(f"API request failed with status code: {response.status_code}")
-                # Error in API request
-                time.sleep(120)
-        except requests.exceptions.Timeout:
-            save_err_log("Exception","Binance API - " + url + " Proxy : " + ipstr[pi-1],"Request timed out. Please check your network connection or try again later.")
-            print("Request timed out. Please check your network connection or try again later.")
-        except requests.exceptions.RequestException as e:
-            save_err_log("Exception","Binance API - " + url + " Proxy : " + ipstr[pi-1],f"An error occurred: RequestException")
-            print(f"An error occurred: {e}")
+        
 
 def save_err_log(code, type, data):
     cnx = connect_mysql()
@@ -508,12 +516,10 @@ def get_candles_mh():
             sub_array.append(cryptoServerModule.all_symbols[(start_index + i * cryptoServerModule.step) % len(cryptoServerModule.all_symbols)])
         
         get_fundingRate(pi, proxies)
-        pi = (pi+1)%(len(proxies)+1)
+        # pi = (pi+1)%(len(proxies)+1)
         get_candles(sub_array, pi, proxies)
-        if len(proxies)%2 == 0:
-            pi = (pi+1)%(len(proxies)+1)
-        else:
-            pi = (pi+2)%(len(proxies)+1)
+        pi = (pi+len(cryptoServerModule.interval_mh))%(len(proxies)+1)
+        
         start_index = (start_index + cryptoServerModule.sub_array_size + 1) % len(cryptoServerModule.all_symbols)
         time.sleep(cmperiod)
 def check_user():

@@ -2,18 +2,18 @@
 {% load static %}
 {% block content %}
 <!-- [ Main Content ] start -->
-<div class="page-header">
-	<div class="page-block">
-		<div class="row align-items-center">
-			<div class="col-md-12">
-				<div class="page-header-title">
-					<h5 class="m-b-10">System Setting Page</h5>
-				</div>
-				
-			</div>
+
+	
+<div class="row align-items-center">
+	<div class="col-md-12">
+		<div class="page-header-title">
+			<h5 class="m-b-10">System Setting Page</h5>
 		</div>
+		
 	</div>
 </div>
+	
+
 <div class="row">
 	<form class="form-horizontal" style="display: contents;" id="settinginfo" action="/save_system_settings/" method="post"> 
 	{% csrf_token %}
@@ -202,7 +202,7 @@
 	</div>
 	
 	
-	<div class="col-md-4" style="margin-top: 5px;">
+	<div class="col-md-3" style="margin-top: 5px;">
 		<div class="input-group">
 			<div class="input-group-prepend" >
 				<span class="input-group-text" style="width: 230px;">Price period (Sec)</span>
@@ -211,7 +211,7 @@
 			<input type="text" class="form-control" name="priceperiod" value="{{data.priceperiod}}">
 		</div>
 	</div>
-	<div class="col-md-4" style="margin-top: 5px;">
+	<div class="col-md-3" style="margin-top: 5px;">
 		<div class="input-group">
 			<div class="input-group-prepend" >
 				<span class="input-group-text" style="width: 230px;">1H Candle period (Min)</span>
@@ -220,7 +220,7 @@
 			<input type="text" class="form-control" name="h1period" value="{{data.h1period}}">
 		</div>
 	</div>
-	<div class="col-md-4" style="margin-top: 5px;">
+	<div class="col-md-3" style="margin-top: 5px;">
 		<div class="input-group">
 			<div class="input-group-prepend" >
 				<span class="input-group-text" style="width: 230px;">3M Candle period (Min)</span>
@@ -232,21 +232,22 @@
 	<div class="col-md-3" style="margin-top: 5px;">
 		<div class="input-group">
 			<div class="input-group-prepend" >
-				<span class="input-group-text" style="width: 220px;">Long/Short ratio period (Min)</span>
-			</div>
-			
-			<input type="text" class="form-control" name="lsperiod" value="{{data.lsperiod}}">
-		</div>
-	</div>
-	<div class="col-md-3" style="margin-top: 5px;">
-		<div class="input-group">
-			<div class="input-group-prepend" >
 				<span class="input-group-text" style="width: 240px;">% Change module period (Sec)</span>
 			</div>
 			
 			<input type="text" class="form-control" name="cmperiod" value="{{data.cmperiod}}">
 		</div>
 	</div>
+	<div class="col-md-3" style="margin-top: 5px;">
+		<div class="input-group">
+			<div class="input-group-prepend" >
+				<span class="input-group-text" style="width: 230px;">Long/Short ratio period (Min)</span>
+			</div>
+			
+			<input type="text" class="form-control" name="lsperiod" value="{{data.lsperiod}}">
+		</div>
+	</div>
+	
 	
 	<div class="col-md-3" style="margin-top: 5px;">
 		<div class="input-group">
@@ -257,6 +258,43 @@
 			<input type="text" class="form-control" name="tlgperiod" value="{{data.tlgperiod}}">
 		</div>
 	</div>
+	<div class="col-md-6" style="margin-top: 5px;">
+		<div class="input-group">
+			<div class="input-group-prepend" >
+				<span class="input-group-text" style="width: 200px;">Telegram BOT TOKEN</span>
+			</div>
+			
+			<input type="text" class="form-control" name="tlgtoken" value="{{data.tlgtoken}}">
+		</div>
+	</div>
+	<div class="col-md-3" style="margin-top: 5px;">
+		<div class="input-group">
+			<div class="input-group-prepend" >
+				<span class="input-group-text" style="width: 140px;">Telegram API ID</span>
+			</div>
+			
+			<input type="text" class="form-control" name="tlgapiid" value="{{data.tlgapiid}}">
+		</div>
+	</div>
+	<div class="col-md-5" style="margin-top: 5px;">
+		<div class="input-group">
+			<div class="input-group-prepend" >
+				<span class="input-group-text" style="width: 150px;">Telegram API Hash</span>
+			</div>
+			
+			<input type="text" class="form-control" name="tlgapihash" value="{{data.tlgapihash}}">
+		</div>
+	</div>
+	<div class="col-md-4" style="margin-top: 5px;">
+		<div class="input-group">
+			<div class="input-group-prepend" >
+				<span class="input-group-text" style="width: 150px;">Telegram URL</span>
+			</div>
+			
+			<input type="text" class="form-control" name="tlgurl" value="{{data.tlgurl}}">
+		</div>
+	</div>
+	
 	<div class="col-md-3" style="margin-top: 10px; display: -webkit-box;" >
 		<button type="submit" id="submit" class="btn  btn-primary" data-toggle="modal" data-target="#exampleModalCenter" style="width: 150px;">Save</button>
 		<div class="toast hide toast-3s " role="alert" aria-live="assertive" data-delay="2000" aria-atomic="true" style="margin-left:10px;width : 230px;height: 35px;">
