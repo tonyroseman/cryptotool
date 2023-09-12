@@ -76,19 +76,22 @@
         }
         function nameRender(data, type, row) {
             if(data != undefined){
-                return "<a href='http://127.0.0.1:8000/admin/home/customuser/" + row.id + "/change/' >" + data + "</a>";
+                url = location.protocol + "//" + location.host;
+                return "<a href='" + url + "/admin/home/customuser/" + row.id + "/change/' >" + data + "</a>";
                 
             }
         }
 		function settingsRender(data, type, row) {
             if(data != undefined){
-                return "<a href='http://127.0.0.1:8000/usersettings/" + row.id + "' >" + "View Settings" + "</a>";
+                url = location.protocol + "//" + location.host;
+                return "<a href='" + url + "/usersettings/" + row.id + "' >" + "View Settings" + "</a>";
                 
             }
         }
 		function notifyRender(data, type, row) {
             if(data != undefined){
-                return "<a href='http://127.0.0.1:8000/admin_usernotify/" + row.id + "' >" + "View Notify History" + "</a>";
+                url = location.protocol + "//" + location.host;
+                return "<a href='" + url + "/admin_usernotify/" + row.id + "' >" + "View Notify History" + "</a>";
                 
             }
         }
