@@ -333,7 +333,7 @@ class telegramServer():
     def startServer(self):
         
         api_id, api_hash, bot_token = get_telegram_info()
-        client = TelegramClient('anon', api_id, api_hash)
+        client = TelegramClient('tlg_session_' + str(api_id), api_id, api_hash)
         bot_thread = threading.Thread(target=start_bot)
         bot_thread.start()
         with client:
