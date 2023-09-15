@@ -292,7 +292,23 @@ def save_profile(request):
             userdata.tlgactive = 1
           except TelegramList.DoesNotExist:
             userdata.tlgactive = 0
-          userdata.save() 
+          if str(userdata.telegram).strip() == "": 
+            userdata.tlgactive = 0
+            try:
+              
+              usersettingsdata = UserSettingsData.objects.get(userid=userdata.id)
+              data = json.loads(usersettingsdata.data.replace("'", "\""))
+              if 'tlg' in data.keys():
+                 data['tlg'] = 0
+              usersettingsdata.data = str(data)
+              usersettingsdata.save()
+              UserNotifyData.objects.filter(userid=userdata.id).delete()
+            except UserSettingsData.DoesNotExist:
+              msg = 'Settings does not exist'
+          userdata.save()
+          
+             
+             
     return redirect('/user-profile')
 
 @login_required(login_url='/accounts/auth-signin')

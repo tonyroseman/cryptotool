@@ -112,6 +112,34 @@ def get_notifydatas():
 def get_tlg_users():
     cnx = connect_mysql()
     cursor = cnx.cursor()
+
+    query = "SELECT * FROM home_customuser WHERE telegram <> '' AND tlgactive = 0;"
+    cursor.execute(query)
+    users = cursor.fetchall()
+    
+    column_names = [desc[0] for desc in cursor.description]
+    query = "SELECT * FROM home_telegramlist;"
+    cursor.execute(query)
+    telegrams = cursor.fetchall()
+    if(len(users) > 0):
+        for user in users:
+            
+            telegram_index = column_names.index('telegram')
+            
+            for tlg in telegrams:
+                tlg_str = str(tlg[1])
+                if tlg_str[2:len(tlg_str)-1] == user[telegram_index]:
+                    
+                    query = """
+                        UPDATE home_customuser
+                        SET tlgactive = 1
+                        WHERE id = %(id)s
+                    """
+                    values = {'id': user[0]}
+                    cursor.execute(query, values)
+                    cnx.commit()
+                    break
+
     query = "SELECT * FROM home_usersettingsdata"
     
     cursor.execute(query)
@@ -193,8 +221,17 @@ def get_coins_of_user(coindatas, usersettings, coindataindex):
                     ok_count+=1
         
         
-        if(ok_count == count/2):
-            returns.append(data)
+        if(ok_count>0 and ok_count == count/2):
+            if('coins' in settings.keys()):
+                coins = []
+                if(settings['coins'].strip() != ""):
+                    coins = settings['coins'].split(',')
+                if(len(coins) > 0):
+
+                    if data['symbol'] in coins:
+                        returns.append(data)
+            else:
+                returns.append(data)
     if(len(returns) > 0):
         
         return returns

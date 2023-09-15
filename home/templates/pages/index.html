@@ -18,45 +18,56 @@
 <div class="row">
     
 
-    <table id="myDataTable" class="table table-striped table-bordered custom-row-height">
-        <thead>
-            <tr>
-                <th rowspan="2" class="fit-content custom-row-height">No.</th>
-                <th rowspan="2" class="fit-content custom-row-height">Symbol</th>
-                <th rowspan="2" class="fit-content custom-row-height">Current<br> Price<br>(USD)</th>
-                
-                <th rowspan="2" class="fit-content custom-row-height">Market cap<br>(millions $)</th>
-                <th rowspan="2" class="fit-content custom-row-height">Volume 24H<br>(millions $)</th>
-                <th rowspan="2" class="fit-content custom-row-height">Volume <br>change<br>24H (%)</th>
-                <th rowspan="2" class="fit-content custom-row-height">Volume/<br>Market<br> cap</th>
-                <th rowspan="2" class="fit-content custom-row-height">Funding <br>rate <br>(%)</th>
-                <th rowspan="2" class="fit-content custom-row-height">Long <br>Short<br>Ratio</th>
-                <th colspan="6" class="fit-content custom-row-height">% change</th>
-                <th colspan="2" class="fit-content custom-row-height">3m candle<br> count</th>
-                <th colspan="2" class="fit-content custom-row-height">1H candle<br> count</th>
-                
-                
-                
-                
-                <!-- Add more table headers as needed -->
-            </tr>
-            <tr>
-                <th class="fit-content custom-row-height">1'</th>
-                <th class="fit-content custom-row-height">3'</th>
-                <th class="fit-content custom-row-height">5'</th>
-                <th class="fit-content custom-row-height">15'</th>
-                <th class="fit-content custom-row-height">1H</th>
-                <th class="fit-content custom-row-height">4H</th>
-                <th class="fit-content custom-row-height">1d</th>
-                <th class="fit-content custom-row-height">2d</th>
-                <th class="fit-content custom-row-height">7d</th>
-                <th class="fit-content custom-row-height">14d</th>
-                
-                <!-- Add more table headers as needed -->
-            </tr>
-        </thead>
-        
-    </table>
+    <div class="col-xs-12">
+        <table id="myDataTable" class="display responsive nowrap" style="width:100%">
+            <thead>
+                <tr>
+                    <th rowspan="2" >No.</th>
+                    <th rowspan="2" >Symbol</th>
+                    <th rowspan="2" >Current<br> Price<br>(USD)</th>
+                    
+                    <th rowspan="2" >Market <br>cap<br>(mil $)</th>
+                    <th rowspan="2" >Volume <br>24H<br>(mil $)</th>
+                    <th rowspan="2" >Volume <br>change<br>24H (%)</th>
+                    <th rowspan="2" >Volume/<br>Market<br> cap</th>
+                    <th rowspan="2" >Funding <br>rate <br>(%)</th>
+                    <th rowspan="2" >Long <br>Short<br>Ratio</th>
+                    <th colspan="6" >% change</th>
+                    <th colspan="2" >3m candle<br> count</th>
+                    <th colspan="2" >1H candle<br> count</th>
+                    
+                    
+                    
+                    
+                    <!-- Add more table headers as needed -->
+                </tr>
+                <tr>
+                    <th >1'</th>
+                    <th >3'</th>
+                    <th >5'</th>
+                    <th >15'</th>
+                    <th >1H</th>
+                    <th >4H</th>
+                    <th >1d</th>
+                    <th >2d</th>
+                    <th >7d</th>
+                    <th >14d</th>
+                    
+                    <!-- Add more table headers as needed -->
+                </tr>
+            </thead>
+            <!-- <tfoot>
+                <tr>
+                    <th>Name</th>
+                    <th>Position</th>
+                    <th>Office</th>
+                    <th>Extn.</th>
+                    <th>Start date</th>
+                    <th>Salary</th>
+                </tr>
+            </tfoot> -->
+        </table>
+</div>
     
 </div>
 
@@ -130,16 +141,10 @@
                 }
             }
         }
-        coindataTable = $('#myDataTable').DataTable(
-            {
-                "paging": true,
-                "autoWidth": true,
-                
-                
-                suppressWarnings: false,
-                
-                columns: [
-                    { data: 'no'},
+        coindataTable = new DataTable('#myDataTable', {
+            ajax: '{% url 'get_coindata_all'%}',
+            columns: [
+            { data: 'no'},
                     { data: 'symbol' ,
                         render: linkRender}, //or { data: 'MONTH', title: 'Month' }`
                     { data: 'price' ,
@@ -173,13 +178,8 @@
                     { data: 'c2' },    
                     { data: 'c7' },
                     { data: 'c14' },
-                    
-
-                ],
-                
-            }
-            
-        );
+            ]
+        });
         $('#myDataTable').on( 'error.dt', function ( e, settings, techNote, message ) {
             console.log( 'An error has been reported by DataTables: ', message );
             
@@ -188,46 +188,9 @@
         } ) ;    
         
 
-        function updateDataTable() {
-            
-            // $("li.paginate_button.page-item").blur();
-            // Make an AJAX request to get updated data from the server
-            var startPos = document.body.scrollTop
-            $.ajax({
-                url: '{% url 'get_coindata_all'%}', // Replace with your server endpoint URL
-                type: 'GET',
-                dataType: 'json',
-                
-                success: function(response) {
-                    
-                    // Clear existing DataTable data
-                    coindataTable.clear();
-                    
-                    
-                    coindataTable.rows.add(response.data);
-                    // Redraw the DataTable
-                    // console.log(response.data.length);
-
-                    coindataTable.draw(false);
-                    
-                    
-                    $("li.paginate_button.page-item").blur();
-                    document.body.scrollTop = startPos;
-                },
-                error: function(error) {
-                    console.log(error);
-                }
-            });
-        }
-        coindataTable.on('page.dt', function() {
-            // $('html, body').animate({
-            //     scrollTop: $(".dataTables_wrapper").offset().bottom
-            // }, 'slow');
-
-            $('thead tr th:first-child').focus().blur();
-        });
-        updateDataTable()
-        setInterval(updateDataTable, 1000);
+        setInterval( function () {
+            coindataTable.ajax.reload( null, false);
+        }, 1000 );
     });
 </script>
 
