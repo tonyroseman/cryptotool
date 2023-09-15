@@ -64,6 +64,7 @@ class AuthSignin(auth_views.LoginView):
   template_name = 'accounts/auth-signin.html'
   form_class = LoginForm
   success_url = '/'
+  
 
 class UserPasswordResetView(auth_views.PasswordResetView):
   template_name = 'accounts/forgot-password.html'

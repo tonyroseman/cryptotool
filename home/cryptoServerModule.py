@@ -85,13 +85,18 @@ def get_top_symbols_current():
                 data = response.json()
                 
                 
-                oneflag = 0
+                oneflag = xrpflag =0
                 for coin in data["data"]:
                     if(coin["symbol"] == "ONE"):
                         if oneflag == 1:
                             continue
                         else:
                             oneflag = 1
+                    if(coin["symbol"] == "XRP"):
+                        if xrpflag == 1:
+                            continue
+                        else:
+                            xrpflag = 1
                     try:
                         sindex = cryptoServerModule.all_symbols.index(coin["symbol"]+"USDT")
                         if(sindex > -1):
@@ -357,15 +362,16 @@ def get_candles_h(symbol, down, up):
     
     i=0
     c7=c14=0
-    for candle in candles:
-        
-        open_price = float(candle[1])        
-        close_price = float(candle[4])        
-        if((close_price - open_price)/open_price*100 > up or (close_price - open_price)/open_price*100 < down):
-            if i>=7*24:
-                c7+=1
-            c14+=1
-        i+=1
+    if candles is not None:
+        for candle in candles:
+            
+            open_price = float(candle[1])        
+            close_price = float(candle[4])        
+            if((close_price - open_price)/open_price*100 > up or (close_price - open_price)/open_price*100 < down):
+                if i>=7*24:
+                    c7+=1
+                c14+=1
+            i+=1
     symbol['c7'] = c7
     symbol['c14'] = c14
     h_count = {}
@@ -392,15 +398,16 @@ def get_candles_3m(symbol, down, up):
     
     i=0
     c1=c2=0
-    for candle in candles:
-        
-        open_price = float(candle[1])        
-        close_price = float(candle[4])        
-        if((close_price - open_price)/open_price*100 > up or (close_price - open_price)/open_price*100 < down):
-            if i>=24*20:
-                c1+=1
-            c2+=1
-        i+=1
+    if candles is not None:
+        for candle in candles:
+            
+            open_price = float(candle[1])        
+            close_price = float(candle[4])        
+            if((close_price - open_price)/open_price*100 > up or (close_price - open_price)/open_price*100 < down):
+                if i>=24*20:
+                    c1+=1
+                c2+=1
+            i+=1
     symbol['c1'] = c1
     symbol['c2'] = c2
    
@@ -628,36 +635,41 @@ def get_longshortrate():
                 
                 "limit": 1  # Fetch only one candle
             }
-            response = None
-            if (piindex == 0):
-                response = requests.get(url, params=params)
-           
-            else:
-                proxies = {
-                    'http': proxiesarr[piindex-1],
-                    'https': proxiesarr[piindex-1]
-                }
-                response = requests.get(url, proxies=proxies, params=params)
-            if response.status_code == 200:
-                data = response.json()
-                if(len(data) > 0):
-                    
-                    long_short_ratio = data[0]['longShortRatio']
-                    try:
+            try:
+                response = None
+                if (piindex == 0):
+                    response = requests.get(url, params=params)
+            
+                else:
+                    proxies = {
+                        'http': proxiesarr[piindex-1],
+                        'https': proxiesarr[piindex-1]
+                    }
+                    response = requests.get(url, proxies=proxies, params=params)
+                if response.status_code == 200:
+                    data = response.json()
+                    if(len(data) > 0):
                         
+                        long_short_ratio = data[0]['longShortRatio']
+                        try:
                             
-                        sindex = cryptoServerModule.future_symbols.index(symbol)
-                        if(sindex > -1):
-                            cryptoServerModule.all_candles[sindex]['ls'] = float(long_short_ratio)
+                                
+                            sindex = cryptoServerModule.future_symbols.index(symbol)
+                            if(sindex > -1):
+                                cryptoServerModule.all_candles[sindex]['ls'] = float(long_short_ratio)
+                                
+                        except ValueError:
                             
-                    except ValueError:
+                            continue
                         
-                        continue
-                    
-                piindex = (piindex+1)%(len(proxiesarr)+1)
-            else:
-                save_err_log(str(response.status_code),"Binance API - " + url + " Proxy : " + ipstr[piindex-1],"Failed to retrieve long/short ratio.")
-                print("Failed to retrieve long/short ratio. Status code:", response.status_code)
+                    piindex = (piindex+1)%(len(proxiesarr)+1)
+                else:
+                    save_err_log(str(response.status_code),"Binance API - " + url + " Proxy : " + ipstr[piindex-1],"Failed to retrieve long/short ratio.")
+                    print("Failed to retrieve long/short ratio. Status code:", response.status_code)
+            except requests.exceptions.RequestException as e:
+                save_err_log("Exception","Binance API - " + url + " Proxy : " + ipstr[piindex-1],"Failed to retrieve long/short ratio.")
+                print(f"An error occurred: {e}")
+                time.sleep(60)
         time.sleep(lsperiod)
 
 

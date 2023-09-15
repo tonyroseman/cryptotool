@@ -127,7 +127,11 @@
                         render: function(data, type, row) {
                             if(data != undefined){
                                 if(row.coinflag != undefined && row.coinflag == true){
-                                    return '<span style="background-color: ' + 'lightgreen' + ';display: block; width: 100%; height: 100%;">' + "<a href='https://www.binance.com/en/trade/" + data + "_USDT?theme=dark&type=spot' target='_blank'>" + data + "</a>" + '</span>';
+                                    var backgroundColor = 'pink'; // Example color value
+                                    if(row.allok != undefined && row.allok == true){
+                                        backgroundColor = 'lightgreen'; // Example color value
+                                    }
+                                    return '<span style="background-color: ' + backgroundColor + ';display: block; width: 100%; height: 100%;">' + "<a href='https://www.binance.com/en/trade/" + data + "_USDT?theme=dark&type=spot' target='_blank'>" + data + "</a>" + '</span>';
                                 }
                                 else{
                                     return "<a href='https://www.binance.com/en/trade/" + data + "_USDT?theme=dark&type=spot' target='_blank'>" + data + "</a>";
@@ -519,15 +523,19 @@
                             
                             rowData['count'] = ok_count;
                             if(ok_count == count/2){
-                                rowData['count'] = ok_count+0.5;
+                                rowData['count'] = ok_count;
                                 rowData['allok'] = true;
-                            }
-                            if(settings['coins'] != ""){
-                                if (rowData['coinflag'] == true){
-                                    ok_count = ok_count+1;
-                                    rowData['count'] = ok_count;
+                                if(settings['coins'] != ""){
+                                    if (rowData['coinflag'] == true){
+                                        ok_count = ok_count+1;
+                                        rowData['count'] = ok_count;
+                                    }
+                                    else{
+                                        rowData['allok'] = false;
+                                    }
                                 }
                             }
+                            
 
                             rows.push(rowData);
                             
@@ -535,7 +543,7 @@
                         else{
                             if(settings['coins'] != ""){
                                 if (rowData['coinflag'] == true){
-                                    rowData['count'] = ok_count+1;
+                                    rowData['count'] = ok_count+1.5;
                                     rowflag = true;
                                     rows.push(rowData);
                                 }
