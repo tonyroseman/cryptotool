@@ -35,8 +35,22 @@
 
 - commit version 'update-7'
     -> updated app contents
-    
-    -> updated contents 
+        home/cryptoServerModule.py
+        home/templates/includes/sidebar.html
+        home/templates/pages/records.html
+        home/views.py
+    -> updated contents
+        adjustments8.doc 
+            1, Wrong message when user is de-active
+            2, This telegram link in here is not correct
+            3, Error when starting server
+            4, XRP marketcap is mapping wrong 
+            5, Wrong result with setting “Coinname”
+    -> Note
+        To fix '1, Wrong message when user is de-active', add this statement at the end of core\settings.py
+
+            AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.AllowAllUsersModelBackend']
+
 
 
 </pre>
