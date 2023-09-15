@@ -40,7 +40,7 @@
         home/templates/pages/records.html
         home/views.py
     -> updated contents
-        adjustments8.doc 
+        adjustments10.doc 
             1, Wrong message when user is de-active
             2, This telegram link in here is not correct
             3, Error when starting server
