@@ -1,3 +1,4 @@
+<pre>
 - commit version 'update-5'
     -> updated app contents
         home\cryptoTelegramServer.py
@@ -26,4 +27,16 @@
             1, Can not enable tlg function
             2, After removing the tlg URL on “User Profile” page. The data of user still remaining 
 
+- commit version 'update-6'
+    -> updated app contents
+        home\cryptoTelegramServer.py
+    -> updated contents
+        tlg is not sending any noti => fixed
 
+- commit version 'update-7'
+    -> updated app contents
+    
+    -> updated contents 
+
+
+</pre>
