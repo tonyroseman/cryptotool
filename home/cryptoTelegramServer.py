@@ -222,14 +222,21 @@ def get_coins_of_user(coindatas, usersettings, coindataindex):
         
         
         if(ok_count>0 and ok_count == count/2):
+            
             if('coins' in settings.keys()):
+                
                 coins = []
                 if(settings['coins'].strip() != ""):
                     coins = settings['coins'].split(',')
-                if(len(coins) > 0):
+                    if(len(coins) > 0):
+                        
+                        if data['symbol'] in coins:
+                            returns.append(data)
+                else:
+                    returns.append(data)
 
-                    if data['symbol'] in coins:
-                        returns.append(data)
+                
+                
             else:
                 returns.append(data)
     if(len(returns) > 0):
@@ -386,7 +393,7 @@ while(True):
         @bot.message_handler(commands=['start', 'hello'])
         def send_welcome(message):
             username = message.from_user.username
-            bot.reply_to(message, f"{username}, Your Telegram notificaion function is activated. Thank you!")
+            bot.reply_to(message, f"{username}, Your Telegram notification function is activated. Thank you!")
             set_tlgactive(username)
         @bot.message_handler(func=lambda msg: True)
         def echo_all(message):
