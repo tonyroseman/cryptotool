@@ -51,6 +51,16 @@
 
             AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.AllowAllUsersModelBackend']
 
-
+- commit version 'update-8'
+    -> updated app contents
+        home/cryptoTelegramServer.py
+        home/templates/admin/usermonitor.html
+        home/urls.py
+        home/views.py
+    -> updated contents
+        adjustments11.doc 
+            1, Wrong result with setting “Coinname” and noti did not send
+            2, When de-active an user on admin page -> they can still using all functions until they sign out
+            
 
 </pre>
