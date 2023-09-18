@@ -67,6 +67,11 @@ class AuthSignin(auth_views.LoginView):
   template_name = 'accounts/auth-signin.html'
   form_class = LoginForm
   success_url = '/'
+  def form_valid(self, form):
+        user = form.get_user()
+        user.is_login = 1
+        user.save()
+        return super().form_valid(form)
   
 
 class UserPasswordResetView(auth_views.PasswordResetView):
@@ -91,6 +96,11 @@ class UserPasswordChangeView(auth_views.PasswordChangeView):
 
 
 def user_logout_view(request):
+
+  
+  userdata = CustomUser.objects.get(id=request.user.id)
+  userdata.is_login = 0
+  userdata.save()
   logout(request)
  
   return redirect('/accounts/auth-signin/')
@@ -562,22 +572,22 @@ def get_active_users(request):
   
   for user in active_users:
      
-     if user.is_active:
-      
-      userdata = {}
-      userdata['no'] = (i+1)
-      userdata['username'] = user.username
-      userdata['type'] = user.is_staff
-      userdata['id'] = user.id
-      userdata['active'] = 1
-      usersettings = UserSettingsData.objects.filter(userid=user.id)
-      if(len(usersettings)>0):
-        sdata = json.loads(usersettings[0].data.replace("'", "\""))        
-        userdata['istlg'] = int(sdata['tlg'])
-      else:
-        userdata['istlg'] = 0
-      data.append(userdata)
-      i+=1
+      if user.is_active and user.is_login:
+        
+        userdata = {}
+        userdata['no'] = (i+1)
+        userdata['username'] = user.username
+        userdata['type'] = user.is_staff
+        userdata['id'] = user.id
+        userdata['active'] = 1
+        usersettings = UserSettingsData.objects.filter(userid=user.id)
+        if(len(usersettings)>0):
+          sdata = json.loads(usersettings[0].data.replace("'", "\""))        
+          userdata['istlg'] = int(sdata['tlg'])
+        else:
+          userdata['istlg'] = 0
+        data.append(userdata)
+        i+=1
   context = {'data': data}
   return JsonResponse (context, status = 200)
 @login_required(login_url='admin/accounts/auth-signin')
@@ -604,7 +614,7 @@ def get_error_log(request):
 def set_deactive_user(request):
   user_to_logout = CustomUser.objects.get(id=request.GET.get('userid'))
   user_to_logout.is_active = False
-
+  user_to_logout.is_login = 0
   user_to_logout.save()
 
   active_sessions = Session.objects.filter(expire_date__gte=timezone.now())
@@ -621,15 +631,15 @@ def set_deactive_user(request):
   
   for user in active_users:
      
-     if user.is_active:
-      userdata = {}
-      userdata['no'] = (i+1)
-      userdata['username'] = user.username
-      userdata['type'] = user.is_staff
-      userdata['id'] = user.id
-      userdata['active'] = 1
-      data.append(userdata)
-      i+=1
+      if user.is_active and user.is_login:
+        userdata = {}
+        userdata['no'] = (i+1)
+        userdata['username'] = user.username
+        userdata['type'] = user.is_staff
+        userdata['id'] = user.id
+        userdata['active'] = 1
+        data.append(userdata)
+        i+=1
   context = {'data': data}
   return JsonResponse (context, status = 200)
 

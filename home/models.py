@@ -6,9 +6,10 @@ import datetime
 # Create your models here.
 class CustomUser(AbstractUser):
     telegram = models.URLField(default="", blank=True)
-    tlgactive = models.DecimalField(default=0,max_digits=10, decimal_places=2)
+    tlgactive = models.DecimalField(default=0,max_digits=10, decimal_places=0)
     phone = models.CharField(default="", blank=True,max_length=20)
-    limitcount = models.DecimalField(default=500,max_digits=5, decimal_places=1)
+    limitcount = models.DecimalField(default=500,max_digits=5, decimal_places=0)
+    is_login = models.DecimalField(default=0,max_digits=10, decimal_places=0)
     # expired_time = models.DateField(default=timezone.now() + timezone.timedelta(days=365))
     expired_time = models.DateTimeField(default=datetime.datetime(2023, 12, 31, 23, 59, 59))
 
