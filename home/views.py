@@ -12,6 +12,7 @@ from django.contrib.sessions.models import Session
 from django.http import HttpResponse
 from django.utils import timezone
 from django.contrib.auth import logout, login
+
 import telegram 
 import json
 import time
@@ -20,6 +21,7 @@ import datetime
 
 
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import user_passes_test
 from .models import UserSettingsData
 from .models import SystemSettingsData
 from .models import CustomUser
@@ -28,7 +30,8 @@ from .models import UserNotifyData
 from .models import ErrorLog
 from .models import TelegramList
 
-
+def is_user_active(user):
+    return user.is_active
 def auth_signup(request):
   if request.method == 'POST':
       form = RegistrationForm(request.POST)
@@ -110,6 +113,7 @@ def index(request):
   else:
     return redirect('auth_signin')
 @login_required(login_url='/accounts/auth-signin')
+@user_passes_test(is_user_active, login_url='/accounts/auth-signin')
 def get_coindata_all(request):
   if request.method == "GET":
     
@@ -123,6 +127,7 @@ def get_coindata_all(request):
   # some error occured
   return JsonResponse ({"error": ""}, status = 400)
 @login_required(login_url='/accounts/auth-signin')
+@user_passes_test(is_user_active, login_url='/accounts/auth-signin')
 def get_coindata_user(request):
   
   if request.method == "GET":
@@ -134,6 +139,16 @@ def get_coindata_user(request):
     if(len(usersettingsdata) > 0):
       settings = json.loads(usersettingsdata[0].data.replace("'", "\""))
     # coins.append(json.loads(usersettingsdata.data.replace("'", "\"")))
+    if 'coins' in settings:
+        setcoins = settings['coins'].split(",")
+        flag = True
+        for setcoin in setcoins:
+            if setcoin[0:1] != '-':
+              flag = False
+              break
+        if flag is True:
+           settings['coins'] = ''
+             
     context = {
         'data': coins,
         'settings': settings,
@@ -144,6 +159,7 @@ def get_coindata_user(request):
   # some error occured
   return JsonResponse ({"error": ""}, status = 400)
 @login_required(login_url='admin/accounts/auth-signin')
+@user_passes_test(is_user_active, login_url='/accounts/auth-signin')
 def get_notifydata_user(request):
   
   if request.method == "GET":
@@ -210,31 +226,9 @@ def get_users(request):
     return JsonResponse (context, status = 200)
   # some error occured
   return JsonResponse ({"error": ""}, status = 400)
-@login_required(login_url='/accounts/auth-signin')
 
-@login_required(login_url='/accounts/auth-signin')
-def bc_typography(request):
-    return render(request, 'pages/bc_typography.html')
 
-@login_required(login_url='/accounts/auth-signin')
-def icon_feather(request):
-    return render(request, 'pages/icon-feather.html')
-
-# Table
-@login_required(login_url='/accounts/auth-signin')
-def tbl_bootstrap(request):
-   
-    return render(request, 'pages/tbl_allcoin.html')
-
-# Chart & Maps
-@login_required(login_url='/accounts/auth-signin')
-def chart_apex(request):
-    return render(request, 'pages/chart-apex.html')
-
-@login_required(login_url='/accounts/auth-signin')
-def map_google(request):
-    return render(request, 'pages/map-google.html')
-
+@user_passes_test(is_user_active, login_url='/accounts/auth-signin')
 @login_required(login_url='/accounts/auth-signin')
 def save_settings(request):
     alertMsg = "Saved your settings."
@@ -280,6 +274,7 @@ def save_settings(request):
     }
     return render(request, 'pages/setting.html', context)
 @login_required(login_url='/accounts/auth-signin')
+@user_passes_test(is_user_active, login_url='/accounts/auth-signin')
 def save_profile(request):
     alertMsg = "Saved your settings."
     if request.method == 'POST':
@@ -311,7 +306,7 @@ def save_profile(request):
              
              
     return redirect('/user-profile')
-
+@user_passes_test(is_user_active, login_url='/accounts/auth-signin')
 @login_required(login_url='/accounts/auth-signin')
 def disable_telegram(request):
     
@@ -331,10 +326,12 @@ def disable_telegram(request):
 # Pages
 
 @login_required(login_url='/accounts/auth-signin')
+@user_passes_test(is_user_active, login_url='/accounts/auth-signin')
 def user_profile(request):
     return render(request, 'pages/user-profile.html')
     
 @login_required(login_url='/accounts/auth-signin')
+@user_passes_test(is_user_active, login_url='/accounts/auth-signin')
 def setting_page(request):
     msg = ''
     data = None
@@ -361,6 +358,7 @@ def setting_page(request):
     
     return render(request, 'pages/setting.html', context)
 @login_required(login_url='/accounts/auth-signin')
+@user_passes_test(is_user_active, login_url='/accounts/auth-signin')
 def user_settings(request, userid):
     msg = ''
     data = None
@@ -399,6 +397,7 @@ def admin_usernotify(request, userid):
     
     return render(request, 'pages/admin_usernotify.html', context)
 @login_required(login_url='/accounts/auth-signin')
+@user_passes_test(is_user_active, login_url='/accounts/auth-signin')
 def usernotify(request, userid):
     
     data = []
@@ -495,7 +494,9 @@ def save_system_settings(request):
         'msg' : msg
     }
     return render(request, 'admin/systemsetting.html', context)
+
 @login_required(login_url='/accounts/auth-signin')
+@user_passes_test(is_user_active, login_url='/accounts/auth-signin')
 def records(request):
     
     return render(request, 'pages/records.html')
@@ -603,6 +604,7 @@ def get_error_log(request):
 def set_deactive_user(request):
   user_to_logout = CustomUser.objects.get(id=request.GET.get('userid'))
   user_to_logout.is_active = False
+
   user_to_logout.save()
 
   active_sessions = Session.objects.filter(expire_date__gte=timezone.now())

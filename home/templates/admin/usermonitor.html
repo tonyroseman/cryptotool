@@ -96,12 +96,7 @@
             }
 			
         }
-        function nameRender(data, type, row) {
-            if(data != undefined){
-                return "<a href='http://127.0.0.1:8000/admin/home/customuser/" + row.id + "/change/' >" + data + "</a>";
-                
-            }
-        }
+        
 		function activeRender(data, type, row) {
             if(data != undefined){
                 return '<button type="button" class="btn btn-danger" onclick="deactive(' +row.id + ')"><i class="feather mr-2 icon-slash"></i>De-Active</button>';

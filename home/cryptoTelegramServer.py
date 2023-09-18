@@ -225,13 +225,26 @@ def get_coins_of_user(coindatas, usersettings, coindataindex):
             
             if('coins' in settings.keys()):
                 
+
                 coins = []
                 if(settings['coins'].strip() != ""):
-                    coins = settings['coins'].split(',')
-                    if(len(coins) > 0):
+                    setcoins = settings['coins'].split(',')
+                    flag = True
+                    for setcoin in setcoins:
+                        if setcoin[0:1] != '-':
+                            flag = False
+                            break
+
+                    if(flag is False):
+                        if(len(setcoins) > 0):
                         
-                        if data['symbol'] in coins:
-                            returns.append(data)
+                            if data['symbol'] in setcoins:
+                                returns.append(data)
+                    else:
+                        if(len(setcoins) > 0):
+                            if not str("-") + data['symbol'] in setcoins:
+                                returns.append(data)
+                            
                 else:
                     returns.append(data)
 

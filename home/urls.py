@@ -8,7 +8,7 @@ urlpatterns = [
     #pages
     path('', views.index, name = 'index'),
     
-    path('icon-feather/', views.icon_feather, name = 'icon_feather'),
+    
     path('records/', views.records, name = 'records'),
     path('aboutus/', views.aboutus, name = 'aboutus'),
     path('abouttlgnoti/', views.abouttlgnoti, name = 'abouttlgnoti'),
