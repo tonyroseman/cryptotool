@@ -61,6 +61,15 @@
         adjustments11.doc 
             1, Wrong result with setting “Coinname” and noti did not send
             2, When de-active an user on admin page -> they can still using all functions until they sign out
-            
+
+- commit version 'update-9'
+    -> updated app contents
+        home/models.py
+        home/views.py
+    -> updated contents
+        fix usermonitor funtion error.
+
+        
+
 
 </pre>

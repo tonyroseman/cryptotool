@@ -8,16 +8,16 @@
     </li>
   {% endif %}
   {% if request.user.is_superuser %}
-    <li class="nav-item">
-      <a href="/admin/" class="nav-link "><span class="pcoded-micon"><i
-            class="feather icon-users"></i></span><span class="pcoded-mtext">All Users</span></a>
-    </li>
-    <li class="nav-item"><a href="{% url 'user_console' %}" class="nav-link "><span class="pcoded-micon"><i
-      class="feather icon-user-check"></i></span><span class="pcoded-mtext">Console Users</span></a></li>
-    <li class="nav-item"><a href="{% url 'user_website' %}" class="nav-link "><span class="pcoded-micon"><i
-      class="feather icon-user-check"></i></span><span class="pcoded-mtext">Website Users</span></a></li>
-    <li class="nav-item"><a href="{% url 'system_setting' %}" class="nav-link "><span class="pcoded-micon"><i
-      class="feather icon-settings"></i></span><span class="pcoded-mtext">System Setting</span></a></li>
+  <li class="nav-item"><a href="{% url 'user_console' %}" class="nav-link "><span class="pcoded-micon"><i
+    class="feather icon-user-check"></i></span><span class="pcoded-mtext">Console Users</span></a></li>
+  <li class="nav-item"><a href="{% url 'user_website' %}" class="nav-link "><span class="pcoded-micon"><i
+    class="feather icon-user-check"></i></span><span class="pcoded-mtext">Website Users</span></a></li>
+  <li class="nav-item"><a href="{% url 'system_setting' %}" class="nav-link "><span class="pcoded-micon"><i
+    class="feather icon-settings"></i></span><span class="pcoded-mtext">System Setting</span></a></li>
+  <li class="nav-item"><a href="{% url 'active_users' %}" class="nav-link "><span class="pcoded-micon"><i
+      class="feather icon-list"></i></span><span class="pcoded-mtext">User monitor</span></a></li>
+  <li class="nav-item"><a href="{% url 'error_log' %}" class="nav-link "><span class="pcoded-micon"><i
+    class="feather icon-user-check"></i></span><span class="pcoded-mtext">Error log</span></a></li>
     {% endif %}
 
   {% if request.user.is_authenticated and not request.user.is_superuser %}
