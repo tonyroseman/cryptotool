@@ -85,5 +85,19 @@
         fix dispaly warning on startup server
         display footer on admin page
         logo image on admin signin page
-    
+
+    -> additional updates
+        home/templates/pages/admin_usernotify.html
+        delete below files
+            home/templates/pages/custom-index.html
+            home/templates/pages/icon-feather.html
+            home/templates/pages/tbl_allcoin.html
+            static/assets/images/2.png        
+            static/assets/images/3.png
+            static/assets/images/logo-1.png
+            static/assets/images/logo-dark-1.png
+            static/assets/images/logo-docs.png
+            static/assets/images/logo-icon.png
+            static/assets/images/logo-thumb.png
+            image.png
 </pre>
