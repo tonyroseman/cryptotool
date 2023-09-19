@@ -27,30 +27,33 @@
             <tr>
                 <th rowspan="2" >No.</th>
                 <th rowspan="2" >Symbol</th>
-                <th rowspan="2" >Price</th>
-                <th rowspan="2" >Market cap<br>(millions $)</th>
-                <th rowspan="2" >Volume change<br>24H (%)</th>
-                <th colspan="5" >% change</th>
-                <th colspan="2" >candle<br> count</th>
-                <th colspan="5" >% change BTC</th>
+                <th rowspan="2" >Current<br> Price<br>(USD)</th>
+                
+                <th rowspan="2" >Market <br>cap<br>(Mils $)</th>
+                <th rowspan="2" >Volume <br>24H<br>(Mils $)</th>
+                <th rowspan="2" >Volume <br>change<br>24H (%)</th>
+                <th rowspan="2" >Volume/<br>Market<br> cap</th>
+                <th rowspan="2" >Funding <br>rate <br>(%)</th>
+                <th rowspan="2" >Long <br>Short<br>Ratio</th>
+                <th colspan="6" >% change</th>
+                <th colspan="2" >3m <br>candle<br> count</th>
+                <th colspan="2" >1H <br>candle<br> count</th>
 
                 
                 <!-- Add more table headers as needed -->
             </tr>
             <tr>
                 
+                <th >1'</th>
                 <th >3'</th>
                 <th >5'</th>
                 <th >15'</th>
                 <th >1H</th>
                 <th >4H</th>
+                <th >1d</th>
+                <th >2d</th>
                 <th >7d</th>
                 <th >14d</th>
-                <th >3'</th>
-                <th >5'</th>
-                <th >15'</th>
-                <th >1H</th>
-                <th >4H</th>
                 <th >Sending Time</th>
                 
                 <!-- Add more table headers as needed -->
@@ -70,6 +73,21 @@
         function numberRender(data, type, row) {
             if(data != undefined){
                 return '' +  Math.round(data * 10000) / 10000;
+                
+            }
+        }
+        function numberRender1(data, type, row) {
+            if(data != undefined){
+                return '' +  Math.round(data * 10) / 10;
+                
+            }
+        }
+        function FundingRateRender(data, type, row) {
+            if(data != undefined){
+                if(row.c1000 == 0)
+                    return "<a href='https://www.binance.com/en/futures/" + row.symbol + "USDT' target='_blank'>" + Math.round(data * 10000) / 10000 + "</a>";
+                else
+                    return "<a href='https://www.binance.com/en/futures/1000" + row.symbol + "USDT' target='_blank'>" + Math.round(data * 10000) / 10000 + "</a>";
                 
             }
         }
@@ -93,9 +111,19 @@
                         render: numberRender},
                     
                     { data: 'market_cap' ,
-                        render: numberRender},
+                        render: numberRender1},
+                    { data: 'vol_24h' ,
+                        render: numberRender1},
                     { data: 'vol' ,
+                        render: numberRender1},
+                    { data: 'vm' ,
                         render: numberRender},
+                    { data: 'fr' ,
+                        render: FundingRateRender},   
+                    { data: 'ls' ,
+                        render: numberRender},                     
+                    { data: '1m' ,
+                        render: numberRender},    
                     { data: '3m' ,
                         render: numberRender},
                     { data: '5m' ,
@@ -106,18 +134,10 @@
                         render: numberRender},
                     { data: '4h' ,
                         render: numberRender},
+                    { data: 'c1' },
+                    { data: 'c2' },    
                     { data: 'c7' },
                     { data: 'c14' },
-                    { data: '3mBTC' ,
-                        render: numberRender},
-                    { data: '5mBTC' ,
-                        render: numberRender},
-                    { data: '15mBTC' ,
-                        render: numberRender},
-                    { data: '1hBTC' ,
-                        render: numberRender},
-                    { data: '4hBTC' ,
-                        render: numberRender},
                     {
                         data: 'time'
                     }
