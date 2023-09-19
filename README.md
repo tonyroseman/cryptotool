@@ -61,6 +61,7 @@
         adjustments11.doc 
             1, Wrong result with setting “Coinname” and noti did not send
             2, When de-active an user on admin page -> they can still using all functions until they sign out
+<<<<<<< HEAD
 
 - commit version 'update-9'
     -> updated app contents
@@ -71,5 +72,21 @@
 
         
 
+=======
+>>>>>>> 92f07687cb1f3ff8997cb25ab062026dac6fd959
 
+- commit version 'update-9'
+    -> updated app contents
+        home/models.py
+        home/views.py
+    -> updated contents
+        fix usermonitor funtion error.
+    -> Note
+        After update app contents on pc or VPS, run follow commands in cmd of cryptotool directory.
+            python .\manage.py makemigrations
+            python manage.py migrate
+        And then
+            run "python .\manage.py runserver" on PC
+            restart Web Server of our app on VPS.
+    
 </pre>
