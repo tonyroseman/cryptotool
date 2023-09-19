@@ -87,7 +87,7 @@
         logo image on admin signin page
 
     -> additional updates
-        home/templates/pages/admin_usernotify.html
+        home/templates/pages/admin_usernotify.html  // fix user notify history bug on admin page
         delete below files
             home/templates/pages/custom-index.html
             home/templates/pages/icon-feather.html
