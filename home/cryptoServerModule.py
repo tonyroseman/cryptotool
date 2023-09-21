@@ -540,7 +540,7 @@ def get_candles_mh():
     # get_all_candles_3m(cryptoServerModule.all_candles)
     for i in range(len(cryptoServerModule.interval_mh)):
             if i>0:
-                print("Get " + cryptoServerModule.interval_mh[i] + "change : ", datetime.datetime.now())
+                print("Get " + cryptoServerModule.interval_mh[i] + " change : ", datetime.datetime.now())
             h_thread = threading.Thread(target=get_h_changedata, args=(i,))
             h_thread.start()
     
