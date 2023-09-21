@@ -109,6 +109,10 @@
     -> updated app contents
         home/cryptoServerModule.py
     -> updated contents
+<<<<<<< HEAD
         update price, change module 1m, 3m, 5m
         
+=======
+        update adjust12.doc
+>>>>>>> 358c759da6ee610adcca6c47947fb7b95409fd8a
 </pre>
