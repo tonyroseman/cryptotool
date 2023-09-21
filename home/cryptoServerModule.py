@@ -45,8 +45,7 @@ class cryptoServerModule():
         if len(proxies) > 0:
             price_thread = threading.Thread(target=get_price, args=(proxies,))
             price_thread.start()
-            del_price_thread = threading.Thread(target=delete_coindata)
-            del_price_thread.start()
+            
             binance_thread = threading.Thread(target=get_candles_mh)
             binance_thread.start()
             ls_thread = threading.Thread(target=get_longshortrate)
@@ -658,7 +657,7 @@ def get_price(proxiesarr):
     
     while True:
         pi=(pi+1)%(len(proxiesarr)+1)
-        
+        pi=0
         try:
         # Send the GET request
             starttime = datetime.datetime.utcnow()
