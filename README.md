@@ -109,10 +109,21 @@
     -> updated app contents
         home/cryptoServerModule.py
     -> updated contents
-<<<<<<< HEAD
         update price, change module 1m, 3m, 5m
-        
-=======
         update adjust12.doc
->>>>>>> 358c759da6ee610adcca6c47947fb7b95409fd8a
+- commit version 'update-13'
+    -> updated app contents
+        home/cryptoServerModule.py
+        home/templates/pages/admin_usernotify.html
+        home/templates/pages/index.html
+        home/templates/pages/records.html
+        home/templates/pages/setting.html
+        home/templates/pages/usernotify.html
+        home/templates/pages/usersettings.html
+    -> updated contents
+        update 1m,3m,5m,15m with new way
+        add change module 6h 12h 24h and 48h, remove 4h
+        update all related pages
+        update all h module refreshing data period
+
 </pre>
