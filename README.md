@@ -100,4 +100,10 @@
             static/assets/images/logo-icon.png
             static/assets/images/logo-thumb.png
             image.png
+- commit version 'update-11'
+    -> updated app contents
+        home/cryptoServerModule.py
+    -> updated contents
+        update price, change module 1m, 3m, 5m
+        
 </pre>
