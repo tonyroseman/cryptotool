@@ -26,7 +26,7 @@
 	<div class="col-md-4" style="margin-top: 5px;">
 		<div class="input-group">
 			<div class="input-group-prepend" >
-				<span class="input-group-text" style="width: 190px;">% Change 1 mins</span>
+				<span class="input-group-text" >% Change 1'</span>
 			</div>
 			<select class="custom-select" name="1m">
 				
@@ -35,13 +35,13 @@
 				<option value="3" style="text-align: center;" {% if data.1m == "3" %}selected{% endif %}>&gt;=</option>
 				<option value="4" style="text-align: center;" {% if data.1m == "4" %}selected{% endif %}>&lt;=</option>
 			</select>
-			<input type="text" class="form-control" name="t1m" value="{{data.t1m}}">
+			<input type="number" step=any class="form-control floatNumber" name="t1m" value="{{data.t1m}}">
 		</div>
 	</div>
 	<div class="col-md-4" style="margin-top: 5px;">
 		<div class="input-group">
 			<div class="input-group-prepend" >
-				<span class="input-group-text" style="width: 190px;">% Change 3 mins</span>
+				<span class="input-group-text" >% Change 3'</span>
 			</div>
 			<select class="custom-select" name="3m">
 				
@@ -50,14 +50,14 @@
 				<option value="3" style="text-align: center;" {% if data.3m == "3" %}selected{% endif %}>&gt;=</option>
 				<option value="4" style="text-align: center;" {% if data.3m == "4" %}selected{% endif %}>&lt;=</option>
 			</select>
-			<input type="text" class="form-control" name="t3m" value="{{data.t3m}}">
+			<input type="number" step=any class="form-control" name="t3m" value="{{data.t3m}}" >
 		</div>
 	</div>
 	
 	<div class="col-md-4" style="margin-top: 5px;">
 		<div class="input-group">
 			<div class="input-group-prepend">
-				<span class="input-group-text" style="width: 190px;">% Change 5 mins</span>
+				<span class="input-group-text" >% Change 5'</span>
 			</div>
 			<select class="custom-select" name="5m">
 				
@@ -66,14 +66,14 @@
 				<option value="3" style="text-align: center;" {% if data.5m == "3" %}selected{% endif %}>&gt;=</option>
 				<option value="4" style="text-align: center;" {% if data.5m == "4" %}selected{% endif %}>&lt;=</option>
 			</select>
-			<input type="text" class="form-control" name="t5m" value="{{data.t5m}}">
+			<input type="number" step=any class="form-control" name="t5m" value="{{data.t5m}}">
 		</div>
 	</div>
 	
 	<div class="col-md-4" style="margin-top: 5px;">
 		<div class="input-group">
 			<div class="input-group-prepend">
-				<span class="input-group-text" style="width: 190px;">% Change 15 mins</span>
+				<span class="input-group-text" >% Change 15'</span>
 			</div>
 			<select class="custom-select" name="15m">
 				
@@ -82,14 +82,14 @@
 				<option value="3" style="text-align: center;" {% if data.15m == "3" %}selected{% endif %}>&gt;=</option>
 				<option value="4" style="text-align: center;" {% if data.15m == "4" %}selected{% endif %}>&lt;=</option>
 			</select>
-			<input type="text" class="form-control" name="t15m" value="{{data.t15m}}">
+			<input type="number" step=any class="form-control" name="t15m" value="{{data.t15m}}">
 		</div>
 	</div>
 	
 	<div class="col-md-4" style="margin-top: 5px;">
 		<div class="input-group">
 			<div class="input-group-prepend">
-				<span class="input-group-text" style="width: 190px;">% Change 1H</span>
+				<span class="input-group-text" >% Change 1H</span>
 			</div>
 			<select class="custom-select" name="1h">
 				
@@ -98,25 +98,73 @@
 				<option value="3" style="text-align: center;" {% if data.1h == "3" %}selected{% endif %}>&gt;=</option>
 				<option value="4" style="text-align: center;" {% if data.1h == "4" %}selected{% endif %}>&lt;=</option>
 			</select>
-			<input type="text" class="form-control" name="t1h" value="{{data.t1h}}">
+			<input type="number" step=any class="form-control" name="t1h" value="{{data.t1h}}">
 		</div>
 	</div>
 	
 	<div class="col-md-4" style="margin-top: 5px;">
 		<div class="input-group">
 			<div class="input-group-prepend">
-				<span class="input-group-text" style="width: 190px;">% Change 4H</span>
+				<span class="input-group-text" >% Change 6H</span>
 			</div>
-			<select class="custom-select" name="4h">
+			<select class="custom-select" name="6h">
 				
-				<option value="1" style="text-align: center;" {% if data.4h == "1" %}selected{% endif %}> &gt;</option>
-				<option value="2" style="text-align: center;" {% if data.4h == "2" %}selected{% endif %}> &lt; </option>
-				<option value="3" style="text-align: center;" {% if data.4h == "3" %}selected{% endif %}>&gt;=</option>
-				<option value="4" style="text-align: center;" {% if data.4h == "4" %}selected{% endif %}>&lt;=</option>
+				<option value="1" style="text-align: center;" {% if data.6h == "1" %}selected{% endif %}> &gt;</option>
+				<option value="2" style="text-align: center;" {% if data.6h == "2" %}selected{% endif %}> &lt; </option>
+				<option value="3" style="text-align: center;" {% if data.6h == "3" %}selected{% endif %}>&gt;=</option>
+				<option value="4" style="text-align: center;" {% if data.6h == "4" %}selected{% endif %}>&lt;=</option>
 			</select>
-			<input type="text" class="form-control" name="t4h" value="{{data.t4h}}">
+			<input type="number" step=any class="form-control" name="t6h" value="{{data.t6h}}">
 		</div>
 	</div>
+	<div class="col-md-4" style="margin-top: 5px;">
+		<div class="input-group">
+			<div class="input-group-prepend">
+				<span class="input-group-text" >% Change 12H</span>
+			</div>
+			<select class="custom-select" name="12h">
+				
+				<option value="1" style="text-align: center;" {% if data.12h == "1" %}selected{% endif %}> &gt;</option>
+				<option value="2" style="text-align: center;" {% if data.12h == "2" %}selected{% endif %}> &lt; </option>
+				<option value="3" style="text-align: center;" {% if data.12h == "3" %}selected{% endif %}>&gt;=</option>
+				<option value="4" style="text-align: center;" {% if data.12h == "4" %}selected{% endif %}>&lt;=</option>
+			</select>
+			<input type="number" step=any class="form-control" name="t12h" value="{{data.t12h}}">
+		</div>
+	</div>
+	
+	<div class="col-md-4" style="margin-top: 5px;">
+		<div class="input-group">
+			<div class="input-group-prepend">
+				<span class="input-group-text" >% Change 24H</span>
+			</div>
+			<select class="custom-select" name="1d">
+				
+				<option value="1" style="text-align: center;" {% if data.1d == "1" %}selected{% endif %}> &gt;</option>
+				<option value="2" style="text-align: center;" {% if data.1d == "2" %}selected{% endif %}> &lt; </option>
+				<option value="3" style="text-align: center;" {% if data.1d == "3" %}selected{% endif %}>&gt;=</option>
+				<option value="4" style="text-align: center;" {% if data.1d == "4" %}selected{% endif %}>&lt;=</option>
+			</select>
+			<input type="number" step=any class="form-control" name="t1d" value="{{data.t1d}}">
+		</div>
+	</div>
+	
+	<div class="col-md-4" style="margin-top: 5px;">
+		<div class="input-group">
+			<div class="input-group-prepend">
+				<span class="input-group-text" >% Change 48H</span>
+			</div>
+			<select class="custom-select" name="2d">
+				
+				<option value="1" style="text-align: center;" {% if data.2d == "1" %}selected{% endif %}> &gt;</option>
+				<option value="2" style="text-align: center;" {% if data.2d == "2" %}selected{% endif %}> &lt; </option>
+				<option value="3" style="text-align: center;" {% if data.2d == "3" %}selected{% endif %}>&gt;=</option>
+				<option value="4" style="text-align: center;" {% if data.2d == "4" %}selected{% endif %}>&lt;=</option>
+			</select>
+			<input type="number" step=any class="form-control" name="t2d" value="{{data.t2d}}">
+		</div>
+	</div>
+	
 	<div class="col-md-12" style="margin-top: 5px;">
 		<br>
 	</div>
@@ -132,7 +180,7 @@
 				<option value="3" style="text-align: center;" {% if data.vol == "3" %}selected{% endif %}>&gt;=</option>
 				<option value="4" style="text-align: center;" {% if data.vol == "4" %}selected{% endif %}>&lt;=</option>
 			</select>
-			<input type="text" class="form-control" name="tvol" value="{{data.tvol}}">
+			<input type="number" step=any class="form-control" name="tvol" value="{{data.tvol}}">
 		</div>
 	</div>
 	<div class="col-md-6" style="margin-top: 5px;">
@@ -147,10 +195,9 @@
 				<option value="3" style="text-align: center;" {% if data.vol_24h == "3" %}selected{% endif %}>&gt;=</option>
 				<option value="4" style="text-align: center;" {% if data.vol_24h == "4" %}selected{% endif %}>&lt;=</option>
 			</select>
-			<input type="text" class="form-control" name="tvol_24h" value="{{data.tvol_24h}}">
+			<input type="number" step=any class="form-control" name="tvol_24h" value="{{data.tvol_24h}}">
 		</div>
 	</div>
-	
 	<div class="col-md-6" style="margin-top: 5px;">
 		<div class="input-group">
 			<div class="input-group-prepend">
@@ -163,7 +210,7 @@
 				<option value="3" style="text-align: center;" {% if data.mc == "3" %}selected{% endif %}>&gt;=</option>
 				<option value="4" style="text-align: center;" {% if data.mc == "4" %}selected{% endif %}>&lt;=</option>
 			</select>
-			<input type="text" class="form-control" name="tmc" value="{{data.tmc}}">
+			<input type="number" step=any class="form-control" name="tmc" value="{{data.tmc}}">
 		</div>
 	</div>
 	<div class="col-md-6" style="margin-top: 5px;">
@@ -178,7 +225,7 @@
 				<option value="3" style="text-align: center;" {% if data.vm == "3" %}selected{% endif %}>&gt;=</option>
 				<option value="4" style="text-align: center;" {% if data.vm == "4" %}selected{% endif %}>&lt;=</option>
 			</select>
-			<input type="text" class="form-control" name="tvm" value="{{data.tvm}}">
+			<input type="number" step=any class="form-control" name="tvm" value="{{data.tvm}}">
 		</div>
 	</div>
 	
@@ -186,72 +233,7 @@
 		<br>
 	</div>
 	
-	<div class="col-md-6" style="margin-top: 5px;">
-		<div class="input-group">
-			<div class="input-group-prepend">
-				<span class="input-group-text" style="width: 190px;">1H Candle count 7 days</span>
-			</div>
-			<select class="custom-select" name="c7">
-				
-				<option value="1" style="text-align: center;" {% if data.c7 == "1" %}selected{% endif %}> &gt;</option>
-				<option value="2" style="text-align: center;" {% if data.c7 == "2" %}selected{% endif %}> &lt; </option>
-				<option value="3" style="text-align: center;" {% if data.c7 == "3" %}selected{% endif %}>&gt;=</option>
-				<option value="4" style="text-align: center;" {% if data.c7 == "4" %}selected{% endif %}>&lt;=</option>
-			</select>
-			<input type="text" class="form-control" name="tc7" value="{{data.tc7}}">
-		</div>
-	</div>
 	
-	<div class="col-md-6" style="margin-top: 5px;">
-		<div class="input-group">
-			<div class="input-group-prepend">
-				<span class="input-group-text" style="width: 190px;">1H Candle count 14 days</span>
-			</div>
-			<select class="custom-select" name="c14">
-				
-				<option value="1" style="text-align: center;" {% if data.c14 == "1" %}selected{% endif %}> &gt;</option>
-				<option value="2" style="text-align: center;" {% if data.c14 == "2" %}selected{% endif %}> &lt; </option>
-				<option value="3" style="text-align: center;" {% if data.c14 == "3" %}selected{% endif %}>&gt;=</option>
-				<option value="4" style="text-align: center;" {% if data.c14 == "4" %}selected{% endif %}>&lt;=</option>
-			</select>
-			<input type="text" class="form-control" name="tc14" value="{{data.tc14}}">
-		</div>
-	</div>
-	
-	<div class="col-md-6" style="margin-top: 5px;">
-		<div class="input-group">
-			<div class="input-group-prepend">
-				<span class="input-group-text" style="width: 190px;">3M Candle count 1 day</span>
-			</div>
-			<select class="custom-select" name="c1">
-				
-				<option value="1" style="text-align: center;" {% if data.c1 == "1" %}selected{% endif %}> &gt;</option>
-				<option value="2" style="text-align: center;" {% if data.c1 == "2" %}selected{% endif %}> &lt; </option>
-				<option value="3" style="text-align: center;" {% if data.c1 == "3" %}selected{% endif %}>&gt;=</option>
-				<option value="4" style="text-align: center;" {% if data.c1 == "4" %}selected{% endif %}>&lt;=</option>
-			</select>
-			<input type="text" class="form-control" name="tc1" value="{{data.tc1}}">
-		</div>
-	</div>
-	
-	<div class="col-md-6" style="margin-top: 5px;">
-		<div class="input-group">
-			<div class="input-group-prepend">
-				<span class="input-group-text" style="width: 190px;">3M Candle count 2 days</span>
-			</div>
-			<select class="custom-select" name="c2">
-				
-				<option value="1" style="text-align: center;" {% if data.c2 == "1" %}selected{% endif %}> &gt;</option>
-				<option value="2" style="text-align: center;" {% if data.c2 == "2" %}selected{% endif %}> &lt; </option>
-				<option value="3" style="text-align: center;" {% if data.c2 == "3" %}selected{% endif %}>&gt;=</option>
-				<option value="4" style="text-align: center;" {% if data.c2 == "4" %}selected{% endif %}>&lt;=</option>
-			</select>
-			<input type="text" class="form-control" name="tc2" value="{{data.tc2}}">
-		</div>
-	</div>
-	<div class="col-md-12" style="margin-top: 5px;">
-		<br>
-	</div>
 	<div class="col-md-6" style="margin-top: 5px;">
 		<div class="input-group">
 			<div class="input-group-prepend">
@@ -264,7 +246,7 @@
 				<option value="3" style="text-align: center;" {% if data.fr == "3" %}selected{% endif %}>&gt;=</option>
 				<option value="4" style="text-align: center;" {% if data.fr == "4" %}selected{% endif %}>&lt;=</option>
 			</select>
-			<input type="text" class="form-control" name="tfr" value="{{data.tfr}}">
+			<input type="number" step=any class="form-control" name="tfr" value="{{data.tfr}}">
 		</div>
 	</div>
 	<div class="col-md-6" style="margin-top: 5px;">
@@ -279,7 +261,7 @@
 				<option value="3" style="text-align: center;" {% if data.ls == "3" %}selected{% endif %}>&gt;=</option>
 				<option value="4" style="text-align: center;" {% if data.ls == "4" %}selected{% endif %}>&lt;=</option>
 			</select>
-			<input type="text" class="form-control" name="tls" value="{{data.tls}}">
+			<input type="number" step=any class="form-control" name="tls" value="{{data.tls}}">
 		</div>
 	</div>
 	<div class="col-md-12" style="margin-top: 5px;">
@@ -294,6 +276,10 @@
 			<input type="text" class="form-control" name="coins" value="{{data.coins}}">
 		</div>
 	</div>
+	<div class="col-md-12" style="margin-top: 5px;">
+		<br>
+	</div>
+	
 	<div class="col-md-6" style="margin-top: 15px;">
 		<div class="input-group">
 			<div class="input-group-prepend">

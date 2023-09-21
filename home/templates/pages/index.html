@@ -32,9 +32,8 @@
                     <th rowspan="2" >Volume/<br>Market<br> cap</th>
                     <th rowspan="2" >Funding <br>rate <br>(%)</th>
                     <th rowspan="2" >Long <br>Short<br>Ratio</th>
-                    <th colspan="6" >% change</th>
-                    <th colspan="2" >3m candle<br> count</th>
-                    <th colspan="2" >1H candle<br> count</th>
+                    <th colspan="9" >% change</th>
+                    
                     
                     
                     
@@ -48,11 +47,11 @@
                     <th >5'</th>
                     <th >15'</th>
                     <th >1H</th>
-                    <th >4H</th>
-                    <th >1d</th>
-                    <th >2d</th>
-                    <th >7d</th>
-                    <th >14d</th>
+                    <th >6H</th>
+                    <th >12H</th>
+                    <th >24H</th>
+                    <th >48H</th>
+                    
                     
                     <!-- Add more table headers as needed -->
                 </tr>
@@ -173,12 +172,15 @@
                         render: numberRender},
                     { data: '1h' ,
                         render: numberRender},
-                    { data: '4h' ,
+                    { data: '6h' ,
                         render: numberRender},
-                    { data: 'c1' },
-                    { data: 'c2' },    
-                    { data: 'c7' },
-                    { data: 'c14' },
+                    { data: '12h' ,
+                        render: numberRender},
+                    { data: '1d' ,
+                        render: numberRender},
+                    { data: '2d' ,
+                        render: numberRender},
+                    
             ]
         });
         $('#myDataTable').on( 'error.dt', function ( e, settings, techNote, message ) {

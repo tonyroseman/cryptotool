@@ -8,20 +8,20 @@ import urllib.parse
 
 
 class cryptoServerModule():
-    is_running_as_server = False
-    taskcount = 0
+    
+    
     all_candles = []
     all_pricedata = []
     thread_count =2
     timeout = 10
     all_symbols = ['BTCUSDT', 'ETHUSDT', 'BNBUSDT', 'NEOUSDT', 'LTCUSDT', 'QTUMUSDT', 'ADAUSDT', 'XRPUSDT', 'EOSUSDT',  'XLMUSDT', 'ONTUSDT', 'TRXUSDT', 'ETCUSDT', 'ICXUSDT', 'NULSUSDT', 'VETUSDT', 'LINKUSDT', 'WAVESUSDT', 'ONGUSDT', 'HOTUSDT', 'ZILUSDT', 'ZRXUSDT', 'FETUSDT', 'BATUSDT', 'XMRUSDT', 'ZECUSDT', 'IOSTUSDT', 'CELRUSDT', 'DASHUSDT', 'OMGUSDT', 'THETAUSDT', 'ENJUSDT', 'MATICUSDT', 'ATOMUSDT', 'TFUELUSDT', 'ONEUSDT', 'FTMUSDT', 'ALGOUSDT', 'DOGEUSDT', 'DUSKUSDT', 'ANKRUSDT', 'WINUSDT', 'COSUSDT', 'MTLUSDT', 'TOMOUSDT', 'PERLUSDT', 'DENTUSDT', 'KEYUSDT', 'DOCKUSDT', 'WANUSDT', 'FUNUSDT', 'CVCUSDT', 'CHZUSDT', 'BANDUSDT', 'XTZUSDT', 'RENUSDT', 'RVNUSDT', 'HBARUSDT', 'NKNUSDT', 'STXUSDT', 'KAVAUSDT', 'ARPAUSDT', 'IOTXUSDT', 'RLCUSDT', 'CTXCUSDT', 'BCHUSDT', 'TROYUSDT', 'VITEUSDT', 'OGNUSDT', 'DREPUSDT', 'WRXUSDT', 'BTSUSDT', 'LSKUSDT', 'BNTUSDT', 'LTOUSDT', 'MBLUSDT', 'COTIUSDT', 'STPTUSDT', 'WTCUSDT', 'DATAUSDT', 'SOLUSDT', 'CTSIUSDT', 'HIVEUSDT', 'CHRUSDT', 'ARDRUSDT', 'MDTUSDT', 'STMXUSDT', 'KNCUSDT', 'LRCUSDT', 'PNTUSDT', 'COMPUSDT', 'SCUSDT', 'ZENUSDT', 'SNXUSDT', 'VTHOUSDT', 'DGBUSDT', 'SXPUSDT', 'MKRUSDT', 'DCRUSDT', 'STORJUSDT', 'MANAUSDT', 'YFIUSDT', 'BALUSDT', 'BLZUSDT', 'IRISUSDT', 'KMDUSDT', 'JSTUSDT', 'ANTUSDT', 'CRVUSDT', 'SANDUSDT', 'OCEANUSDT', 'NMRUSDT', 'DOTUSDT', 'LUNAUSDT', 'RSRUSDT', 'PAXGUSDT', 'WNXMUSDT', 'TRBUSDT', 'SUSHIUSDT', 'YFIIUSDT', 'KSMUSDT', 'EGLDUSDT', 'DIAUSDT', 'RUNEUSDT', 'FIOUSDT', 'UMAUSDT', 'BELUSDT', 'WINGUSDT', 'UNIUSDT', 'OXTUSDT', 'SUNUSDT', 'AVAXUSDT', 'FLMUSDT', 'ORNUSDT', 'UTKUSDT', 'XVSUSDT', 'ALPHAUSDT', 'AAVEUSDT', 'NEARUSDT', 'FILUSDT', 'INJUSDT', 'AUDIOUSDT', 'CTKUSDT', 'AKROUSDT', 'AXSUSDT', 'HARDUSDT', 'STRAXUSDT', 'UNFIUSDT', 'ROSEUSDT', 'AVAUSDT', 'XEMUSDT', 'SKLUSDT', 'GRTUSDT', 'JUVUSDT', 'PSGUSDT', '1INCHUSDT', 'REEFUSDT', 'OGUSDT', 'ATMUSDT', 'ASRUSDT', 'CELOUSDT', 'RIFUSDT', 'TRUUSDT', 'CKBUSDT', 'TWTUSDT', 'FIROUSDT', 'LITUSDT', 'SFPUSDT', 'DODOUSDT', 'CAKEUSDT', 'ACMUSDT', 'BADGERUSDT', 'FISUSDT', 'OMUSDT', 'PONDUSDT', 'DEGOUSDT', 'ALICEUSDT', 'LINAUSDT', 'PERPUSDT', 'SUPERUSDT', 'CFXUSDT', 'TKOUSDT', 'PUNDIXUSDT', 'TLMUSDT', 'BARUSDT', 'FORTHUSDT', 'BAKEUSDT', 'BURGERUSDT', 'SLPUSDT', 'SHIBUSDT', 'ICPUSDT', 'ARUSDT', 'POLSUSDT', 'MDXUSDT', 'MASKUSDT', 'LPTUSDT', 'XVGUSDT', 'ATAUSDT', 'GTCUSDT', 'ERNUSDT', 'KLAYUSDT', 'PHAUSDT', 'BONDUSDT', 'MLNUSDT', 'DEXEUSDT', 'C98USDT', 'CLVUSDT', 'QNTUSDT', 'FLOWUSDT', 'TVKUSDT', 'MINAUSDT', 'RAYUSDT', 'FARMUSDT', 'ALPACAUSDT', 'QUICKUSDT', 'MBOXUSDT', 'FORUSDT', 'REQUSDT', 'GHSTUSDT', 'WAXPUSDT', 'GNOUSDT', 'XECUSDT', 'ELFUSDT', 'DYDXUSDT', 'IDEXUSDT', 'VIDTUSDT', 'GALAUSDT', 'ILVUSDT', 'YGGUSDT', 'SYSUSDT', 'DFUSDT', 'FIDAUSDT', 'FRONTUSDT', 'CVPUSDT', 'AGLDUSDT', 'RADUSDT', 'BETAUSDT', 'RAREUSDT', 'LAZIOUSDT', 'CHESSUSDT', 'ADXUSDT', 'AUCTIONUSDT', 'DARUSDT', 'BNXUSDT', 'MOVRUSDT', 'CITYUSDT', 'ENSUSDT', 'KP3RUSDT', 'QIUSDT', 'PORTOUSDT', 'POWRUSDT', 'VGXUSDT', 'JASMYUSDT', 'AMPUSDT', 'PLAUSDT', 'PYRUSDT', 'RNDRUSDT', 'ALCXUSDT', 'SANTOSUSDT', 'MCUSDT', 'BICOUSDT', 'FLUXUSDT', 'FXSUSDT', 'VOXELUSDT', 'HIGHUSDT', 'CVXUSDT', 'PEOPLEUSDT', 'OOKIUSDT', 'SPELLUSDT', 'JOEUSDT', 'ACHUSDT', 'IMXUSDT', 'GLMRUSDT', 'LOKAUSDT', 'SCRTUSDT', 'API3USDT', 'ACAUSDT', 'XNOUSDT', 'WOOUSDT', 'ALPINEUSDT', 'TUSDT', 'ASTRUSDT', 'GMTUSDT', 'KDAUSDT', 'APEUSDT', 'BSWUSDT', 'BIFIUSDT', 'MULTIUSDT', 'STEEMUSDT', 'MOBUSDT', 'NEXOUSDT', 'REIUSDT', 'GALUSDT', 'LDOUSDT', 'EPXUSDT', 'OPUSDT', 'LEVERUSDT', 'STGUSDT', 'LUNCUSDT', 'GMXUSDT', 'POLYXUSDT', 'APTUSDT', 'OSMOUSDT', 'HFTUSDT', 'PHBUSDT', 'HOOKUSDT', 'MAGICUSDT', 'HIFIUSDT', 'RPLUSDT', 'PROSUSDT', 'AGIXUSDT', 'GNSUSDT', 'SYNUSDT', 'VIBUSDT', 'SSVUSDT', 'LQTYUSDT', 'AMBUSDT', 'USTCUSDT', 'GASUSDT', 'GLMUSDT', 'PROMUSDT', 'QKCUSDT', 'UFTUSDT', 'IDUSDT', 'ARBUSDT', 'LOOMUSDT', 'OAXUSDT', 'RDNTUSDT', 'EDUUSDT', 'SUIUSDT', 'AERGOUSDT', 'PEPEUSDT', 'FLOKIUSDT', 'ASTUSDT', 'SNTUSDT', 'COMBOUSDT', 'MAVUSDT', 'PENDLEUSDT', 'ARKMUSDT',  'WLDUSDT', 'SEIUSDT', 'CYBERUSDT']
     future_symbols = ['BTCUSDT', 'ETHUSDT', 'BNBUSDT', 'NEOUSDT', 'LTCUSDT', 'QTUMUSDT', 'ADAUSDT', 'XRPUSDT', 'EOSUSDT',  'XLMUSDT', 'ONTUSDT', 'TRXUSDT', 'ETCUSDT', 'ICXUSDT', 'NULSUSDT', 'VETUSDT', 'LINKUSDT', 'WAVESUSDT', 'ONGUSDT', 'HOTUSDT', 'ZILUSDT', 'ZRXUSDT', 'FETUSDT', 'BATUSDT', 'XMRUSDT', 'ZECUSDT', 'IOSTUSDT', 'CELRUSDT', 'DASHUSDT', 'OMGUSDT', 'THETAUSDT', 'ENJUSDT', 'MATICUSDT', 'ATOMUSDT', 'TFUELUSDT', 'ONEUSDT', 'FTMUSDT', 'ALGOUSDT', 'DOGEUSDT', 'DUSKUSDT', 'ANKRUSDT', 'WINUSDT', 'COSUSDT', 'MTLUSDT', 'TOMOUSDT', 'PERLUSDT', 'DENTUSDT', 'KEYUSDT', 'DOCKUSDT', 'WANUSDT', 'FUNUSDT', 'CVCUSDT', 'CHZUSDT', 'BANDUSDT', 'XTZUSDT', 'RENUSDT', 'RVNUSDT', 'HBARUSDT', 'NKNUSDT', 'STXUSDT', 'KAVAUSDT', 'ARPAUSDT', 'IOTXUSDT', 'RLCUSDT', 'CTXCUSDT', 'BCHUSDT', 'TROYUSDT', 'VITEUSDT', 'OGNUSDT', 'DREPUSDT', 'WRXUSDT', 'BTSUSDT', 'LSKUSDT', 'BNTUSDT', 'LTOUSDT', 'MBLUSDT', 'COTIUSDT', 'STPTUSDT', 'WTCUSDT', 'DATAUSDT', 'SOLUSDT', 'CTSIUSDT', 'HIVEUSDT', 'CHRUSDT', 'ARDRUSDT', 'MDTUSDT', 'STMXUSDT', 'KNCUSDT', 'LRCUSDT', 'PNTUSDT', 'COMPUSDT', 'SCUSDT', 'ZENUSDT', 'SNXUSDT', 'VTHOUSDT', 'DGBUSDT', 'SXPUSDT', 'MKRUSDT', 'DCRUSDT', 'STORJUSDT', 'MANAUSDT', 'YFIUSDT', 'BALUSDT', 'BLZUSDT', 'IRISUSDT', 'KMDUSDT', 'JSTUSDT', 'ANTUSDT', 'CRVUSDT', 'SANDUSDT', 'OCEANUSDT', 'NMRUSDT', 'DOTUSDT', 'LUNAUSDT', 'RSRUSDT', 'PAXGUSDT', 'WNXMUSDT', 'TRBUSDT', 'SUSHIUSDT', 'YFIIUSDT', 'KSMUSDT', 'EGLDUSDT', 'DIAUSDT', 'RUNEUSDT', 'FIOUSDT', 'UMAUSDT', 'BELUSDT', 'WINGUSDT', 'UNIUSDT', 'OXTUSDT', 'SUNUSDT', 'AVAXUSDT', 'FLMUSDT', 'ORNUSDT', 'UTKUSDT', 'XVSUSDT', 'ALPHAUSDT', 'AAVEUSDT', 'NEARUSDT', 'FILUSDT', 'INJUSDT', 'AUDIOUSDT', 'CTKUSDT', 'AKROUSDT', 'AXSUSDT', 'HARDUSDT', 'STRAXUSDT', 'UNFIUSDT', 'ROSEUSDT', 'AVAUSDT', 'XEMUSDT', 'SKLUSDT', 'GRTUSDT', 'JUVUSDT', 'PSGUSDT', '1INCHUSDT', 'REEFUSDT', 'OGUSDT', 'ATMUSDT', 'ASRUSDT', 'CELOUSDT', 'RIFUSDT', 'TRUUSDT', 'CKBUSDT', 'TWTUSDT', 'FIROUSDT', 'LITUSDT', 'SFPUSDT', 'DODOUSDT', 'CAKEUSDT', 'ACMUSDT', 'BADGERUSDT', 'FISUSDT', 'OMUSDT', 'PONDUSDT', 'DEGOUSDT', 'ALICEUSDT', 'LINAUSDT', 'PERPUSDT', 'SUPERUSDT', 'CFXUSDT', 'TKOUSDT', 'PUNDIXUSDT', 'TLMUSDT', 'BARUSDT', 'FORTHUSDT', 'BAKEUSDT', 'BURGERUSDT', 'SLPUSDT', 'SHIBUSDT', 'ICPUSDT', 'ARUSDT', 'POLSUSDT', 'MDXUSDT', 'MASKUSDT', 'LPTUSDT', 'XVGUSDT', 'ATAUSDT', 'GTCUSDT', 'ERNUSDT', 'KLAYUSDT', 'PHAUSDT', 'BONDUSDT', 'MLNUSDT', 'DEXEUSDT', 'C98USDT', 'CLVUSDT', 'QNTUSDT', 'FLOWUSDT', 'TVKUSDT', 'MINAUSDT', 'RAYUSDT', 'FARMUSDT', 'ALPACAUSDT', 'QUICKUSDT', 'MBOXUSDT', 'FORUSDT', 'REQUSDT', 'GHSTUSDT', 'WAXPUSDT', 'GNOUSDT', 'XECUSDT', 'ELFUSDT', 'DYDXUSDT', 'IDEXUSDT', 'VIDTUSDT', 'GALAUSDT', 'ILVUSDT', 'YGGUSDT', 'SYSUSDT', 'DFUSDT', 'FIDAUSDT', 'FRONTUSDT', 'CVPUSDT', 'AGLDUSDT', 'RADUSDT', 'BETAUSDT', 'RAREUSDT', 'LAZIOUSDT', 'CHESSUSDT', 'ADXUSDT', 'AUCTIONUSDT', 'DARUSDT', 'BNXUSDT', 'MOVRUSDT', 'CITYUSDT', 'ENSUSDT', 'KP3RUSDT', 'QIUSDT', 'PORTOUSDT', 'POWRUSDT', 'VGXUSDT', 'JASMYUSDT', 'AMPUSDT', 'PLAUSDT', 'PYRUSDT', 'RNDRUSDT', 'ALCXUSDT', 'SANTOSUSDT', 'MCUSDT', 'BICOUSDT', 'FLUXUSDT', 'FXSUSDT', 'VOXELUSDT', 'HIGHUSDT', 'CVXUSDT', 'PEOPLEUSDT', 'OOKIUSDT', 'SPELLUSDT', 'JOEUSDT', 'ACHUSDT', 'IMXUSDT', 'GLMRUSDT', 'LOKAUSDT', 'SCRTUSDT', 'API3USDT', 'ACAUSDT', 'XNOUSDT', 'WOOUSDT', 'ALPINEUSDT', 'TUSDT', 'ASTRUSDT', 'GMTUSDT', 'KDAUSDT', 'APEUSDT', 'BSWUSDT', 'BIFIUSDT', 'MULTIUSDT', 'STEEMUSDT', 'MOBUSDT', 'NEXOUSDT', 'REIUSDT', 'GALUSDT', 'LDOUSDT', 'EPXUSDT', 'OPUSDT', 'LEVERUSDT', 'STGUSDT', 'LUNCUSDT', 'GMXUSDT', 'POLYXUSDT', 'APTUSDT', 'OSMOUSDT', 'HFTUSDT', 'PHBUSDT', 'HOOKUSDT', 'MAGICUSDT', 'HIFIUSDT', 'RPLUSDT', 'PROSUSDT', 'AGIXUSDT', 'GNSUSDT', 'SYNUSDT', 'VIBUSDT', 'SSVUSDT', 'LQTYUSDT', 'AMBUSDT', 'USTCUSDT', 'GASUSDT', 'GLMUSDT', 'PROMUSDT', 'QKCUSDT', 'UFTUSDT', 'IDUSDT', 'ARBUSDT', 'LOOMUSDT', 'OAXUSDT', 'RDNTUSDT', 'EDUUSDT', 'SUIUSDT', 'AERGOUSDT', 'PEPEUSDT', 'FLOKIUSDT', 'ASTUSDT', 'SNTUSDT', 'COMBOUSDT', 'MAVUSDT', 'PENDLEUSDT', 'ARKMUSDT', 'WLDUSDT', 'SEIUSDT', 'CYBERUSDT']
-    interval_mh = ['1m','3m', '5m', '15m', '1h','4h']
-    # interval_mh = ['5m', '15m', '1h','4h']
-
-
+    interval_mh = ['1h','6h','12h','1d','2d']
+    
+    delay_mh = [0,30,45,60,90]
+    
     sub_array_size = 100
-    step = 3
+    
     
     def runServer(self):
         
@@ -432,6 +432,7 @@ def get_candles_3m(symbol, down, up):
 def get_sub_candels(subsymbol, interval,pi, proxiesarr, ipstr):
     url = "https://api.binance.com/api/v3/ticker"
     api_url = f"{url}?symbols={subsymbol}&windowSize={interval}"
+    
     try:
     # Send the GET request
         
@@ -463,7 +464,7 @@ def get_sub_candels(subsymbol, interval,pi, proxiesarr, ipstr):
             # Process or use the ticker data as per your requirements
             
             remaining_weight = response.headers.get('X-MBX-USED-WEIGHT')
-            print(f"Remaining weight: {remaining_weight}", ipstr[pi-1])
+            # print(f"Remaining weight: {remaining_weight}", ipstr[pi-1])
         else:
             save_err_log(str(response.status_code),"Binance API - " + url + " Proxy : " + ipstr[pi-1],"Failed to fetch candles.")
             print(f"API request failed with status code: {response.status_code}")
@@ -476,8 +477,32 @@ def get_sub_candels(subsymbol, interval,pi, proxiesarr, ipstr):
         save_err_log("Exception","Binance API - " + url + " Proxy : " + ipstr[pi-1],f"An error occurred: RequestException")
         print(f"An error occurred: {e}")
 
-
-def get_candles(symobls, pi, proxiesarr):
+def get_h_changedata(index):
+    start_index = 0
+    pi = 0
+    count = 0
+    array_count = int(len(cryptoServerModule.all_symbols)/cryptoServerModule.sub_array_size)+1
+    while True:
+        proxyurl, cmckeys, h1_downdelta_s, h1_updelta_s, m3_downdelta_s,m3_updelta_s, priceperiod, h1period, m3period, lsperiod, cmperiod  = get_sys_settings()
+        proxies = proxyurl
+        sub_array = []
+        for i in range(cryptoServerModule.sub_array_size):
+            sub_array.append(cryptoServerModule.all_symbols[(start_index + i) % len(cryptoServerModule.all_symbols)])
+        
+        
+        get_candles(sub_array, pi, proxies, cryptoServerModule.interval_mh[index])
+        count+=1
+        pi = (pi+1)%(len(proxies)+1)
+        
+        start_index = (start_index + cryptoServerModule.sub_array_size) % len(cryptoServerModule.all_symbols)
+        if count>array_count and index>0:
+            
+            time.sleep(cryptoServerModule.delay_mh[index]*60)
+            print("Get " + cryptoServerModule.interval_mh[index] + " change : ", datetime.datetime.now())
+            start_index = 0
+            count=0
+        
+def get_candles(symobls, pi, proxiesarr, interval):
     
     # symbols = all_symbols[0:100]
     
@@ -485,17 +510,10 @@ def get_candles(symobls, pi, proxiesarr):
     ipstr = ["Proxy1", "Proxy2", "Proxy3", "Proxy4", "Proxy5", "local"]
     symbols_param = "[" + ",".join(f'"{symbol}"' for symbol in symobls) + "]"
     encoded_symbols_param = urllib.parse.quote(symbols_param)
-    can_threadings = []
-    for interval in cryptoServerModule.interval_mh:
-    # Set the windowSize
-        can_thread = threading.Thread(target=get_sub_candels, args=(encoded_symbols_param,interval,pi,proxiesarr,ipstr,))
-        can_thread.start()
-        can_threadings.append(can_thread)
-        pi = (pi+1)%(len(proxiesarr)+1)
-    for tr in can_threadings:
-        tr.join()
-        # Set the API endpoint URL
-        
+    
+    get_sub_candels(encoded_symbols_param,interval,pi,proxiesarr,ipstr)
+    
+    pi = (pi+1)%(len(proxiesarr)+1)
 
 def save_err_log(code, type, data):
     cnx = connect_mysql()
@@ -517,34 +535,25 @@ def save_err_log(code, type, data):
 def get_candles_mh():
     proxyurl, cmckeys, h1_downdelta_s, h1_updelta_s, m3_downdelta_s,m3_updelta_s, priceperiod, h1period, m3period, lsperiod, cmperiod  = get_sys_settings()
     proxies = proxyurl
-    get_all_candles_h(cryptoServerModule.all_candles)
+    # get_all_candles_h(cryptoServerModule.all_candles)
     
-    get_all_candles_3m(cryptoServerModule.all_candles)
+    # get_all_candles_3m(cryptoServerModule.all_candles)
+    for i in range(len(cryptoServerModule.interval_mh)):
+            if i>0:
+                print("Get " + cryptoServerModule.interval_mh[i] + "change : ", datetime.datetime.now())
+            h_thread = threading.Thread(target=get_h_changedata, args=(i,))
+            h_thread.start()
     
-    start_time = datetime.datetime.now()
-    start_index = 0
     pi = 0
     while True:
         proxyurl, cmckeys, h1_downdelta_s, h1_updelta_s, m3_downdelta_s,m3_updelta_s, priceperiod, h1period, m3period, lsperiod, cmperiod  = get_sys_settings()
         proxies = proxyurl
-        end_time = datetime.datetime.now()
-        if((end_time - start_time).seconds > h1period):
-            get_all_candles_h(cryptoServerModule.all_candles)
-        if((end_time - start_time).seconds > m3period):            
-            get_all_candles_3m(cryptoServerModule.all_candles)
-            
-        start_time = end_time
-            
-        sub_array = []
-        for i in range(cryptoServerModule.sub_array_size):
-            sub_array.append(cryptoServerModule.all_symbols[(start_index + i * cryptoServerModule.step) % len(cryptoServerModule.all_symbols)])
         
         get_fundingRate(pi, proxies)
         # pi = (pi+1)%(len(proxies)+1)
-        get_candles(sub_array, pi, proxies)
-        pi = (pi+len(cryptoServerModule.interval_mh))%(len(proxies)+1)
         
-        start_index = (start_index + cryptoServerModule.sub_array_size + 1) % len(cryptoServerModule.all_symbols)
+        pi = (pi+1)%(len(proxies)+1)
+        
         time.sleep(cmperiod)
 def check_user():
     while True:
@@ -603,7 +612,7 @@ def get_fundingRate(pi, proxiesarr):
         
         if response.status_code == 200:
             
-            print(f"Funding rate", ipstr[pi-1])
+            # print(f"Funding rate", ipstr[pi-1])
             # Parse the response JSON
             funding_rates = response.json()
             
@@ -639,8 +648,8 @@ def get_fundingRate(pi, proxiesarr):
         time.sleep(60)    
 def get_ago_pricedata(cur):
    
-    ago1 = ago3 = ago5 = None
-    isok1 = isok3 = isok5 = False
+    ago1 = ago3 = ago5 = ago15=None
+    isok1 = isok3 = isok5 = isok15 = False
     for pricedata in cryptoServerModule.all_pricedata:
         if (isok1 is False and (cur - pricedata['created_on']).total_seconds() )> 1*60:
             if (cur - pricedata['created_on']).total_seconds() < 1*60+5:
@@ -654,9 +663,14 @@ def get_ago_pricedata(cur):
             if (cur - pricedata['created_on']).total_seconds() < 5*60+5:
                 ago5 = pricedata
                 isok5 = True
+                
+        if (isok15 is False and (cur - pricedata['created_on']).total_seconds()) > 15*60:
+            if (cur - pricedata['created_on']).total_seconds() < 15*60+5:
+                ago15 = pricedata
+                isok15 = True
                 break
             
-    return ago1, ago3, ago5
+    return ago1, ago3, ago5, ago15
         
 
 def get_price(proxiesarr):
@@ -667,7 +681,7 @@ def get_price(proxiesarr):
     
     while True:
         pi=(pi+1)%(len(proxiesarr)+1)
-        
+        pi=0
         try:
         # Send the GET request
             starttime = datetime.datetime.utcnow()
@@ -691,10 +705,10 @@ def get_price(proxiesarr):
                     new_pricedata[pricedata['symbol']] = pricedata['price']
                     
                 cryptoServerModule.all_pricedata.insert(0,new_pricedata)
-                if len(cryptoServerModule.all_pricedata)>360:
-                    cryptoServerModule.all_pricedata = cryptoServerModule.all_pricedata[:360]
+                if len(cryptoServerModule.all_pricedata)>16*60:
+                    cryptoServerModule.all_pricedata = cryptoServerModule.all_pricedata[:16*60]
                 
-                ago1, ago3, ago5 = get_ago_pricedata(created_on)
+                ago1, ago3, ago5, ago15 = get_ago_pricedata(created_on)
                     
                 ticker_data = response.json()
 
@@ -710,6 +724,8 @@ def get_price(proxiesarr):
                                 cryptoServerModule.all_candles[sindex]['3m'] = (float(data['price']) - float(ago3[data["symbol"]]))/float(ago3[data["symbol"]])*100
                             if ago5 is not None and data["symbol"] in ago5.keys():
                                 cryptoServerModule.all_candles[sindex]['5m'] = (float(data['price']) - float(ago5[data["symbol"]]))/float(ago5[data["symbol"]])*100
+                            if ago15 is not None and data["symbol"] in ago15.keys():
+                                cryptoServerModule.all_candles[sindex]['15m'] = (float(data['price']) - float(ago15[data["symbol"]]))/float(ago15[data["symbol"]])*100
 
 
                                 # print(agodata)
