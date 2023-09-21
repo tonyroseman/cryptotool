@@ -105,5 +105,9 @@
         home/cryptoServerModule.py
     -> updated contents
         update price, change module 1m, 3m, 5m
-        
+- commit version 'update-12'
+    -> updated app contents
+        home/cryptoServerModule.py
+    -> updated contents
+        update adjust12.doc
 </pre>
