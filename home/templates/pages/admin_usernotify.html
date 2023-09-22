@@ -35,7 +35,7 @@
                 <th rowspan="2" >Volume/<br>Market<br> cap</th>
                 <th rowspan="2" >Funding <br>rate <br>(%)</th>
                 <th rowspan="2" >Long <br>Short<br>Ratio</th>
-                <th colspan="9" >% change</th>
+                <th colspan="11" >% change</th>
 
                 
                 <!-- Add more table headers as needed -->
@@ -49,8 +49,10 @@
                 <th >1H</th>
                 <th >6H</th>
                 <th >12H</th>
-                <th >24H</th>
-                <th >48H</th>
+                <th >1D</th>
+                <th >2D</th>
+                <th >4D</th>
+                <th >7D</th>
                 <th >Sending Time</th>
                 
                 <!-- Add more table headers as needed -->
@@ -136,6 +138,10 @@
                     { data: '1d' ,
                         render: numberRender},
                     { data: '2d' ,
+                        render: numberRender},
+                    { data: '4d' ,
+                        render: numberRender},
+                    { data: '7d' ,
                         render: numberRender},
                     {
                         data: 'time'

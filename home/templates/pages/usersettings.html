@@ -23,7 +23,7 @@
 	{% csrf_token %}
 	<!-- [ sample-page ] start -->
 	
-	<div class="col-md-4" style="margin-top: 5px;">
+	<div class="col-md-3" style="margin-top: 5px;">
 		<div class="input-group">
 			<div class="input-group-prepend" >
 				<span class="input-group-text" >% Change 1'</span>
@@ -38,7 +38,7 @@
 			<input type="number" step=any class="form-control floatNumber" name="t1m" value="{{data.t1m}}">
 		</div>
 	</div>
-	<div class="col-md-4" style="margin-top: 5px;">
+	<div class="col-md-3" style="margin-top: 5px;">
 		<div class="input-group">
 			<div class="input-group-prepend" >
 				<span class="input-group-text" >% Change 3'</span>
@@ -54,7 +54,7 @@
 		</div>
 	</div>
 	
-	<div class="col-md-4" style="margin-top: 5px;">
+	<div class="col-md-3" style="margin-top: 5px;">
 		<div class="input-group">
 			<div class="input-group-prepend">
 				<span class="input-group-text" >% Change 5'</span>
@@ -70,7 +70,7 @@
 		</div>
 	</div>
 	
-	<div class="col-md-4" style="margin-top: 5px;">
+	<div class="col-md-3" style="margin-top: 5px;">
 		<div class="input-group">
 			<div class="input-group-prepend">
 				<span class="input-group-text" >% Change 15'</span>
@@ -86,7 +86,7 @@
 		</div>
 	</div>
 	
-	<div class="col-md-4" style="margin-top: 5px;">
+	<div class="col-md-3" style="margin-top: 5px;">
 		<div class="input-group">
 			<div class="input-group-prepend">
 				<span class="input-group-text" >% Change 1H</span>
@@ -102,7 +102,7 @@
 		</div>
 	</div>
 	
-	<div class="col-md-4" style="margin-top: 5px;">
+	<div class="col-md-3" style="margin-top: 5px;">
 		<div class="input-group">
 			<div class="input-group-prepend">
 				<span class="input-group-text" >% Change 6H</span>
@@ -117,7 +117,7 @@
 			<input type="number" step=any class="form-control" name="t6h" value="{{data.t6h}}">
 		</div>
 	</div>
-	<div class="col-md-4" style="margin-top: 5px;">
+	<div class="col-md-3" style="margin-top: 5px;">
 		<div class="input-group">
 			<div class="input-group-prepend">
 				<span class="input-group-text" >% Change 12H</span>
@@ -132,11 +132,13 @@
 			<input type="number" step=any class="form-control" name="t12h" value="{{data.t12h}}">
 		</div>
 	</div>
-	
-	<div class="col-md-4" style="margin-top: 5px;">
+	<div class="col-md-3" style="margin-top: 5px;">
+		
+	</div>
+	<div class="col-md-3" style="margin-top: 5px;">
 		<div class="input-group">
 			<div class="input-group-prepend">
-				<span class="input-group-text" >% Change 24H</span>
+				<span class="input-group-text" >% Change 1D</span>
 			</div>
 			<select class="custom-select" name="1d">
 				
@@ -149,10 +151,10 @@
 		</div>
 	</div>
 	
-	<div class="col-md-4" style="margin-top: 5px;">
+	<div class="col-md-3" style="margin-top: 5px;">
 		<div class="input-group">
 			<div class="input-group-prepend">
-				<span class="input-group-text" >% Change 48H</span>
+				<span class="input-group-text" >% Change 2D</span>
 			</div>
 			<select class="custom-select" name="2d">
 				
@@ -162,6 +164,36 @@
 				<option value="4" style="text-align: center;" {% if data.2d == "4" %}selected{% endif %}>&lt;=</option>
 			</select>
 			<input type="number" step=any class="form-control" name="t2d" value="{{data.t2d}}">
+		</div>
+	</div>
+	<div class="col-md-3" style="margin-top: 5px;">
+		<div class="input-group">
+			<div class="input-group-prepend">
+				<span class="input-group-text" >% Change 4D</span>
+			</div>
+			<select class="custom-select" name="4d">
+				
+				<option value="1" style="text-align: center;" {% if data.4d == "1" %}selected{% endif %}> &gt;</option>
+				<option value="2" style="text-align: center;" {% if data.4d == "2" %}selected{% endif %}> &lt; </option>
+				<option value="3" style="text-align: center;" {% if data.4d == "3" %}selected{% endif %}>&gt;=</option>
+				<option value="4" style="text-align: center;" {% if data.4d == "4" %}selected{% endif %}>&lt;=</option>
+			</select>
+			<input type="number" step=any class="form-control" name="t4d" value="{{data.t4d}}">
+		</div>
+	</div>
+	<div class="col-md-3" style="margin-top: 5px;">
+		<div class="input-group">
+			<div class="input-group-prepend">
+				<span class="input-group-text" >% Change 7D</span>
+			</div>
+			<select class="custom-select" name="7d">
+				
+				<option value="1" style="text-align: center;" {% if data.7d == "1" %}selected{% endif %}> &gt;</option>
+				<option value="2" style="text-align: center;" {% if data.7d == "2" %}selected{% endif %}> &lt; </option>
+				<option value="3" style="text-align: center;" {% if data.7d == "3" %}selected{% endif %}>&gt;=</option>
+				<option value="4" style="text-align: center;" {% if data.7d == "4" %}selected{% endif %}>&lt;=</option>
+			</select>
+			<input type="number" step=any class="form-control" name="t7d" value="{{data.t7d}}">
 		</div>
 	</div>
 	

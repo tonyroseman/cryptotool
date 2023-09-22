@@ -32,7 +32,7 @@
                     <th rowspan="2" >Volume/<br>Market<br> cap</th>
                     <th rowspan="2" >Funding <br>rate <br>(%)</th>
                     <th rowspan="2" >Long <br>Short<br>Ratio</th>
-                    <th colspan="9" >% change</th>
+                    <th colspan="11" >% change</th>
                     
                     
                     
@@ -49,8 +49,10 @@
                     <th >1H</th>
                     <th >6H</th>
                     <th >12H</th>
-                    <th >24H</th>
-                    <th >48H</th>
+                    <th >1D</th>
+                    <th >2D</th>
+                    <th >4D</th>
+                    <th >7D</th>
                     
                     
                     <!-- Add more table headers as needed -->
@@ -120,27 +122,7 @@
                 
             }
         }
-        function arrowRenderer(data, type, row) {
-            if(data != undefined){
-                if(row.ffh4BTC != undefined){
-                    
-                    if (row.ffh4BTC == -1){
-                        return  '<font color="green">▲ </font>' + data;
-                    }
-                    // Return the cell content with the specified background color
-                        
-                    else if(row.ffh4BTC == 1) {
-                        return '<font color="red">▼  </font>' + data;
-                    }   
-                        
-                    else
-                        return '&nbsp;&nbsp;&nbsp;&nbsp;' + ' ' + data;
-                }
-                else{
-                    return '&nbsp;&nbsp;&nbsp;&nbsp;' + ' ' + data;
-                }
-            }
-        }
+        
         coindataTable = new DataTable('#myDataTable', {
             ajax: '{% url 'get_coindata_all'%}',
             columns: [
@@ -179,6 +161,10 @@
                     { data: '1d' ,
                         render: numberRender},
                     { data: '2d' ,
+                        render: numberRender},
+                    { data: '4d' ,
+                        render: numberRender},
+                    { data: '7d' ,
                         render: numberRender},
                     
             ]
