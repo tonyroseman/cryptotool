@@ -126,4 +126,17 @@
         update all related pages
         update all h module refreshing data period
 
+- commit version 'update-14'
+    -> updated app contents
+        home/cryptoServerModule.py
+        home/templates/pages/admin_usernotify.html
+        home/templates/pages/index.html
+        home/templates/pages/records.html
+        home/templates/pages/setting.html
+        home/templates/pages/usernotify.html
+        home/templates/pages/usersettings.html
+    -> updated contents
+        update adjusts13.doc
+        
+
 </pre>
