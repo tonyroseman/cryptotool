@@ -137,6 +137,13 @@
         home/templates/pages/usersettings.html
     -> updated contents
         update adjusts13.doc
-        
-
+    -> additional app updated contents
+        home/templates/admin/systemsetting.html
+- commit version 'update-15'
+    -> updated app contents
+        home/cryptoServerModule.py
+        home/templates/admin/systemsetting.html
+    -> updated contents
+        update cmc error
+    
 </pre>
