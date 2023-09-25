@@ -64,14 +64,18 @@ def get_top_symbols_current():
     proxyurl,cmckeys,  priceperiod, delays, lsperiod, cmperiod  = get_sys_settings()
     
     ki = 0
+    pi = 0
     while True:
-
+        
         parameters = {
             "start": 1,         # Start index of coins
             "limit": 1000,      # Number of coins to retrieve (max is 5000)
             "convert": "USD",   # Currency to convert prices and market caps to
         }
-
+        proxies = {
+                'http': proxyurl[pi],
+                'https': proxyurl[pi]
+            }
         headers = {
             "X-CMC_PRO_API_KEY": cmckeys[ki],
             "Accepts": "application/json",
@@ -80,7 +84,7 @@ def get_top_symbols_current():
             
             # proxies = {'http': "socks5://myproxy:9191"}
             # socks5://14a6f067eab2a:d4516c8c50@178.253.215.162:12324
-            response = requests.get(url, params=parameters, headers=headers)
+            response = requests.get(url, params=parameters, headers=headers, proxies=proxies)
             
            
             
@@ -128,11 +132,13 @@ def get_top_symbols_current():
                     except ValueError:
                         continue
                 ki = (ki+1)%len(cmckeys)
+                pi = (pi+1)%len(proxyurl)
                 # print("price : ",all_candles[0])
                 time.sleep(priceperiod)
             else:
                 save_err_log(response.status_code,"CoinMarketCap API - " + cmckeys[ki],"Failed to retrieve data.")
-                print("Failed to retrieve data. Status code:", response.status_code)
+                print("cmc key " + cmckeys[ki] + "Key Failed to retrieve data. Status code:", response.status_code)
+                print("cmc " + str(ki+1) + "Key Failed to retrieve data. Status code:", response.json() )
                 ki = (ki+1)%len(cmckeys)
 
         except requests.exceptions.ConnectTimeout:
@@ -685,7 +691,7 @@ def get_price(proxiesarr):
     while True:
         
         pi=(pi+1)%(len(proxiesarr)+1)
-        pi=0
+        
         try:
         # Send the GET request
             starttime = datetime.datetime.utcnow()
@@ -737,8 +743,9 @@ def get_price(proxiesarr):
                     except ValueError:
                         continue
                 endtime = datetime.datetime.utcnow()
-                
-                time.sleep(max(0,priceperiod-(endtime-starttime).total_seconds()))
+                current_weight = response.headers.get('X-MBX-USED-WEIGHT')
+                print(f"Current weight: {current_weight}", ipstr[pi-1])
+                time.sleep(max(0,1-(endtime-starttime).total_seconds()))
                 # Process or use the ticker data as per your requirements
                 
                 
