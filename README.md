@@ -145,6 +145,32 @@
         home/templates/admin/systemsetting.html
     -> updated contents
         update cmc error
+
+- commit version 'update-16'
+    -> updated app contents
+        home/models.py
+        home/settingsModule.py
+        home/templates/includes/head.html
+        home/templates/pages/aboutus.html
+        home/templates/pages/admin_usernotify.html
+        home/templates/pages/index.html
+        home/templates/pages/records.html
+        home/templates/pages/setting.html
+        home/templates/pages/usernotify.html
+        home/urls.py
+        home/views.py
+        static/assets/css/style.css
+        static/assets/js/treeview.js
+    -> updated contents
+        update advanced settings demo
+    -> Notes
+        After update app contents on pc or VPS, run follow commands in cmd of cryptotool directory.
+            python .\manage.py makemigrations
+            python manage.py migrate
+        And then
+            run "python .\manage.py runserver" on PC
+            restart Web Server of our app on VPS.
+        advanced settings demo can test on About us page.
     
         
 </pre>
