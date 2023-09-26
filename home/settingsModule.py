@@ -58,10 +58,14 @@ class SettingsModule:
                     if node['id'] == '0':
                         return expressions[0]
                     else:
+                        
                         expression = "(" + expressions[0]
                         for i in range(1,len(expressions)):
                             if expressions[i] != "":
-                                expression = expression + " " + self.operator_string[int(node['cond_op'])-1] + " " + expressions[i]
+                                if expression != "" and expression != "(":
+                                    expression = expression + " " + self.operator_string[int(node['cond_op'])-1] + " " + expressions[i]
+                                else:
+                                    expression = expression + expressions[i]
                         expression = expression + " )"   
                         print(expression) 
                         return expression
