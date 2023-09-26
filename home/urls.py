@@ -52,6 +52,8 @@ urlpatterns = [
         template_name='accounts/password_change_done.html'
     ), name="password_change_done" ),
     path('usersettings/<int:userid>/', views.user_settings, name='user_settings'),
+    path('user_advanced_settings/<int:userid>/', views.user_advanced_settings, name='user_advanced_settings'),
+    path('action_advanced_settings', views.action_advanced_settings, name='action_advanced_settings'),
     path('admin_usernotify/<int:userid>/', views.admin_usernotify, name='admin_usernotify'),
     path('usernotify/<int:userid>/', views.usernotify, name='usernotify'),
     re_path(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',

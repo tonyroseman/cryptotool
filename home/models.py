@@ -33,6 +33,15 @@ class UserSettingsData(models.Model):
     def save(self, *args, **kwargs):
         super(UserSettingsData, self).save(*args, **kwargs)
     class Meta:
+        ordering = ['userid']
+class UserAdvancedSettingsData(models.Model):
+    id = models.AutoField(primary_key=True)
+    userid = models.ForeignKey(CustomUser, on_delete=models.CASCADE)    
+    data = models.TextField()
+
+    def save(self, *args, **kwargs):
+        super(UserAdvancedSettingsData, self).save(*args, **kwargs)
+    class Meta:
         ordering = ['userid']  
 class SystemSettingsData(models.Model):
     id = models.AutoField(primary_key=True)

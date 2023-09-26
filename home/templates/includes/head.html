@@ -20,15 +20,21 @@
 <link rel="icon" href="https://appsrv1-147a1.kxcdn.com/gradient/images/favicon.ico" type="image/x-icon">
 <link rel="canonical" href="https://appseed.us/admin-dashboards/django-dashboard-gradientable">
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
-	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.dataTables.min.css">
+<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
 <!-- vendor css -->
 <link rel="stylesheet" href="https://appsrv1-147a1.kxcdn.com/gradient/css/style.min.css">
+
 <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap4.min.js"></script> -->
 <script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.7.0.js"></script>
-	<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-	<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
+<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
+<!-- <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script> -->
+<script type="text/javascript" language="javascript" src="{% static 'assets/js/treeview.js' %}"></script>
+
 <!-- <script src="https://appsrv1-147a1.kxcdn.com/gradient/js/plugins/bootstrap.min.js"></script> -->
 <!-- <script src="https://appsrv1-147a1.kxcdn.com/gradient/js/pcoded.min.js"></script> -->
 <!-- <script src="https://appsrv1-147a1.kxcdn.com/gradient/js/vendor-all.min.js"></script> -->
@@ -85,6 +91,30 @@
 	}
 	table.dataTable thead th, table.dataTable thead td, table.dataTable tfoot th, table.dataTable tfoot td {
 		text-align: center;
+	}
+	.custom-select {
+		display: inline-block;
+		width: 100%;
+		height: calc(1.5em + .75rem + 2px);
+		padding: .375rem 1.95rem .375rem .95rem;
+		font-size: 14px;
+		font-weight: 400;
+		line-height: 1.5;
+		color: #495057;
+		vertical-align: middle;
+		background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3e%3cpath fill='%23343a40' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e") no-repeat right .95rem center/8px 10px;
+		background-color: #fff;
+		border: 1px solid #ced4da;
+		border-radius: 5px;
+		-webkit-appearance: none;
+		-moz-appearance: none;
+		appearance: none;
+	}
+	.fade {
+		opacity: 1;
+		-webkit-transition: opacity .15s linear;
+		-o-transition: opacity .15s linear;
+		transition: opacity .15s linear;
 	}
 </style>
 

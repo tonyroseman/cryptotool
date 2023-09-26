@@ -416,7 +416,7 @@
 	function checkData() {
             // Make an AJAX request to get updated data from the server
 		$.ajax({
-			url: '{% url 'get_coindata_user'%}', // Replace with your server endpoint URL
+			url: '{% url "get_coindata_user"%}', // Replace with your server endpoint URL
 			type: 'GET',
 			dataType: 'json',
 			

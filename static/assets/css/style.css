@@ -2449,7 +2449,7 @@ progress {
     display: block;
     width: 100%;
     padding: 0.375rem 0.95rem;
-    font-size: 0.875rem;
+    font-size: 14px;
     font-weight: 400;
     line-height: 1.5;
     color: #495057;
@@ -2583,7 +2583,7 @@ progress {
 .form-control-sm {
     min-height: calc(1.5em + 0.5rem + 2px);
     padding: 0.25rem 0.5rem;
-    font-size: 0.875rem;
+    font-size: 14px;
     border-radius: 5px;
 }
 
@@ -2659,7 +2659,7 @@ textarea.form-control-lg {
     width: 100%;
     padding: 0.375rem 2.85rem 0.375rem 0.95rem;
     -moz-padding-start: calc(0.95rem - 3px);
-    font-size: 0.875rem;
+    font-size: 14px;
     font-weight: 400;
     line-height: 1.5;
     color: #495057;
@@ -2706,7 +2706,7 @@ textarea.form-control-lg {
     padding-top: 0.25rem;
     padding-bottom: 0.25rem;
     padding-left: 0.5rem;
-    font-size: 0.875rem;
+    font-size: 14px;
     border-radius: 5px;
 }
 
@@ -3069,7 +3069,7 @@ textarea.form-control-lg {
     display: flex;
     align-items: center;
     padding: 0.375rem 0.95rem;
-    font-size: 0.875rem;
+    font-size: 14px;
     font-weight: 400;
     line-height: 1.5;
     color: #495057;
@@ -3094,7 +3094,7 @@ textarea.form-control-lg {
 .input-group-sm > .input-group-text,
 .input-group-sm > .btn {
     padding: 0.25rem 0.5rem;
-    font-size: 0.875rem;
+    font-size: 14px;
     border-radius: 5px;
 }
 
@@ -3328,7 +3328,7 @@ textarea.form-control-lg {
     background-color: transparent;
     border: 1px solid transparent;
     padding: 0.375rem 0.95rem;
-    font-size: 0.875rem;
+    font-size: 14px;
     border-radius: 2px;
     transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
@@ -3950,7 +3950,7 @@ textarea.form-control-lg {
 
 .btn-sm, .btn-group-sm > .btn {
     padding: 0.25rem 0.5rem;
-    font-size: 0.875rem;
+    font-size: 14px;
     border-radius: 2px;
 }
 
@@ -4295,7 +4295,7 @@ textarea.form-control-lg {
     display: block;
     padding: 0.5rem 1rem;
     margin-bottom: 0;
-    font-size: 0.875rem;
+    font-size: 14px;
     color: #6c757d;
     white-space: nowrap;
 }

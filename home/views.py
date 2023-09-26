@@ -23,9 +23,11 @@ import datetime
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import user_passes_test
 from .models import UserSettingsData
+from .models import UserAdvancedSettingsData
 from .models import SystemSettingsData
 from .models import CustomUser
 from .coinmodule import CryptoModule
+from .settingsModule import SettingsModule
 from .models import UserNotifyData
 from .models import ErrorLog
 from .models import TelegramList
@@ -389,6 +391,125 @@ def user_settings(request, userid):
     
     return render(request, 'pages/usersettings.html', context)
 @login_required(login_url='/accounts/auth-signin')
+@user_passes_test(is_user_active, login_url='/accounts/auth-signin')
+def user_advanced_settings(request, userid):
+    
+    treedata = None
+    expression = None
+    try:
+      user = CustomUser.objects.get(id=userid)
+      advancedsettingsdata = UserAdvancedSettingsData.objects.get(userid=userid)
+      
+      data = json.loads(advancedsettingsdata.data.replace("'", "\""))
+      sm = SettingsModule(settingdata=data)
+      treedata = sm.getTreeData()
+      expression = sm.getExpression()
+      expression = " ".join(expression.split())
+    except UserAdvancedSettingsData.DoesNotExist:
+      try:
+          
+          sm = SettingsModule()
+          data = sm.getRawData()
+          advancedsettingsdata = UserAdvancedSettingsData()
+          advancedsettingsdata.data = str(data)
+          advancedsettingsdata.userid = user
+          advancedsettingsdata.save()
+          treedata = sm.getTreeData()
+          expression = sm.getExpression()
+          expression = " ".join(expression.split())
+      except UserSettingsData.DoesNotExist:
+          data = []
+    context = {        
+        'data': treedata,
+        'expression':expression
+    }
+    
+    return JsonResponse (context, status = 200)
+@login_required(login_url='/accounts/auth-signin')
+@user_passes_test(is_user_active, login_url='/accounts/auth-signin')
+def action_advanced_settings(request):
+    
+    action = request.GET.get('action')
+    print(request.GET)
+    msg = "OK"
+    try:
+      
+      advancedsettingsdata = UserAdvancedSettingsData.objects.get(userid=request.user)
+      
+      data = json.loads(advancedsettingsdata.data.replace("'", "\""))
+      sm = SettingsModule(settingdata=data)
+      if action == '1' : # change operator
+        result = sm.changeGroupOperator(request.GET.get('nodeId'),request.GET.get('op'))
+        if result == 1:
+          rawdata = sm.getRawData()
+          advancedsettingsdata.data = str(rawdata)
+          advancedsettingsdata.save()
+          msg = "Changed group operator successfully."
+        else:
+          msg = "Change group operator error" 
+      if action == '2' : # add group
+        result = sm.addGroup(request.GET.get('nodeId'),request.GET.get('op'))
+        if result == 1:
+          rawdata = sm.getRawData()
+          advancedsettingsdata.data = str(rawdata)
+          advancedsettingsdata.save()
+          msg = "Add group successfully."
+        else:
+          msg = "Add group error" 
+      if action == '3' : # delete group
+        result = sm.deleteGroup(request.GET.get('nodeId'))
+        if result == 1:
+          rawdata = sm.getRawData()
+          advancedsettingsdata.data = str(rawdata)
+          advancedsettingsdata.save()
+          msg = "Delete group successfully."
+        else:
+          msg = "Delete group error"
+      if action == '4' : # add condition
+        result = sm.addCondition(request.GET.get('nodeId'),request.GET.get('cond_type'),request.GET.get('glt'),request.GET.get('cvalue'))
+        if result == 1:
+          rawdata = sm.getRawData()
+          advancedsettingsdata.data = str(rawdata)
+          advancedsettingsdata.save()
+          msg = "Add Condition successfully."
+        else:
+          msg = "Add Condition error" 
+      if action == '5' : # change condition
+        result = sm.changeCondition(request.GET.get('nodeId'),request.GET.get('cond_type'),request.GET.get('glt'),request.GET.get('cvalue'))
+        if result == 1:
+          rawdata = sm.getRawData()
+          advancedsettingsdata.data = str(rawdata)
+          advancedsettingsdata.save()
+          msg = "Change Condition successfully."
+        else:
+          msg = "Change Condition error"
+      if action == '6' : # delete condition
+        result = sm.deleteCondition(request.GET.get('nodeId'))
+        if result == 1:
+          rawdata = sm.getRawData()
+          advancedsettingsdata.data = str(rawdata)
+          advancedsettingsdata.save()
+          msg = "Delete Condition successfully."
+        else:
+          msg = "Delete Condition error" 
+      if action == '7' : # delete condition
+        result = sm.makeConditionToGroup(request.GET.get('nodeId'),request.GET.get('op'))
+        if result == 1:
+          rawdata = sm.getRawData()
+          advancedsettingsdata.data = str(rawdata)
+          advancedsettingsdata.save()
+          msg = "Make Condition to Group successfully."
+        else:
+          msg = "Make Condition to Group error" 
+    except UserAdvancedSettingsData.DoesNotExist:
+      msg = "Error"
+    
+    context = {        
+        'msg': msg,
+    }
+    
+    return JsonResponse (context, status = 200)
+@login_required(login_url='/accounts/auth-signin')
 def admin_usernotify(request, userid):
     
     data = []
@@ -511,8 +632,10 @@ def records(request):
     
     return render(request, 'pages/records.html')
 def aboutus(request):
-    
-    return render(request, 'pages/aboutus.html')
+    context = {  
+        'userid': request.user.id,
+    }
+    return render(request, 'pages/aboutus.html', context)
 def abouttlgnoti(request):
     
     return render(request, 'pages/abouttlgnoti.html')
