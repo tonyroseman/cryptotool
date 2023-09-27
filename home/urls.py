@@ -21,6 +21,7 @@ urlpatterns = [
     path('get_error_log/', views.get_error_log, name = 'get_error_log'),
     path('set_deactive_user/', views.set_deactive_user, name = 'set_deactive_user'),
     path('setting_page/', views.setting_page, name = 'setting_page'),
+    path('advanced_settings/', views.advanced_settings, name = 'advanced_settings'),
     path('admin/users/console/', views.user_console, name = 'user_console'),
     path('admin/users/website/', views.user_website, name = 'user_website'),
     path('admin/system_setting', views.system_setting, name = 'system_setting'),

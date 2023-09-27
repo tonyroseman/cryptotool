@@ -21,9 +21,19 @@
     {% endif %}
 
   {% if request.user.is_authenticated and not request.user.is_superuser %}
+  <li class="nav-item pcoded-hasmenu">
+    <a href="#" class="nav-link "><span class="pcoded-micon"><i class="feather icon-settings"></i></span><span
+      class="pcoded-mtext">Settings</span></a>
+    <ul class="pcoded-submenu">
+      <li class="nav-item"><a href="{% url 'setting_page' %}" class="nav-link "><span class="pcoded-micon"><i
+        class="feather icon-check-circle"></i></span><span class="pcoded-mtext">Simple</span></a></li>
+      <li class="nav-item"><a href="{% url 'advanced_settings' %}" class="nav-link "><span class="pcoded-micon"><i
+        class="feather icon-sliders"></i></span><span class="pcoded-mtext">Advanced</span></a></li>
+      
+    </ul>
+  </li>
   
-  <li class="nav-item"><a href="{% url 'setting_page' %}" class="nav-link "><span class="pcoded-micon"><i
-    class="feather icon-settings"></i></span><span class="pcoded-mtext">Settings</span></a></li>
+
   
   <li class="nav-item">
     <a href="{% url 'records' %}" class="nav-link "><span class="pcoded-micon"><i
@@ -48,8 +58,10 @@
     <a href="#" class="nav-link "><span class="pcoded-micon"><i class="feather icon-lock"></i></span><span
         class="pcoded-mtext">Authentication</span></a>
     <ul class="pcoded-submenu">
-      <li><a href="{% url 'auth_signup' %}" target="_blank">Sign up</a></li>
-      <li><a href="{% url 'auth_signin' %}" target="_blank">Sign in</a></li>
+      <li class="nav-item"><a href="{% url 'auth_signup' %}" target="_blank" class="nav-link "><span class="pcoded-micon"><i
+        class="feather icon-user-plus"></i></span><span class="pcoded-mtext">Sign up</span></a></li>
+      <li class="nav-item"><a href="{% url 'auth_signin' %}" target="_blank" class="nav-link "><span class="pcoded-micon"><i
+        class="feather icon-log-in"></i></span><span class="pcoded-mtext">Sign in</span></a></li>
     </ul>
   </li>
   

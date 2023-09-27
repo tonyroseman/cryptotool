@@ -45,9 +45,14 @@ class SettingsModule:
         return self.makeExpression(self.alldata[0])
     
     def makeExpression(self, node):
+        op_font_start = "<font color ='#ff0000'>"
+        op_font_end = "</font>"
+        q_font_start = "<font color ='#0000ff'>"
+        q_font_end = "</font>"
+
         expression = ""
         if node['isLeaf'] == 1:
-            print(node['text'])
+            
             return node['text']
         else:
             if 'nodes' in node:
@@ -59,17 +64,17 @@ class SettingsModule:
                         return expressions[0]
                     else:
                         
-                        expression = "(" + expressions[0]
+                        expression = q_font_start + "(" + q_font_end + expressions[0]
                         for i in range(1,len(expressions)):
                             if expressions[i] != "":
                                 if expression != "" and expression != "(":
-                                    expression = expression + " " + self.operator_string[int(node['cond_op'])-1] + " " + expressions[i]
+                                    expression = expression + " " + op_font_start+ self.operator_string[int(node['cond_op'])-1] +op_font_end+ " " + expressions[i]
                                 else:
                                     expression = expression + expressions[i]
-                        expression = expression + " )"   
-                        print(expression) 
+                        expression = expression + q_font_start + " )" + q_font_end   
+                        
                         return expression
-        print(expression)
+        
         return expression
         
     def findNode(self, nodeid, startNode):
@@ -107,9 +112,9 @@ class SettingsModule:
                             nodes = parentNode['nodes']
                             del nodes[groupNode['index']]
                             index = 0
-                            for node in nodes:
-                                node['id'] = node['parent'] + "_" + str(index)
-                                node['index'] = index
+                            for tnode in nodes:
+                                tnode['id'] = parentNode['id'] + "_" + str(index)
+                                tnode['index'] = index
                                 index += 1
                             parentNode['nodes'] = nodes
                             return 1
@@ -129,9 +134,9 @@ class SettingsModule:
                             nodes = parentNode['nodes']
                             del nodes[condNode['index']]
                             index = 0
-                            for node in nodes:
-                                node['id'] = node['parent'] + "_" + str(index)
-                                node['index'] = index
+                            for tnode in nodes:
+                                tnode['id'] = parentNode['id'] + "_" + str(index)
+                                tnode['index'] = index
                                 index += 1
                             parentNode['nodes'] = nodes
                             return 1
@@ -259,6 +264,74 @@ class SettingsModule:
                             parentNode['nodes'] = nodes
                             return 1
         return 0
+    def isAllMatch(self,coin):
+        if 'nodes' in self.alldata[0]:
+            if len(self.alldata[0]['nodes']) > 0:
+                return self.isMatch(self.alldata[0]['nodes'][0],coin)
+
+        return False
+    def isMatchCondition(self,node, coin):
+        operand = int(node['op'])
+        key = node['key']
+        value = node['value']
+        flag = False
+        if(key in coin):
+            if operand == 1:
+                flag = coin[key] > value
+            elif operand == 2:
+                flag = coin[key] < value
+            elif operand == 3:
+                flag = coin[key] >= value
+            elif operand == 4:    
+                flag = coin[key] <= value
+        return flag
+    def isMatch(self,node,coin):
+        
+        matched = False
+        if node['isLeaf'] == 1:
+            return self.isMatchCondition(node, coin)
+        else:
+            
+            if int(node['cond_op']) == 1:
+                matched = True
+            else:
+                matched - False
+            if 'nodes' in node:
+                allmatched = []
+                for pnode in node['nodes']:
+                    allmatched.append(self.isMatch(pnode, coin))
+                if len(node['nodes']) > 0:
+                    if node['id'] == '0':
+                        return allmatched[0]
+                    else:
+                        
+                        matched = allmatched[0]
+                        for i in range(1,len(allmatched)):
+                            if int(node['cond_op']) == 1:
+                                matched = matched and allmatched[i]
+                            else:
+                                matched = matched or allmatched[i]
+                        return matched
+                else:
+                    return matched
+            else:
+                return matched
+        
+    def getAllMatchedCoins(self, coins):
+        matchedcoins = []
+        count = 0
+        for coin in coins:
+            if self.isAllMatch(coin):
+                coin['ad'] = 1
+                count+=1
+            else:
+                coin['ad'] = 0
+            matchedcoins.append(coin)
+        print(count)
+        return matchedcoins
+
+
+
             
     
 

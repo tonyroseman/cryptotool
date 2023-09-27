@@ -143,9 +143,13 @@ def get_coindata_all(request):
 def get_coindata_user(request):
   
   if request.method == "GET":
-    
+    advancedsettingsdata = UserAdvancedSettingsData.objects.get(userid=request.user)
+      
+    data = json.loads(advancedsettingsdata.data.replace("'", "\""))
+    sm = SettingsModule(settingdata=data)
     api = CryptoModule()
-    coins = api.get_user_coins(request.user, limit=int(request.user.limitcount))
+    coins = api.get_user_coins(request.user, sm,limit=int(request.user.limitcount))
+    coins = sm.getAllMatchedCoins(coins)
     usersettingsdata = UserSettingsData.objects.filter(userid=request.user)
     settings = []
     if(len(usersettingsdata) > 0):
@@ -280,6 +284,7 @@ def save_settings(request):
     
     
     context = {  
+        'userid': request.user.id,
         'data': json.loads(usersettingsdata.data.replace("'", "\"")),
         'tlgactive':request.user.tlgactive,
         'alertMsg' : alertMsg
@@ -336,7 +341,13 @@ def disable_telegram(request):
     }
     return render(request, 'pages/setting.html', context)
 # Pages
-
+@login_required(login_url='/accounts/auth-signin')
+@user_passes_test(is_user_active, login_url='/accounts/auth-signin')
+def advanced_settings(request):
+  context = {  
+        'userid': request.user.id,
+    }
+  return render(request, 'pages/advanced_settings.html', context)
 @login_required(login_url='/accounts/auth-signin')
 @user_passes_test(is_user_active, login_url='/accounts/auth-signin')
 def user_profile(request):
@@ -362,6 +373,7 @@ def setting_page(request):
     except UserSettingsData.DoesNotExist:
       msg = 'Settings does not exist'
     context = {        
+        'userid': request.user.id,
         'data': data,
         'msg' : msg,
         'tlgactive':request.user.tlgactive,

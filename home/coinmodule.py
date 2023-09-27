@@ -4,15 +4,10 @@ import datetime
 import json
 from .models import CoinData
 from .models import UserSettingsData
-
-
-
-
-
-
+from .settingsModule import SettingsModule
 class CryptoModule:
     
-        
+    
     def get_top_coins(self, user,limit=1000):
         
         all_coindata= CoinData.objects.all()
@@ -30,7 +25,7 @@ class CryptoModule:
 
         
         return retcoins[0:limit]
-    def get_user_coins(self, user, limit=1000):
+    def get_user_coins(self, user, sm,limit=1000):
         
         all_coindata= CoinData.objects.all()
         all_coindata = all_coindata[0:limit]
