@@ -171,6 +171,22 @@
             run "python .\manage.py runserver" on PC
             restart Web Server of our app on VPS.
         advanced settings demo can test on About us page.
+
+- commit version 'update-17'
+    -> updated app contents
+        home/coinmodule.py
+        home/settingsModule.py
+        home/templates/includes/head.html
+        home/templates/includes/menu-list.html
+        home/templates/pages/aboutus.html
+        home/templates/pages/advanced_settings.html
+        home/templates/pages/records.html
+        home/templates/pages/setting.html
+        home/urls.py
+        home/views.py
+    -> updated contents
+        update advanced settings and record page
+    
     
         
 </pre>
