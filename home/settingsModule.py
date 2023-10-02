@@ -36,7 +36,7 @@ class SettingsModule:
     def makeTreeData(self, nodes):
         for node in nodes:
             if node['isLeaf'] == 0:
-                node['color'] = '#ff0000'
+                node['color'] = 'red'
                 node['icon'] = 'glyphicon glyphicon-tags'
             if 'nodes' in node:
                 node['nodes'] = self.makeTreeData(node['nodes'])
@@ -45,9 +45,9 @@ class SettingsModule:
         return self.makeExpression(self.alldata[0])
     
     def makeExpression(self, node):
-        op_font_start = "<font color ='#ff0000'>"
+        op_font_start = "<font color ='red'>"
         op_font_end = "</font>"
-        q_font_start = "<font color ='#0000ff'>"
+        q_font_start = "<font color ='blue'>"
         q_font_end = "</font>"
 
         expression = ""

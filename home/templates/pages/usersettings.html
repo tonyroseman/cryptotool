@@ -19,6 +19,7 @@
 	</div>
 </div>
 <div class="row">
+	<h6 class="m-b-10">Simple Settings</h6>
 	<form class="form-horizontal" style="display: contents;" id="settinginfo" action="/save_settings/" method="post"> 
 	{% csrf_token %}
 	<!-- [ sample-page ] start -->
@@ -311,13 +312,20 @@
 	<div class="col-md-12" style="margin-top: 5px;">
 		<br>
 	</div>
-	
+	<div class="col-md-12">
+		
+		<h6 class="m-b-10">Advanced Settings</h6>
+		
+		<ul class="breadcrumb">
+			<div id="expression"></div>
+		</ul>
+	</div>
 	<div class="col-md-6" style="margin-top: 15px;">
 		<div class="input-group">
 			<div class="input-group-prepend">
-				<span class="input-group-text">Sending Telegram notification</span>
+				<span class="input-group-text">Sending Telegram notification for simple settings</span>
 			</div>
-			<select class="custom-select" name="tlg" id="'tlg" disabled> 
+			<select class="custom-select" name="tlg" id="tlg" disabled> 
 				
 				<option value="1" {% if data.tlg == "1" %}selected{% endif %}>Yes</option>
 				<option value="0" {% if data.tlg == "0" %}selected{% endif %}>No</option>
@@ -326,7 +334,21 @@
 			
 		</div>
 	</div>
-
+	<div class="col-md-6" style="margin-top: 15px;">
+		<div class="input-group">
+			<div class="input-group-prepend">
+				<span class="input-group-text">Sending Telegram notification for advanced settings</span>
+			</div>
+			<select class="custom-select" name="isadtlg" id="isadtlg" disabled> 
+				
+				<option value="1" {% if isadtlg == 1 %}selected{% endif %}>Yes</option>
+				<option value="0" {% if isadtlg == 0 %}selected{% endif %}>No</option>
+				
+			</select>
+			
+		</div>
+	</div>
+	
 	<div class="col-md-6" style="margin-top: 15px; display: -webkit-box;" >
 		
 		<div class="toast hide toast-3s " role="alert" aria-live="assertive" data-delay="2000" aria-atomic="true" style="margin-left:10px;width : 230px;height: 35px;">
@@ -363,7 +385,7 @@
 <script>
 	var status = 0;
 	msg = '{{msg}}';
-	
+	expression = '{{expression}}';
 	
 	
 	$(document).ready(function() {
@@ -371,6 +393,10 @@
 		if(msg != ''){
 			
 			$('.toast-3s').toast('show')
+		}
+		if(expression != ''){
+			
+			$('#expression').html(expression.replaceAll("&lt;","<").replaceAll("&gt;",">").replaceAll("&#x27;","'"));
 		}
 		
 		

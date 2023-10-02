@@ -336,7 +336,7 @@ def save_profile(request):
               usersettingsdata = UserSettingsData.objects.get(userid=userdata.id)
               data = json.loads(usersettingsdata.data.replace("'", "\""))
               if 'tlg' in data.keys():
-                 data['tlg'] = 0
+                 data['tlg'] = '0'
               usersettingsdata.data = str(data)
               usersettingsdata.save()
               UserNotifyData.objects.filter(userid=userdata.id).delete()
@@ -436,13 +436,20 @@ def user_settings(request, userid):
       user = CustomUser.objects.get(id=userid)
       usersettingsdata = UserSettingsData.objects.get(userid=userid)
       data = json.loads(usersettingsdata.data.replace("'", "\""))
+      useradsettingsdata = UserAdvancedSettingsData.objects.get(userid=userid)
+      data = json.loads(useradsettingsdata.data.replace("'", "\""))
+      sm = SettingsModule(settingdata=data)
       
+      expression = sm.getExpression()
+      expression = " ".join(expression.split())
     except UserSettingsData.DoesNotExist:
       msg = 'Settings does not exist'
     context = {        
         'data': data,
         'msg' : msg,
-        'username': user.username
+        'username': user.username,
+        'isadtlg':useradsettingsdata.istlg,
+        'expression':expression,
 
     }
     
