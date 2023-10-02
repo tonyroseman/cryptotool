@@ -284,6 +284,24 @@ class SettingsModule:
                 flag = coin[key] >= value
             elif operand == 4:    
                 flag = coin[key] <= value
+            if flag == True:
+                coin['ad_' +key] = 1
+            else:
+                coin['ad_' +key] = 0
+        if key == 'mc':
+            try:
+                if operand == 1:
+                    flag = coin['market_cap'] > value
+                elif operand == 2:
+                    flag = coin['market_cap'] < value
+                elif operand == 3:
+                    flag = coin['market_cap'] >= value
+                elif operand == 4:    
+                    flag = coin['market_cap'] <= value
+                
+                coin['ad_'+'market_cap'] = 1
+            except KeyError:
+                coin['ad_'+'market_cap'] = 0
         return flag
     def isMatch(self,node,coin):
         
@@ -327,6 +345,30 @@ class SettingsModule:
             else:
                 coin['ad'] = 0
             matchedcoins.append(coin)
+        print(count)
+        return matchedcoins
+    def getAllMatchedCoinsCount(self, coins):
+        matchedcoins = []
+        count = 0
+        for coin in coins:
+            if self.isAllMatch(coin):
+                coin['ad'] = 1
+                count+=1
+            else:
+                coin['ad'] = 0
+            matchedcoins.append(coin)
+        print(count)
+        return count
+    def getTlgAllMatchedCoins(self, coins):
+        matchedcoins = []
+        count = 0
+        for coin in coins:
+            if self.isAllMatch(coin):
+                coin['ad'] = 1
+                matchedcoins.append(coin)
+                count+=1
+            
+            
         print(count)
         return matchedcoins
 

@@ -26,6 +26,7 @@ urlpatterns = [
     path('admin/users/website/', views.user_website, name = 'user_website'),
     path('admin/system_setting', views.system_setting, name = 'system_setting'),
     path('save_settings/', views.save_settings, name = 'save_settings'),
+    path('set_ad_tlg_settings/', views.set_ad_tlg_settings, name = 'set_ad_tlg_settings'),
     path('save_profile/', views.save_profile, name = 'save_profile'),
     path('save_system_settings/', views.save_system_settings, name = 'save_system_settings'),
     path('disable_telegram/', views.disable_telegram, name = 'disable_telegram'),
@@ -34,6 +35,7 @@ urlpatterns = [
     path('get_users/', views.get_users, name = 'get_users'),
     
     
+    path('get_coindata_user_count/', views.get_coindata_user_count, name = 'get_coindata_user_count'),
     path('get_coindata_user/', views.get_coindata_user, name = 'get_coindata_user'),
     path('get_notifydata_user/', views.get_notifydata_user, name = 'get_notifydata_user'),
     path('accounts/auth-signup/', views.auth_signup, name = 'auth_signup'),

@@ -140,8 +140,9 @@ def get_top_symbols_current():
                 print("cmc key " + cmckeys[ki] + "Key Failed to retrieve data. Status code:", response.status_code)
                 print("cmc " + str(ki+1) + "Key Failed to retrieve data. Status code:", response.json() )
                 ki = (ki+1)%len(cmckeys)
+                time.sleep(20*60)
 
-        except requests.exceptions.ConnectTimeout:
+        except requests.exceptions.ConnectTimeout: 
             save_err_log("Exception","CoinMarketCap API - " + cmckeys[ki],"Connection timed out.")
             print("Connection timed out - get_data_from_cmc")
             time.sleep(30)    

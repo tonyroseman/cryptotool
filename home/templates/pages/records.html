@@ -142,22 +142,22 @@
                     { data: 'price' ,
                         render: function(data, type, row) {
                             
-                            if(row.ad != undefined && row.ad == 1){
-                                var backgroundColor = 'lightblue'; // Example color value
-                                
-                                // Return the cell content with the specified background color
-                                return '<span style="background-color: ' + backgroundColor + ';display: block; width: 100%; height: 100%;">' + Math.round(data * 10000) / 10000 + '</span>';
-                            }
-                            else{
-                                if(data != undefined){
-                                        return Math.round(data * 10000) / 10000;
-                                }
-                            }
+                            
+                        if(data != undefined){
+                                return Math.round(data * 10000) / 10000;
+                        }
+                            
                     }},
                     { data: 'market_cap',
                         render: function(data, type, row) {
                             
-                            if(row.fmc != undefined && row.fmc == true){
+                            if(row.ad != undefined && row.ad == 1 && row.ad_market_cap != undefined && row.ad_market_cap == true){
+                                    var backgroundColor = 'lightblue'; // Example color value
+                                    
+                                    // Return the cell content with the specified background color
+                                    return '<span style="background-color: ' + backgroundColor + ';display: block; width: 100%; height: 100%;">' + Math.round(data * 10000) / 10000 + '</span>';
+                            }
+                            else if(row.fmc != undefined && row.fmc == true){
                                 var backgroundColor = 'pink'; // Example color value
                                 if(row.allok != undefined && row.allok == true){
                                     backgroundColor = 'lightgreen'; // Example color value
@@ -174,7 +174,13 @@
                     { data: 'vol_24h',
                         render: function(data, type, row) {
                             
-                            if(row.fvol_24h != undefined && row.fvol_24h == true){
+                            if(row.ad != undefined && row.ad == 1 && row.ad_vol_24h != undefined && row.ad_vol_24h == true){
+                                    var backgroundColor = 'lightblue'; // Example color value
+                                    
+                                    // Return the cell content with the specified background color
+                                    return '<span style="background-color: ' + backgroundColor + ';display: block; width: 100%; height: 100%;">' + Math.round(data * 10000) / 10000 + '</span>';
+                            }
+                            else if(row.fvol_24h != undefined && row.fvol_24h == true){
                                 var backgroundColor = 'pink'; // Example color value
                                 if(row.allok != undefined && row.allok == true){
                                     backgroundColor = 'lightgreen'; // Example color value
@@ -190,7 +196,13 @@
                     } },
                     { data: 'vol' ,
                         render: function(data, type, row) {
-                            if(row.fvol != undefined && row.fvol == true){
+                            if(row.ad != undefined && row.ad == 1 && row.ad_vol != undefined && row.ad_vol == true){
+                                    var backgroundColor = 'lightblue'; // Example color value
+                                    
+                                    // Return the cell content with the specified background color
+                                    return '<span style="background-color: ' + backgroundColor + ';display: block; width: 100%; height: 100%;">' + Math.round(data * 10000) / 10000 + '</span>';
+                            }
+                            else if(row.fvol != undefined && row.fvol == true){
                                 var backgroundColor = 'pink'; // Example color value
                                 if(row.allok != undefined && row.allok == true){
                                     backgroundColor = 'lightgreen'; // Example color value
@@ -208,7 +220,13 @@
                         }},
                         { data: 'vm' ,
                         render: function(data, type, row) {
-                            if(row.fvm != undefined && row.fvm == true){
+                            if(row.ad != undefined && row.ad == 1 && row.ad_vm != undefined && row.ad_vm == true){
+                                    var backgroundColor = 'lightblue'; // Example color value
+                                    
+                                    // Return the cell content with the specified background color
+                                    return '<span style="background-color: ' + backgroundColor + ';display: block; width: 100%; height: 100%;">' + Math.round(data * 10000) / 10000 + '</span>';
+                            }
+                            else if(row.fvm != undefined && row.fvm == true){
                                 var backgroundColor = 'pink'; // Example color value
                                 if(row.allok != undefined && row.allok == true){
                                     backgroundColor = 'lightgreen'; // Example color value
@@ -231,7 +249,13 @@
                            
                         { data: 'ls' ,
                             render: function(data, type, row) {
-                                if(row.fls != undefined && row.fls == true){
+                                if(row.ad != undefined && row.ad == 1 && row.ad_ls != undefined && row.ad_ls == true){
+                                    var backgroundColor = 'lightblue'; // Example color value
+                                    
+                                    // Return the cell content with the specified background color
+                                    return '<span style="background-color: ' + backgroundColor + ';display: block; width: 100%; height: 100%;">' + Math.round(data * 10000) / 10000 + '</span>';
+                                }
+                                else if(row.fls != undefined && row.fls == true){
                                     var backgroundColor = 'pink'; // Example color value
                                     if(row.allok != undefined && row.allok == true){
                                         backgroundColor = 'lightgreen'; // Example color value
@@ -248,7 +272,13 @@
                         }},
                         { data: '1m',
                         render: function(data, type, row) {
-                            if(row.f1m != undefined && row.f1m == true){
+                            if(row.ad != undefined && row.ad == 1 && row.ad_1m != undefined && row.ad_1m == true){
+                                var backgroundColor = 'lightblue'; // Example color value
+                                
+                                // Return the cell content with the specified background color
+                                return '<span style="background-color: ' + backgroundColor + ';display: block; width: 100%; height: 100%;">' + Math.round(data * 10000) / 10000 + '</span>';
+                            }
+                            else if(row.f1m != undefined && row.f1m == true){
                                 var backgroundColor = 'pink'; // Example color value
                                 if(row.allok != undefined && row.allok == true){
                                     backgroundColor = 'lightgreen'; // Example color value
@@ -267,7 +297,13 @@
                     },
                     { data: '3m',
                         render: function(data, type, row) {
-                            if(row.f3m != undefined && row.f3m == true){
+                            if(row.ad != undefined && row.ad == 1 && row.ad_3m != undefined && row.ad_3m == true){
+                                var backgroundColor = 'lightblue'; // Example color value
+                                
+                                // Return the cell content with the specified background color
+                                return '<span style="background-color: ' + backgroundColor + ';display: block; width: 100%; height: 100%;">' + Math.round(data * 10000) / 10000 + '</span>';
+                            }
+                            else if(row.f3m != undefined && row.f3m == true){
                                 var backgroundColor = 'pink'; // Example color value
                                 if(row.allok != undefined && row.allok == true){
                                     backgroundColor = 'lightgreen'; // Example color value
@@ -285,7 +321,13 @@
                     },
                     { data: '5m' ,
                         render: function(data, type, row) {
-                            if(row.f5m != undefined && row.f5m == true){
+                            if(row.ad != undefined && row.ad == 1 && row.ad_5m != undefined && row.ad_5m == true){
+                                var backgroundColor = 'lightblue'; // Example color value
+                                
+                                // Return the cell content with the specified background color
+                                return '<span style="background-color: ' + backgroundColor + ';display: block; width: 100%; height: 100%;">' + Math.round(data * 10000) / 10000 + '</span>';
+                            }
+                            else if(row.f5m != undefined && row.f5m == true){
                                 var backgroundColor = 'pink'; // Example color value
                                 if(row.allok != undefined && row.allok == true){
                                     backgroundColor = 'lightgreen'; // Example color value
@@ -302,7 +344,13 @@
                         }},
                     { data: '15m' ,
                         render: function(data, type, row) {
-                            if(row.f15m != undefined && row.f15m == true){
+                            if(row.ad != undefined && row.ad == 1 && row.ad_15m != undefined && row.ad_15m == true){
+                                var backgroundColor = 'lightblue'; // Example color value
+                                
+                                // Return the cell content with the specified background color
+                                return '<span style="background-color: ' + backgroundColor + ';display: block; width: 100%; height: 100%;">' + Math.round(data * 10000) / 10000 + '</span>';
+                            }
+                            else if(row.f15m != undefined && row.f15m == true){
                                 var backgroundColor = 'pink'; // Example color value
                                 if(row.allok != undefined && row.allok == true){
                                     backgroundColor = 'lightgreen'; // Example color value
@@ -319,7 +367,13 @@
                         }},
                     { data: '1h' ,
                         render: function(data, type, row) {
-                            if(row.f1h != undefined && row.f1h == true){
+                            if(row.ad != undefined && row.ad == 1 && row.ad_1h != undefined && row.ad_1h == true){
+                                var backgroundColor = 'lightblue'; // Example color value
+                                
+                                // Return the cell content with the specified background color
+                                return '<span style="background-color: ' + backgroundColor + ';display: block; width: 100%; height: 100%;">' + Math.round(data * 10000) / 10000 + '</span>';
+                            }
+                            else if(row.f1h != undefined && row.f1h == true){
                                 var backgroundColor = 'pink'; // Example color value
                                 if(row.allok != undefined && row.allok == true){
                                     backgroundColor = 'lightgreen'; // Example color value
@@ -336,7 +390,13 @@
                         }},
                     { data: '6h' ,
                         render: function(data, type, row) {
-                            if(row.f6h != undefined && row.f6h == true){
+                            if(row.ad != undefined && row.ad == 1 && row.ad_6h != undefined && row.ad_6h == true){
+                                var backgroundColor = 'lightblue'; // Example color value
+                                
+                                // Return the cell content with the specified background color
+                                return '<span style="background-color: ' + backgroundColor + ';display: block; width: 100%; height: 100%;">' + Math.round(data * 10000) / 10000 + '</span>';
+                            }
+                            else if(row.f6h != undefined && row.f6h == true){
                                 var backgroundColor = 'pink'; // Example color value
                                 if(row.allok != undefined && row.allok == true){
                                     backgroundColor = 'lightgreen'; // Example color value
@@ -353,7 +413,13 @@
                     }},
                     { data: '12h' ,
                     render: function(data, type, row) {
-                        if(row.f12h != undefined && row.f12h == true){
+                        if(row.ad != undefined && row.ad == 1 && row.ad_12h != undefined && row.ad_12h == true){
+                                var backgroundColor = 'lightblue'; // Example color value
+                                
+                                // Return the cell content with the specified background color
+                                return '<span style="background-color: ' + backgroundColor + ';display: block; width: 100%; height: 100%;">' + Math.round(data * 10000) / 10000 + '</span>';
+                            }
+                        else if(row.f12h != undefined && row.f12h == true){
                             var backgroundColor = 'pink'; // Example color value
                             if(row.allok != undefined && row.allok == true){
                                 backgroundColor = 'lightgreen'; // Example color value
@@ -370,7 +436,13 @@
                     }},
                     { data: '1d' ,
                         render: function(data, type, row) {
-                            if(row.f1d != undefined && row.f1d == true){
+                            if(row.ad != undefined && row.ad == 1 && row.ad_1d != undefined && row.ad_1d == true){
+                                var backgroundColor = 'lightblue'; // Example color value
+                                
+                                // Return the cell content with the specified background color
+                                return '<span style="background-color: ' + backgroundColor + ';display: block; width: 100%; height: 100%;">' + Math.round(data * 10000) / 10000 + '</span>';
+                            }
+                            else if(row.f1d != undefined && row.f1d == true){
                                 var backgroundColor = 'pink'; // Example color value
                                 if(row.allok != undefined && row.allok == true){
                                     backgroundColor = 'lightgreen'; // Example color value
@@ -387,7 +459,13 @@
                         }},
                     { data: '2d' ,
                         render: function(data, type, row) {
-                            if(row.f2d != undefined && row.f2d == true){
+                            if(row.ad != undefined && row.ad == 1 && row.ad_2d != undefined && row.ad_2d == true){
+                                var backgroundColor = 'lightblue'; // Example color value
+                                
+                                // Return the cell content with the specified background color
+                                return '<span style="background-color: ' + backgroundColor + ';display: block; width: 100%; height: 100%;">' + Math.round(data * 10000) / 10000 + '</span>';
+                            }
+                            else if(row.f2d != undefined && row.f2d == true){
                                 var backgroundColor = 'pink'; // Example color value
                                 if(row.allok != undefined && row.allok == true){
                                     backgroundColor = 'lightgreen'; // Example color value
@@ -405,7 +483,13 @@
                 
                     { data: '4d' ,
                         render: function(data, type, row) {
-                            if(row.f4d != undefined && row.f4d == true){
+                            if(row.ad != undefined && row.ad == 1 && row.ad_4d != undefined && row.ad_4d == true){
+                                var backgroundColor = 'lightblue'; // Example color value
+                                
+                                // Return the cell content with the specified background color
+                                return '<span style="background-color: ' + backgroundColor + ';display: block; width: 100%; height: 100%;">' + Math.round(data * 10000) / 10000 + '</span>';
+                            }
+                            else if(row.f4d != undefined && row.f4d == true){
                                 var backgroundColor = 'pink'; // Example color value
                                 if(row.allok != undefined && row.allok == true){
                                     backgroundColor = 'lightgreen'; // Example color value
@@ -422,7 +506,13 @@
                     }},
                     { data: '7d' ,
                         render: function(data, type, row) {
-                            if(row.f7d != undefined && row.f7d == true){
+                            if(row.ad != undefined && row.ad == 1 && row.ad_7d != undefined && row.ad_7d == true){
+                                var backgroundColor = 'lightblue'; // Example color value
+                                
+                                // Return the cell content with the specified background color
+                                return '<span style="background-color: ' + backgroundColor + ';display: block; width: 100%; height: 100%;">' + Math.round(data * 10000) / 10000 + '</span>';
+                            }
+                            else if(row.f7d != undefined && row.f7d == true){
                                 var backgroundColor = 'pink'; // Example color value
                                 if(row.allok != undefined && row.allok == true){
                                     backgroundColor = 'lightgreen'; // Example color value

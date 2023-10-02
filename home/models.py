@@ -38,6 +38,7 @@ class UserAdvancedSettingsData(models.Model):
     id = models.AutoField(primary_key=True)
     userid = models.ForeignKey(CustomUser, on_delete=models.CASCADE)    
     data = models.TextField()
+    istlg = models.DecimalField(default=0,max_digits=10, decimal_places=0)
 
     def save(self, *args, **kwargs):
         super(UserAdvancedSettingsData, self).save(*args, **kwargs)

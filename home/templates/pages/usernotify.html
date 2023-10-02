@@ -145,7 +145,24 @@
                     { data: '7d' ,
                         render: numberRender},
                     {
-                        data: 'time'
+                        data: 'time',
+                        render: function(data, type, row) {
+                            
+                            if(row.ad != undefined && row.ad == 1){
+                                var backgroundColor = 'lightblue'; // Example color value
+                                
+                                // Return the cell content with the specified background color
+                                return '<span style="background-color: ' + backgroundColor + ';display: block; width: 100%; height: 100%;">' + data + '</span>';
+                            }
+                            else{
+                                var backgroundColor = 'lightgreen'; // Example color value
+                                
+                                // Return the cell content with the specified background color
+                                return '<span style="background-color: ' + backgroundColor + ';display: block; width: 100%; height: 100%;">' + data + '</span>';
+                                
+                                
+                            }
+                        }
                     }
 
                 ],
@@ -174,7 +191,7 @@
                     // Redraw the DataTable
                     // console.log(response.data.length);
                     coindataTable.draw(false);
-                    coindataTable.order([[19, 'desc']]).draw(false);// Redraw the DataTable
+                    coindataTable.order([[20, 'desc']]).draw(false);// Redraw the DataTable
                     // coindataTable.draw();
                     $("li.paginate_button.page-item").blur();
                 },

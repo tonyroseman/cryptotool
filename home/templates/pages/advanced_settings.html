@@ -22,7 +22,45 @@
         <div id="treeview" class=""></div>
     </div>
     <div class="col-sm-6" >
-        <br>
+        
+        {% if tlgactive == 1 %}
+        
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Sending Telegram notification</span>
+                </div>
+                <select class="custom-select" name="tlg" id="tlg" onchange="checkTlg();"> 
+                    
+                    <option value="1" {% if data.tlg == "1" %}selected{% endif %}>Yes</option>
+                    <option value="0" {% if data.tlg == "0" %}selected{% endif %}>No</option>
+                    
+                </select>
+                &nbsp;&nbsp;Your Telegram URL is activated.	
+            </div>
+        
+        {% endif%}
+        {% if tlgactive == 0 %}
+        
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Sending Telegram notification</span>
+                </div>
+                <select class="custom-select" name="tlg" id="tlg" disabled onchange="checkTlg();"> 
+                    
+                    <option value="1" >Yes</option>
+                    <option value="0" selected>No</option>
+                    
+                </select>
+                &nbsp;&nbsp;Your Telegram URL is not activated. &nbsp;<button type="button" onclick="showHelp()" class="btn  btn-icon btn-info"><i class="feather icon-help-circle"></i></button>
+            </div>
+        
+        {% endif%}
+        
+            
+                    
+                    
+                
+           
         <div id="changeGroupForm" style="display: none;">
             <br>
             <div id="changeGroupStr"><h6>Change Group Operator</h6></div>
@@ -152,6 +190,7 @@
         
         
     </div>
+    
     <div id="changeOp" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
@@ -170,6 +209,28 @@
 			</div>
 		</div>
 	</div>
+    <div id="helpDialog" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="helpDialogTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="helpDialogTitle">Activate Telegram URL</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close" id="closeicon"><span aria-hidden="true">&times;</span></button>
+				</div>
+				<div class="modal-body">
+					<p id="msg1">Step 1: Go to "User Profile" -> Edit -> Set up your telegram URL<br>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;For example : https://t.me/tradie2 <br>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;How to get your telegram URL. Click <a href="{% url 'abouttlgnoti' %}" target="_blank">Here</a><br>
+						Step 2: Click to <a href="{{tlgurl}}" target="_blank">this link</a> <br>
+						Step 3: Click "SEND MESSAGE" -> Click "START"
+					</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn  btn-secondary" data-dismiss="modal" id="closeModal">Close</button>
+					
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
 
@@ -181,7 +242,7 @@
 var selNode;
 var groupaction = 0;
 var lgt_string = [' > ',' < ',' >= ', ' <= ']    
-    $(function() {
+$(function() {
 
     function updateTree() {
         // Make an AJAX request to get updated data from the server
@@ -205,12 +266,9 @@ var lgt_string = [' > ',' < ',' >= ', ' <= ']
                 
                 });
                 $('#expression').html("<h5>" + response.expression + "</h5>");
+                console.log(response.istlg) ;
                 
-                
-                
-                
-                
-                
+                $('#tlg').val(response.istlg);
             },
             error: function(error) {
                 console.log(error);
@@ -220,11 +278,42 @@ var lgt_string = [' > ',' < ',' >= ', ' <= ']
     updateTree();
     $('#no_btn').click(function(){
         $('#changeOp').modal('hide');
+        if (groupaction == 11 || groupaction == 12) {
+            $('#tlg').val('0');
+        }
     });
     $('#yes_btn').click(function(){
+
         $('#changeOp').modal('hide');
-        doActionAdvncedSettings();
+        if(groupaction < 10){
+            doActionAdvncedSettings();
+        }
+        else{
+            if (groupaction == 11 || groupaction == 12) {
+                $('#tlg').val('0');
+            }
+        }
     });
+    $('#closeModal').click(function(){
+		$('#helpDialog').modal('hide');
+			
+    });
+    $('#closeicon').click(function(){
+        $('#helpDialog').modal('hide');
+        
+    });
+    $('#helpDialog').on('hidden.bs.modal', function (e) {
+		location.href = location.protocol + "//" + location.host + "/advanced_settings/";// do something...
+	})
+    $('#changeOp').on('hidden.bs.modal', function (e) {
+		if (groupaction == 11 || groupaction == 12) {
+            $('#tlg').val('0');
+            setAdTlg();
+        }
+        else if (groupaction == 13){
+            setAdTlg();
+        }
+	})
 
 });
 
@@ -410,7 +499,32 @@ function doActionAdvncedSettings() {
             
             // Clear existing DataTable data
             // alert(response.msg);
-            location.href = location.protocol + "//" + location.host + "/advanced_settings/";
+            if ($('#tlg').val() == '1'){
+                console.log("sdfsdfsdf");
+                getTlgCount();
+            }
+            else{
+                location.href = location.protocol + "//" + location.host + "/advanced_settings/";
+            }
+            
+            
+        },
+        error: function(error) {
+            console.log(error);
+        }
+    });
+}
+
+function getTlgCount(){
+    
+    $.ajax({
+        url: '{% url "get_coindata_user_count"%}', // Replace with your server endpoint URL
+        type: 'GET',
+        dataType: 'json',
+        
+        success: function(response) {
+           console.log(response.count);
+           setTlg(response.count);
             
         },
         error: function(error) {
@@ -419,6 +533,58 @@ function doActionAdvncedSettings() {
     });
 }
 	
+function showHelp(){
+    
+    $('#helpDialog').modal("show");
+}
+function setTlg(count){
+    if (count > 5){
+        $('#msg').text("Please re-config your settings, too many coins met the conditions");
+        
+        groupaction = 11;
+        $('#changeOp').modal("show");
+    }
+    else if(count > 0 && count <= 5){
+        $('#msg').text("There are some coins met the conditions, please check record table");
+        
+        groupaction = 12;
+        $('#changeOp').modal("show");
+    }
+    else if(count == 0){
+        $('#msg').text("Start telegram server");
+        groupaction = 13;
+        
+        $('#changeOp').modal("show");
+
+    }
+}
+function setAdTlg(){
+    data = {}
+    data.value = $('#tlg').val();
+    $.ajax({
+        url: '{% url "set_ad_tlg_settings"%}', // Replace with your server endpoint URL
+        type: 'GET',
+        dataType: 'json',
+        data:data,
+        success: function(response) {
+           console.log(response.msg);
+        //    location.href = location.protocol + "//" + location.host + "/advanced_settings/";
+            
+        },
+        error: function(error) {
+            console.log(error);
+        }
+    });
+}
+function checkTlg(){
+    istlgfuc = $('#tlg').val();
+    if (istlgfuc == '1'){
+        getTlgCount();
+    }
+    else{
+        setAdTlg();
+    }
+}
 
 	
 </script>

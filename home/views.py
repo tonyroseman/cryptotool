@@ -174,6 +174,29 @@ def get_coindata_user(request):
     return JsonResponse (context, status = 200)
   # some error occured
   return JsonResponse ({"error": ""}, status = 400)
+@login_required(login_url='/accounts/auth-signin')
+@user_passes_test(is_user_active, login_url='/accounts/auth-signin')
+def get_coindata_user_count(request):
+  
+  if request.method == "GET":
+    advancedsettingsdata = UserAdvancedSettingsData.objects.get(userid=request.user)
+      
+    data = json.loads(advancedsettingsdata.data.replace("'", "\""))
+    sm = SettingsModule(settingdata=data)
+    api = CryptoModule()
+    coins = api.get_user_coins(request.user, sm,limit=int(request.user.limitcount))
+    count = sm.getAllMatchedCoinsCount(coins)
+    
+             
+    context = {
+        'count': count,
+        
+        
+    }
+    
+    return JsonResponse (context, status = 200)
+  # some error occured
+  return JsonResponse ({"error": ""}, status = 400)
 @login_required(login_url='admin/accounts/auth-signin')
 @user_passes_test(is_user_active, login_url='/accounts/auth-signin')
 def get_notifydata_user(request):
@@ -186,6 +209,7 @@ def get_notifydata_user(request):
     if(len(usernotifydata) > 0):
       no = 1
       for notidata in usernotifydata:
+          
           jsondata = json.loads(notidata.data.replace("'", "\""))
           now_timestamp = time.time()
           offset = datetime.datetime.fromtimestamp(now_timestamp) - datetime.datetime.utcfromtimestamp(now_timestamp)
@@ -316,7 +340,12 @@ def save_profile(request):
               usersettingsdata.data = str(data)
               usersettingsdata.save()
               UserNotifyData.objects.filter(userid=userdata.id).delete()
-            except UserSettingsData.DoesNotExist:
+              adsettings = UserAdvancedSettingsData.objects.get(userid=userdata.id)
+              adsettings.istlg = 0
+              adsettings.save()
+            except UserSettingsData.DoesNotExist:            
+              msg = 'Settings does not exist'
+            except UserAdvancedSettingsData.DoesNotExist:
               msg = 'Settings does not exist'
           userdata.save()
           
@@ -344,8 +373,24 @@ def disable_telegram(request):
 @login_required(login_url='/accounts/auth-signin')
 @user_passes_test(is_user_active, login_url='/accounts/auth-signin')
 def advanced_settings(request):
+  tlgurl = ''
+  try:
+    syssettings = SystemSettingsData.objects.all()
+    
+    if(len(syssettings) > 0):
+        data = json.loads(syssettings[0].data.replace("'", "\""))
+        
+        if 'tlgurl' in data:
+          tlgurl = data['tlgurl']
+    usersettingsdata = UserSettingsData.objects.get(userid=request.user)
+    data = json.loads(usersettingsdata.data.replace("'", "\""))
+    
+  except UserSettingsData.DoesNotExist:
+    msg = 'Settings does not exist'
   context = {  
         'userid': request.user.id,
+        'tlgactive':request.user.tlgactive,
+        'tlgurl':tlgurl,
     }
   return render(request, 'pages/advanced_settings.html', context)
 @login_required(login_url='/accounts/auth-signin')
@@ -408,6 +453,7 @@ def user_advanced_settings(request, userid):
     
     treedata = None
     expression = None
+    istlg = 0
     try:
       user = CustomUser.objects.get(id=userid)
       advancedsettingsdata = UserAdvancedSettingsData.objects.get(userid=userid)
@@ -417,6 +463,7 @@ def user_advanced_settings(request, userid):
       treedata = sm.getTreeData()
       expression = sm.getExpression()
       expression = " ".join(expression.split())
+      istlg = advancedsettingsdata.istlg
     except UserAdvancedSettingsData.DoesNotExist:
       try:
           
@@ -433,7 +480,28 @@ def user_advanced_settings(request, userid):
           data = []
     context = {        
         'data': treedata,
+        'istlg': str(istlg),
         'expression':expression
+    }
+    
+    return JsonResponse (context, status = 200)
+@login_required(login_url='/accounts/auth-signin')
+@user_passes_test(is_user_active, login_url='/accounts/auth-signin')
+def set_ad_tlg_settings(request):
+    
+    value = request.GET.get('value')
+    msg = "OK"
+    try:
+      
+      advancedsettingsdata = UserAdvancedSettingsData.objects.get(userid=request.user)
+      advancedsettingsdata.istlg = int(value)
+      advancedsettingsdata.save()
+      
+    except UserAdvancedSettingsData.DoesNotExist:
+      msg = "Error"
+    
+    context = {        
+        'msg': msg,
     }
     
     return JsonResponse (context, status = 200)

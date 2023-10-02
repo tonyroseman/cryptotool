@@ -1,13 +1,15 @@
 import json
 import time
 import datetime
-
+import platform
+import asyncio
 from telethon import TelegramClient
 
 import threading
 import mysql.connector
 
 import telebot
+from settingsModule import SettingsModule
 
 
 def set_tlgactive(tlgname):
@@ -153,12 +155,23 @@ def get_tlg_users():
             
             if data['tlg'] == '1':
                 userresult.append(usersetting)
+    query = "SELECT * FROM home_useradvancedsettingsdata WHERE istlg=1"
+    
+    cursor.execute(query)
+    useradresult = cursor.fetchall()
+    
         
     cursor.close()
     if(len(usersetting) > 0):
-        return userresult
+        if (len(useradresult) > 0):
+            return userresult, useradresult
+        else:
+            return userresult, None
     else:
-        return None
+        if (len(useradresult) > 0):
+            return None, useradresult
+        else:
+            return None, None
 def get_current_coindatas():
     cnx = connect_mysql()
     cursor = cnx.cursor()
@@ -173,6 +186,30 @@ def get_current_coindatas():
         return result, coindataindex
     cursor.close()
     return None, None
+def get_advanced_coins_of_user(coindatas, userid, coindataindex):
+    retcoins = []
+    cnx = connect_mysql()
+    cursor = cnx.cursor()
+    
+    query = "SELECT * FROM home_useradvancedsettingsdata where userid_id = %s;"
+    params = (userid,)
+    cursor.execute(query, params)
+    
+    result = cursor.fetchall()
+    if(len(result) > 0):
+    
+        useradvancedsettingsdata = str(result[0][1])
+        settingsdata = json.loads(useradvancedsettingsdata[2:len(useradvancedsettingsdata)-1].replace("'", "\""))
+        sm = SettingsModule(settingdata=settingsdata)
+        coins = []
+        for coin in coindatas:
+            coindata = str(coin[coindataindex])
+            data = json.loads(coindata[2:len(coindata)-1].replace("'", "\""))
+            coins.append(data)
+        retcoins = sm.getTlgAllMatchedCoins(coins)
+    cursor.close()
+    return retcoins
+        
 
 def get_coins_of_user(coindatas, usersettings, coindataindex):
     returns = []
@@ -304,8 +341,9 @@ def get_telegram_info():
     
     cursor.close()
     return api_id, api_hash, bot_token
-def make_message(data):
-    message = "This " + data['symbol'] + " matched all settings.\n"
+def make_message(data, type):
+    typestr = ['All Simple', 'Advanced']
+    message = "This " + data['symbol'] + " matched " + typestr[type] + " settings.\n"
     # for key in data.keys():
     #     if key != 'symbol':
     #         message = message + key + ": " + str(data[key]) + "\n"
@@ -313,12 +351,13 @@ def make_message(data):
 async def start_server(client):
     print('Telegram Server Start')
     tlg_user_coindata = {}
-    
+    tlg_user_adv_coindata = {}
     while True:
-        tlg_users = get_tlg_users()
+        tlg_users, ad_tlg_users = get_tlg_users()
         limitseconds = get_notify_peroid()
+        cur_coindatas, coindataindex = get_current_coindatas()
         if (tlg_users is not None):
-            cur_coindatas, coindataindex = get_current_coindatas()
+            
             if cur_coindatas is not None:
                 for user in tlg_users:
                     userinfo,telegram_index, limit_index = get_user_info(user[2])
@@ -332,7 +371,7 @@ async def start_server(client):
                                 
                                 
                                 for coin in coindatas:
-                                    message = make_message(coin)
+                                    message = make_message(coin, 0)
                                     if rcp in tlg_user_coindata:
                                         user_data = tlg_user_coindata[rcp]
                                         if coin['symbol'] in user_data:
@@ -370,9 +409,60 @@ async def start_server(client):
                                         tlg_user_coindata[rcp] = new_user_data
                                         print(coin['symbol'])
                                         time.sleep(3)
-                                        
-                                        
-                                    # update_notifydata(notify['id'])
+        if (ad_tlg_users is not None):
+            for user in ad_tlg_users:
+                userinfo,telegram_index, limit_index = get_user_info(user[2])    
+                if(userinfo is not None):
+                    adv_coindatas = get_advanced_coins_of_user(cur_coindatas[0:int(userinfo[limit_index])], user[2], coindataindex)
+                    if adv_coindatas is not None and len(adv_coindatas) > 0:
+                        
+                        recipient_username = userinfo[telegram_index]
+                        rcp = recipient_username
+                        if(rcp != ""):
+                            
+                            
+                            for coin in adv_coindatas:
+                                message = make_message(coin, 1)
+                                if rcp in tlg_user_adv_coindata:
+                                    user_data = tlg_user_adv_coindata[rcp]
+                                    if coin['symbol'] in user_data:
+                                        coin_data = user_data[coin['symbol']]
+                                        time_difference = datetime.datetime.now() - coin_data['time']
+                                        if(time_difference.total_seconds() > limitseconds):
+                                            await client.send_message(rcp, message)
+                                            save_notifydata(userinfo[0],coin)
+                                            new_coin_data = {}
+                                            new_coin_data['data'] = coin
+                                            new_coin_data['time'] = datetime.datetime.now()                                        
+                                            user_data[coin['symbol']] = new_coin_data
+                                            tlg_user_adv_coindata[rcp] = user_data
+                                            print(coin['symbol'],"advanced")
+                                        else:
+                                            print(coin['symbol'],"advanced", time_difference.total_seconds())
+                                    else:
+                                        await client.send_message(rcp, message)
+                                        save_notifydata(userinfo[0],coin)
+                                        new_coin_data = {}
+                                        new_coin_data['data'] = coin
+                                        new_coin_data['time'] = datetime.datetime.now()                                        
+                                        user_data[coin['symbol']] = new_coin_data
+                                        tlg_user_adv_coindata[rcp] = user_data
+                                        print(coin['symbol'],"advanced")    
+                                    
+                                else:
+                                    await client.send_message(rcp, message)
+                                    save_notifydata(userinfo[0],coin)
+                                    new_coin_data = {}
+                                    new_coin_data['data'] = coin
+                                    new_coin_data['time'] = datetime.datetime.now()
+                                    new_user_data = {}
+                                    new_user_data[coin['symbol']] = new_coin_data
+                                    tlg_user_adv_coindata[rcp] = new_user_data
+                                    print(coin['symbol'],"advanced")
+                                    time.sleep(3)
+                                    
+                                    
+                                # update_notifydata(notify['id'])
                             
         time.sleep(5)
         
@@ -383,7 +473,14 @@ def connect_mysql():
                                 database='cryptoadmin')
      return cnx
 def start_bot():
-    bot.polling()
+    while True:
+        try:
+            bot.polling(none_stop=True, timeout=90)
+        except Exception as e:
+            print(datetime.datetime.now(), e)
+            time.sleep(5)
+            continue
+        
 
 class telegramServer():
 
@@ -397,6 +494,9 @@ class telegramServer():
             client.loop.run_until_complete(start_server(client))
 
 while(True):
+    
+    if platform.system() == 'Windows':
+        asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
     api_id, api_hash, bot_token = get_telegram_info()
     if api_id == None or api_hash == None or bot_token == None:
         print('Please set Telegram Info : API ID, API Hash, BOT Token.')
