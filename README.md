@@ -187,6 +187,26 @@
     -> updated contents
         update advanced settings and record page
     
-    
+- commit version 'update-18'
+    -> updated app contents
+       home/cryptoServerModule.py
+       home/cryptoTelegramServer.py
+       home/models.py
+       home/settingsModule.py
+       home/templates/pages/advanced_settings.html
+       home/templates/pages/records.html
+       home/templates/pages/setting.html
+       home/templates/pages/usernotify.html
+       home/urls.py
+       home/views.py
+    -> updated contents
+        update advanced settings tlg function
+    -> Notes
+        After update app contents on pc or VPS, run follow commands in cmd of cryptotool directory.
+            python .\manage.py makemigrations
+            python manage.py migrate
+        And then
+            run "python .\manage.py runserver" on PC
+            restart Web Server of our app on VPS.    
         
 </pre>

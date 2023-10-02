@@ -142,7 +142,7 @@ def get_top_symbols_current():
                 ki = (ki+1)%len(cmckeys)
                 time.sleep(20*60)
 
-        except requests.exceptions.ConnectTimeout: 
+        except requests.exceptions.ConnectTimeout:
             save_err_log("Exception","CoinMarketCap API - " + cmckeys[ki],"Connection timed out.")
             print("Connection timed out - get_data_from_cmc")
             time.sleep(30)    
