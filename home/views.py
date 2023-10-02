@@ -437,8 +437,8 @@ def user_settings(request, userid):
       usersettingsdata = UserSettingsData.objects.get(userid=userid)
       data = json.loads(usersettingsdata.data.replace("'", "\""))
       useradsettingsdata = UserAdvancedSettingsData.objects.get(userid=userid)
-      data = json.loads(useradsettingsdata.data.replace("'", "\""))
-      sm = SettingsModule(settingdata=data)
+      addata = json.loads(useradsettingsdata.data.replace("'", "\""))
+      sm = SettingsModule(settingdata=addata)
       
       expression = sm.getExpression()
       expression = " ".join(expression.split())

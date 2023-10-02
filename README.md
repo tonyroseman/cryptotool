@@ -199,6 +199,7 @@
        home/templates/pages/usernotify.html
        home/urls.py
        home/views.py
+       home/templates/pages/usersettings.html
     -> updated contents
         update advanced settings tlg function
     -> Notes
