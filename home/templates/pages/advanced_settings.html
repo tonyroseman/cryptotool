@@ -55,6 +55,15 @@
             </div>
         
         {% endif%}
+        <br>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text" style="width: 100px;">Coin name</span>
+            </div>
+            
+            <input type="text" class="form-control" name="coins" value="{{coins}}" id="coins">
+            <button type="submit" id="submit" class="btn  btn-primary" style="width: 100px;" onclick="saveCoins()">Save</button>
+        </div>
         
             
                     
@@ -266,6 +275,7 @@ $(function() {
                 
                 });
                 $('#expression').html("<h5>" + response.expression + "</h5>");
+                $('#coins').val(response.coins);
                 console.log(response.istlg) ;
                 
                 $('#tlg').val(response.istlg);
@@ -568,6 +578,25 @@ function setAdTlg(){
         data:data,
         success: function(response) {
            console.log(response.msg);
+        //    location.href = location.protocol + "//" + location.host + "/advanced_settings/";
+            
+        },
+        error: function(error) {
+            console.log(error);
+        }
+    });
+}
+function saveCoins(){
+    data = {}
+    data.value = $('#coins').val();
+    $.ajax({
+        url: '{% url "save_ad_coins"%}', // Replace with your server endpoint URL
+        type: 'GET',
+        dataType: 'json',
+        data:data,
+        success: function(response) {
+           console.log(response.msg);
+           alert("Coins saved");
         //    location.href = location.protocol + "//" + location.host + "/advanced_settings/";
             
         },

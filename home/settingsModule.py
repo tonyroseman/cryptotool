@@ -264,13 +264,15 @@ class SettingsModule:
                             parentNode['nodes'] = nodes
                             return 1
         return 0
-    def isAllMatch(self,coin):
+    def isAllMatch(self,coin, coinsettings):
         if 'nodes' in self.alldata[0]:
             if len(self.alldata[0]['nodes']) > 0:
-                return self.isMatch(self.alldata[0]['nodes'][0],coin)
+                return self.isMatch(self.alldata[0]['nodes'][0],coin, coinsettings)
 
         return False
-    def isMatchCondition(self,node, coin):
+    def isMatchCondition(self,node, coin, coinsettings):
+    
+
         operand = int(node['op'])
         key = node['key']
         value = node['value']
@@ -285,7 +287,10 @@ class SettingsModule:
             elif operand == 4:    
                 flag = coin[key] <= value
             if flag == True:
-                coin['ad_' +key] = 1
+                if self.isCoinsSettings(coin,coinsettings):
+                    coin['ad_' +key] = 1
+                else:
+                    coin['ad_' +key] = 0
             else:
                 coin['ad_' +key] = 0
         if key == 'mc':
@@ -298,16 +303,19 @@ class SettingsModule:
                     flag = coin['market_cap'] >= value
                 elif operand == 4:    
                     flag = coin['market_cap'] <= value
-                
-                coin['ad_'+'market_cap'] = 1
+                if self.isCoinsSettings(coin,coinsettings):
+                    coin['ad_'+'market_cap'] = 1
+                else:
+                    coin['ad_'+'market_cap'] = 0    
             except KeyError:
                 coin['ad_'+'market_cap'] = 0
         return flag
-    def isMatch(self,node,coin):
+        
+    def isMatch(self,node,coin, coinsettings):
         
         matched = False
         if node['isLeaf'] == 1:
-            return self.isMatchCondition(node, coin)
+            return self.isMatchCondition(node, coin, coinsettings)
         else:
             
             if int(node['cond_op']) == 1:
@@ -317,7 +325,7 @@ class SettingsModule:
             if 'nodes' in node:
                 allmatched = []
                 for pnode in node['nodes']:
-                    allmatched.append(self.isMatch(pnode, coin))
+                    allmatched.append(self.isMatch(pnode, coin, coinsettings))
                 if len(node['nodes']) > 0:
                     if node['id'] == '0':
                         return allmatched[0]
@@ -334,14 +342,37 @@ class SettingsModule:
                     return matched
             else:
                 return matched
-        
-    def getAllMatchedCoins(self, coins):
+    def isCoinsSettings(self, coin, coinssettings):    
+        if(coinssettings.strip() != ""):
+            setcoins = coinssettings.split(',')
+            flag = True
+            for setcoin in setcoins:
+                if setcoin[0:1] != '-':
+                    flag = False
+                    break
+
+            if(flag is False):
+                if(len(setcoins) > 0):
+                
+                    if coin['symbol'] in setcoins:
+                        return True
+            else:
+                if(len(setcoins) > 0):
+                    if not str("-") + coin['symbol'] in setcoins:
+                        return True
+                    
+        else:
+            return True
+    def getAllMatchedCoins(self, coins, coinssettings):
         matchedcoins = []
         count = 0
         for coin in coins:
-            if self.isAllMatch(coin):
-                coin['ad'] = 1
-                count+=1
+            if self.isAllMatch(coin,coinssettings):     
+                if self.isCoinsSettings(coin,coinssettings):      
+                    coin['ad'] = 1
+                    count+=1
+                else:
+                    coin['ad'] = 0
             else:
                 coin['ad'] = 0
             matchedcoins.append(coin)
@@ -359,11 +390,11 @@ class SettingsModule:
             matchedcoins.append(coin)
         print(count)
         return count
-    def getTlgAllMatchedCoins(self, coins):
+    def getTlgAllMatchedCoins(self, coins, coinssetings):
         matchedcoins = []
         count = 0
         for coin in coins:
-            if self.isAllMatch(coin):
+            if self.isAllMatch(coin, coinssetings):
                 coin['ad'] = 1
                 matchedcoins.append(coin)
                 count+=1

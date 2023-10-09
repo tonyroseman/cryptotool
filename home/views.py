@@ -144,12 +144,14 @@ def get_coindata_user(request):
   
   if request.method == "GET":
     advancedsettingsdata = UserAdvancedSettingsData.objects.get(userid=request.user)
-      
+    coinssetings = ""
     data = json.loads(advancedsettingsdata.data.replace("'", "\""))
+    if 'coins' in data[0]:
+       coinssetings = data[0]['coins']
     sm = SettingsModule(settingdata=data)
     api = CryptoModule()
     coins = api.get_user_coins(request.user, sm,limit=int(request.user.limitcount))
-    coins = sm.getAllMatchedCoins(coins)
+    coins = sm.getAllMatchedCoins(coins, coinssetings)
     usersettingsdata = UserSettingsData.objects.filter(userid=request.user)
     settings = []
     if(len(usersettingsdata) > 0):
@@ -431,7 +433,7 @@ def setting_page(request):
 def user_settings(request, userid):
     msg = ''
     data = None
-    
+    coins=""
     try:
       user = CustomUser.objects.get(id=userid)
       usersettingsdata = UserSettingsData.objects.get(userid=userid)
@@ -442,10 +444,13 @@ def user_settings(request, userid):
       
       expression = sm.getExpression()
       expression = " ".join(expression.split())
+      if "coins" in data[0]:
+        coins = data[0]['coins']
     except UserSettingsData.DoesNotExist:
       msg = 'Settings does not exist'
     context = {        
         'data': data,
+        'coins':coins,
         'msg' : msg,
         'username': user.username,
         'isadtlg':useradsettingsdata.istlg,
@@ -461,6 +466,7 @@ def user_advanced_settings(request, userid):
     treedata = None
     expression = None
     istlg = 0
+    coins = ""
     try:
       user = CustomUser.objects.get(id=userid)
       advancedsettingsdata = UserAdvancedSettingsData.objects.get(userid=userid)
@@ -471,6 +477,8 @@ def user_advanced_settings(request, userid):
       expression = sm.getExpression()
       expression = " ".join(expression.split())
       istlg = advancedsettingsdata.istlg
+      if "coins" in data[0]:
+         coins = data[0]['coins']
     except UserAdvancedSettingsData.DoesNotExist:
       try:
           
@@ -487,6 +495,7 @@ def user_advanced_settings(request, userid):
           data = []
     context = {        
         'data': treedata,
+        'coins':coins,
         'istlg': str(istlg),
         'expression':expression
     }
@@ -502,6 +511,29 @@ def set_ad_tlg_settings(request):
       
       advancedsettingsdata = UserAdvancedSettingsData.objects.get(userid=request.user)
       advancedsettingsdata.istlg = int(value)
+      advancedsettingsdata.save()
+      
+    except UserAdvancedSettingsData.DoesNotExist:
+      msg = "Error"
+    
+    context = {        
+        'msg': msg,
+    }
+    
+    return JsonResponse (context, status = 200)
+@login_required(login_url='/accounts/auth-signin')
+@user_passes_test(is_user_active, login_url='/accounts/auth-signin')
+def save_ad_coins(request):
+    
+    value = request.GET.get('value')
+    msg = "OK"
+    try:
+      
+      advancedsettingsdata = UserAdvancedSettingsData.objects.get(userid=request.user)
+      data = json.loads(advancedsettingsdata.data.replace("'", "\""))
+      settingsdata = data[0]
+      data[0]['coins'] = value
+      advancedsettingsdata.data = str(data)
       advancedsettingsdata.save()
       
     except UserAdvancedSettingsData.DoesNotExist:

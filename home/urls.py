@@ -27,6 +27,7 @@ urlpatterns = [
     path('admin/system_setting', views.system_setting, name = 'system_setting'),
     path('save_settings/', views.save_settings, name = 'save_settings'),
     path('set_ad_tlg_settings/', views.set_ad_tlg_settings, name = 'set_ad_tlg_settings'),
+    path('save_ad_coins/', views.save_ad_coins, name = 'save_ad_coins'),
     path('save_profile/', views.save_profile, name = 'save_profile'),
     path('save_system_settings/', views.save_system_settings, name = 'save_system_settings'),
     path('disable_telegram/', views.disable_telegram, name = 'disable_telegram'),

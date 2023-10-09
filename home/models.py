@@ -21,8 +21,7 @@ class CoinData(models.Model):
 
     def save(self, *args, **kwargs):
         super(CoinData, self).save(*args, **kwargs)
-    class Meta:
-        ordering = ['id']
+   
 
 
 class UserSettingsData(models.Model):
@@ -32,8 +31,7 @@ class UserSettingsData(models.Model):
 
     def save(self, *args, **kwargs):
         super(UserSettingsData, self).save(*args, **kwargs)
-    class Meta:
-        ordering = ['userid']
+    
 class UserAdvancedSettingsData(models.Model):
     id = models.AutoField(primary_key=True)
     userid = models.ForeignKey(CustomUser, on_delete=models.CASCADE)    
@@ -42,8 +40,7 @@ class UserAdvancedSettingsData(models.Model):
 
     def save(self, *args, **kwargs):
         super(UserAdvancedSettingsData, self).save(*args, **kwargs)
-    class Meta:
-        ordering = ['userid']  
+    
 class SystemSettingsData(models.Model):
     id = models.AutoField(primary_key=True)
     
@@ -59,8 +56,7 @@ class UserNotifyData(models.Model):
     created_on = models.DateTimeField(unique=False, auto_now_add=True)
     def save(self, *args, **kwargs):
         super(UserNotifyData, self).save(*args, **kwargs)
-    class Meta:
-        ordering = ['id'] 
+   
 class ErrorLog(models.Model):
     id = models.AutoField(primary_key=True)
     code = models.TextField()    
@@ -69,8 +65,7 @@ class ErrorLog(models.Model):
     created_on = models.DateTimeField(unique=False, auto_now_add=True)
     def save(self, *args, **kwargs):
         super(ErrorLog, self).save(*args, **kwargs)
-    class Meta:
-        ordering = ['-created_on'] 
+    
 class TelegramList(models.Model):
     id = models.AutoField(primary_key=True)
     data = models.TextField()

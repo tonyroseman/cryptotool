@@ -197,16 +197,18 @@ def get_advanced_coins_of_user(coindatas, userid, coindataindex):
     
     result = cursor.fetchall()
     if(len(result) > 0):
-    
+        coinssetings = ""
         useradvancedsettingsdata = str(result[0][1])
         settingsdata = json.loads(useradvancedsettingsdata[2:len(useradvancedsettingsdata)-1].replace("'", "\""))
+        if "coins" in settingsdata[0]:
+            coinssetings = settingsdata[0]['coins']
         sm = SettingsModule(settingdata=settingsdata)
         coins = []
         for coin in coindatas:
             coindata = str(coin[coindataindex])
             data = json.loads(coindata[2:len(coindata)-1].replace("'", "\""))
             coins.append(data)
-        retcoins = sm.getTlgAllMatchedCoins(coins)
+        retcoins = sm.getTlgAllMatchedCoins(coins, coinssetings)
     cursor.close()
     return retcoins
         
