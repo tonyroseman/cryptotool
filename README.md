@@ -209,5 +209,16 @@
         And then
             run "python .\manage.py runserver" on PC
             restart Web Server of our app on VPS.    
+- commit version 'update-19'
+    -> updated app contents
+        home/cryptoTelegramServer.py
+        home/models.py
+        home/settingsModule.py
+        home/templates/pages/advanced_settings.html
+        home/urls.py
+        home/views.py
+    -> updated contents
+        update of coin name setting of advanced settings page
+
         
 </pre>
