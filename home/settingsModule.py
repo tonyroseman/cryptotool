@@ -378,11 +378,11 @@ class SettingsModule:
             matchedcoins.append(coin)
         print(count)
         return matchedcoins
-    def getAllMatchedCoinsCount(self, coins):
+    def getAllMatchedCoinsCount(self, coins, coinssetings):
         matchedcoins = []
         count = 0
         for coin in coins:
-            if self.isAllMatch(coin):
+            if self.isAllMatch(coin, coinssetings):
                 coin['ad'] = 1
                 count+=1
             else:

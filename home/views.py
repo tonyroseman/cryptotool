@@ -183,11 +183,15 @@ def get_coindata_user_count(request):
   if request.method == "GET":
     advancedsettingsdata = UserAdvancedSettingsData.objects.get(userid=request.user)
       
+    
+    coinssetings = ""
     data = json.loads(advancedsettingsdata.data.replace("'", "\""))
+    if 'coins' in data[0]:
+       coinssetings = data[0]['coins']
     sm = SettingsModule(settingdata=data)
     api = CryptoModule()
     coins = api.get_user_coins(request.user, sm,limit=int(request.user.limitcount))
-    count = sm.getAllMatchedCoinsCount(coins)
+    count = sm.getAllMatchedCoinsCount(coins, coinssetings)
     
              
     context = {
