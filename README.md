@@ -220,5 +220,11 @@
     -> updated contents
         update of coin name setting of advanced settings page
 
+- commit version 'update-20'
+    -> updated app contents
+        home/settingsModule.py
+        home/views.py
+    -> updated contents
+        update of adjust_18.doc
         
 </pre>
