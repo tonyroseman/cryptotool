@@ -426,7 +426,7 @@
 	function disableTlg() {
             // Make an AJAX request to get updated data from the server
 		$.ajax({
-			url: '{% url 'disable_telegram'%}', // Replace with your server endpoint URL
+			url: '{% url "disable_telegram"%}', // Replace with your server endpoint URL
 			type: 'GET',
 			dataType: 'json',
 			

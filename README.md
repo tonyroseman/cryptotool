@@ -226,5 +226,22 @@
         home/views.py
     -> updated contents
         update of adjust_18.doc
+
+- commit version 'update-21'
+    -> updated app contents
+        home/cryptoServerModule.py
+        home/settingsModule.py
+        home/templates/admin/systemsetting.html
+        home/templates/pages/admin_usernotify.html
+        home/templates/pages/advanced_settings.html
+        home/templates/pages/index.html
+        home/templates/pages/records.html
+        home/templates/pages/setting.html
+        home/templates/pages/usernotify.html
+        home/templates/pages/usersettings.html
+        home/views.py
+    -> updated contents
+        update all bugs and new updating requirments
+
         
 </pre>
