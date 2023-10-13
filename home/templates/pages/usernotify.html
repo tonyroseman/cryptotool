@@ -36,6 +36,7 @@
                 <th rowspan="2" >Funding <br>rate <br>(%)</th>
                 <th rowspan="2" >Long <br>Short<br>Ratio</th>
                 <th colspan="11" >% change</th>
+                <th colspan="2" >Candle count 1H</th>
                 
 
                 
@@ -53,6 +54,8 @@
                 <th >1D</th>
                 <th >2D</th>
                 <th >4D</th>
+                <th >7D</th>
+                <th >2D</th>
                 <th >7D</th>
                 <th >Sending Time</th>
                 
@@ -144,6 +147,9 @@
                         render: numberRender},
                     { data: '7d' ,
                         render: numberRender},
+                    { data: 'c2' },
+                    { data: 'c7' },
+
                     {
                         data: 'time',
                         render: function(data, type, row) {
@@ -191,7 +197,7 @@
                     // Redraw the DataTable
                     // console.log(response.data.length);
                     coindataTable.draw(false);
-                    coindataTable.order([[20, 'desc']]).draw(false);// Redraw the DataTable
+                    coindataTable.order([[22, 'desc']]).draw(false);// Redraw the DataTable
                     // coindataTable.draw();
                     $("li.paginate_button.page-item").blur();
                 },

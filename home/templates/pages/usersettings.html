@@ -197,7 +197,36 @@
 			<input type="number" step=any class="form-control" name="t7d" value="{{data.t7d}}">
 		</div>
 	</div>
-	
+	<div class="col-md-3" style="margin-top: 5px;">
+		<div class="input-group">
+			<div class="input-group-prepend">
+				<span class="input-group-text" >Candle count 1H for 2D</span>
+			</div>
+			<select class="custom-select" name="c2">
+				
+				<option value="1" style="text-align: center;" {% if data.c2 == "1" %}selected{% endif %}> &gt;</option>
+				<option value="2" style="text-align: center;" {% if data.c2 == "2" %}selected{% endif %}> &lt; </option>
+				<option value="3" style="text-align: center;" {% if data.c2 == "3" %}selected{% endif %}>&gt;=</option>
+				<option value="4" style="text-align: center;" {% if data.c2 == "4" %}selected{% endif %}>&lt;=</option>
+			</select>
+			<input type="number" step=any class="form-control" name="tc2" value="{{data.tc2}}">
+		</div>
+	</div>
+	<div class="col-md-3" style="margin-top: 5px;">
+		<div class="input-group">
+			<div class="input-group-prepend">
+				<span class="input-group-text" >Candle count 1H for 7D</span>
+			</div>
+			<select class="custom-select" name="c7">
+				
+				<option value="1" style="text-align: center;" {% if data.c7 == "1" %}selected{% endif %}> &gt;</option>
+				<option value="2" style="text-align: center;" {% if data.c7 == "2" %}selected{% endif %}> &lt; </option>
+				<option value="3" style="text-align: center;" {% if data.c7 == "3" %}selected{% endif %}>&gt;=</option>
+				<option value="4" style="text-align: center;" {% if data.c7 == "4" %}selected{% endif %}>&lt;=</option>
+			</select>
+			<input type="number" step=any class="form-control" name="tc7" value="{{data.tc7}}">
+		</div>
+	</div>
 	<div class="col-md-12" style="margin-top: 5px;">
 		<br>
 	</div>

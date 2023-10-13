@@ -33,6 +33,7 @@
                     <th rowspan="2" >Funding <br>rate <br>(%)</th>
                     <th rowspan="2" >Long <br>Short<br>Ratio</th>
                     <th colspan="11" >% change</th>
+                    <th colspan="2" >Candle count 1H</th>
                     
                     
                     
@@ -52,6 +53,8 @@
                     <th >1D</th>
                     <th >2D</th>
                     <th >4D</th>
+                    <th >7D</th>
+                    <th >2D</th>
                     <th >7D</th>
                     
                     
@@ -165,6 +168,10 @@
                     { data: '4d' ,
                         render: numberRender},
                     { data: '7d' ,
+                        render: numberRender},
+                    { data: 'c2' ,
+                        render: numberRender},
+                    { data: 'c7' ,
                         render: numberRender},
                     
             ]

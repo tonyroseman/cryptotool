@@ -33,7 +33,7 @@
                     <th rowspan="2" >Funding <br>rate <br>(%)</th>
                     <th rowspan="2" >Long <br>Short<br>Ratio</th>
                     <th colspan="11" >% change</th>
-                    
+                    <th colspan="2" >Candle count 1H</th>
                     
                     
                     
@@ -51,7 +51,8 @@
                     <th >2D</th>
                     <th >4D</th>
                     <th >7D</th>
-                    
+                    <th >2D</th>
+                    <th >7D</th>
                     <!-- Add more table headers as needed -->
                 </tr>
             </thead>
@@ -527,6 +528,54 @@
                             }
                             
                     }},
+                    
+                    { data: 'c2' ,
+                        render: function(data, type, row) {
+                            if(row.ad != undefined && row.ad == 1 && row.ad_c2 != undefined && row.ad_c2 == true){
+                                var backgroundColor = 'lightblue'; // Example color value
+                                
+                                // Return the cell content with the specified background color
+                                return '<span style="background-color: ' + backgroundColor + ';display: block; width: 100%; height: 100%;">' + data + '</span>';
+                            }
+                            else if(row.fc2 != undefined && row.fc2 == true){
+                                var backgroundColor = 'pink'; // Example color value
+                                if(row.allok != undefined && row.allok == true){
+                                    backgroundColor = 'lightgreen'; // Example color value
+                                }
+                                // Return the cell content with the specified background color
+                                return '<span style="background-color: ' + backgroundColor + ';display: block; width: 100%; height: 100%;">' + data + '</span>';
+                            }
+                            else{
+                                if(data != undefined){
+                                        return data;
+                                }
+                            }
+                            
+                    }},
+                    
+                    { data: 'c7' ,
+                        render: function(data, type, row) {
+                            if(row.ad != undefined && row.ad == 1 && row.ad_c7 != undefined && row.ad_c7 == true){
+                                var backgroundColor = 'lightblue'; // Example color value
+                                
+                                // Return the cell content with the specified background color
+                                return '<span style="background-color: ' + backgroundColor + ';display: block; width: 100%; height: 100%;">' + data + '</span>';
+                            }
+                            else if(row.fc7 != undefined && row.fc7 == true){
+                                var backgroundColor = 'pink'; // Example color value
+                                if(row.allok != undefined && row.allok == true){
+                                    backgroundColor = 'lightgreen'; // Example color value
+                                }
+                                // Return the cell content with the specified background color
+                                return '<span style="background-color: ' + backgroundColor + ';display: block; width: 100%; height: 100%;">' + data + '</span>';
+                            }
+                            else{
+                                if(data != undefined){
+                                        return data;
+                                }
+                            }
+                            
+                    }},
                     {
                         data: 'count',
                         visible: false
@@ -677,7 +726,7 @@
                         coindataTable.row.add(rows[i]);
                     }
                     
-                    coindataTable.order([[20, 'desc']]).draw(false);// Redraw the DataTable
+                    coindataTable.order([[22, 'desc']]).draw(false);// Redraw the DataTable
                     // coindataTable.draw();
                     $("li.paginate_button.page-item").blur();
                     

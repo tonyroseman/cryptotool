@@ -161,7 +161,35 @@
 		</div>
 	</div>
 	
-	
+	<div class="col-md-4" style="margin-top: 5px;">
+		<div class="input-group">
+			
+			<div class="input-group-prepend" >
+				<span class="input-group-text" style="width: 380px;">% Change For Candle count 7 days and 14 days ago</span>
+			</div>
+			&nbsp;&nbsp;&nbsp;<font size="5">&lt;</font>&nbsp;&nbsp;&nbsp;
+			<input type="text" class="form-control" name="1h_downdelta" value="{{data.1h_downdelta|default:'-1'}}">
+		</div>
+	</div>
+	<div class="col-md-4" style="margin-top: 5px;">
+		<div class="input-group">
+			
+			<div class="input-group-prepend" >
+				<span class="input-group-text" style="width: 380px;">% Change For Candle count 7 days and 14 days ago</span>
+			</div>
+			&nbsp;&nbsp;&nbsp;<font size="5">&gt;</font>&nbsp;&nbsp;&nbsp;
+			<input type="text" class="form-control" name="1h_updelta" value="{{data.1h_updelta|default:'1'}}">
+		</div>
+	</div>
+	<div class="col-md-4" style="margin-top: 5px;">
+		<div class="input-group">
+			<div class="input-group-prepend" >
+				<span class="input-group-text" style="width: 230px;">Candle count period (Hour)</span>
+			</div>
+			
+			<input type="text" class="form-control" name="candleperiod" value="{{data.candleperiod|default:'6'}}">
+		</div>
+	</div>
 	<div class="col-md-3" style="margin-top: 5px;">
 		<div class="input-group">
 			<div class="input-group-prepend" >

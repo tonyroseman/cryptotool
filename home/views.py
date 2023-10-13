@@ -448,8 +448,8 @@ def user_settings(request, userid):
       
       expression = sm.getExpression()
       expression = " ".join(expression.split())
-      if "coins" in data[0]:
-        coins = data[0]['coins']
+      if "coins" in data:
+        coins = data['coins']
     except UserSettingsData.DoesNotExist:
       msg = 'Settings does not exist'
     context = {        

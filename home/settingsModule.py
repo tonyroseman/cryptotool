@@ -288,8 +288,10 @@ class SettingsModule:
                 flag = coin[key] <= value
             if flag == True:
                 if self.isCoinsSettings(coin,coinsettings):
+                    
                     coin['ad_' +key] = 1
                 else:
+                    flag = False
                     coin['ad_' +key] = 0
             else:
                 coin['ad_' +key] = 0
@@ -303,8 +305,12 @@ class SettingsModule:
                     flag = coin['market_cap'] >= value
                 elif operand == 4:    
                     flag = coin['market_cap'] <= value
-                if self.isCoinsSettings(coin,coinsettings):
-                    coin['ad_'+'market_cap'] = 1
+                if flag == True:
+                    if self.isCoinsSettings(coin,coinsettings):
+                        coin['ad_'+'market_cap'] = 1
+                    else:
+                        flag = False
+                        coin['ad_'+'market_cap'] = 0
                 else:
                     coin['ad_'+'market_cap'] = 0    
             except KeyError:

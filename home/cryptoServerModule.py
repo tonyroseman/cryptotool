@@ -26,7 +26,7 @@ class cryptoServerModule():
     def runServer(self):
         
         print("Server start")
-        proxyurl, cmckeys,  priceperiod, delays, lsperiod, cmperiod  = get_sys_settings()
+        proxyurl, cmckeys,  priceperiod, delays, lsperiod, cmperiod, h1deltas  = get_sys_settings()
 
 
         proxies = proxyurl
@@ -46,7 +46,8 @@ class cryptoServerModule():
         if len(proxies) > 0:
             price_thread = threading.Thread(target=get_price, args=(proxies,))
             price_thread.start()
-            
+            candle_thread = threading.Thread(target=get_all_candles_h, args=(cryptoServerModule.all_candles,))
+            candle_thread.start()
             binance_thread = threading.Thread(target=get_candles_mh)
             binance_thread.start()
             ls_thread = threading.Thread(target=get_longshortrate)
@@ -61,7 +62,7 @@ class cryptoServerModule():
 
 def get_top_symbols_current():
     url = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest"
-    proxyurl,cmckeys,  priceperiod, delays, lsperiod, cmperiod  = get_sys_settings()
+    proxyurl,cmckeys,  priceperiod, delays, lsperiod, cmperiod, h1deltas  = get_sys_settings()
     
     ki = 0
     pi = 0
@@ -282,30 +283,32 @@ def get_candle(symbol, interval, start_time, end_time):
         else:
             save_err_log(str(response.status_code),"Binance API - " + api_url + " Proxy : Local","Failed to fetch candles.")
             print("Failed to fetch candles")
-            return []
+            return None
     except requests.exceptions.ConnectTimeout:
         save_err_log("Exception","Binance API - " + api_url + " Proxy : Local","Connection timed out.")
         print("ConnectTimeout - get_candles")
-        time.sleep(10)
+        
         return []
     except requests.exceptions.RequestException as e:
         save_err_log("Exception","Binance API - " + api_url + " Proxy : " + "Local",f"An error occurred: RequestException")
         print(f"An error occurred: {e}")
-        time.sleep(60)    
+        
+        return None
 def get_all_candles_h(symbols):
-    proxyurl, cmckeys,  priceperiod, delays, lsperiod, cmperiod  = get_sys_settings()
+    proxyurl, cmckeys,  priceperiod, delays, lsperiod, cmperiod, h1deltas  = get_sys_settings()
     
     
     threads = []
     for i in range(int(len(symbols)/cryptoServerModule.thread_count)+1):
-        thread = threading.Thread(target=get_sub_candels_h, args=(symbols[min(i*cryptoServerModule.thread_count, len(symbols)):min((i+1)*cryptoServerModule.thread_count,len(symbols))], i,h1_downdelta_s, h1_updelta_s,))
+        thread = threading.Thread(target=get_sub_candels_h, args=(symbols[min(i*cryptoServerModule.thread_count, len(symbols)):min((i+1)*cryptoServerModule.thread_count,len(symbols))], i,h1deltas[0], h1deltas[1],))
         thread.start()
         threads.append(thread)
     for thread in threads:
         thread.join()
+    time.sleep(delays[7]*3600)
 
 def get_all_candles_3m(symbols):
-    proxyurl,cmckeys,  priceperiod, delays, lsperiod, cmperiod  = get_sys_settings()
+    proxyurl,cmckeys,  priceperiod, delays, lsperiod, cmperiod, h1deltas  = get_sys_settings()
     
     
     threads = []
@@ -330,9 +333,10 @@ def get_sys_settings():
     result = cursor.fetchall()
     
     priceperiod = 1
-    delays = [0,30,45,60,90,120,150]
+    delays = [0,30,45,60,90,120,150,6]
     lsperiod = 60*60
     cmperiod = 0
+    h1deltas = [-1,1]
     cmckeys=[]
     proxyurl= []
     if len(result) > 0:
@@ -343,19 +347,24 @@ def get_sys_settings():
             priceperiod = float(settings["priceperiod"])
         if "h1period" in settings:
             delays[0] = float(settings["h1period"]) 
-        if "h1period" in settings:
+        if "h6period" in settings:
             delays[1] = float(settings["h6period"]) 
-        if "h1period" in settings:
+        if "h12period" in settings:
             delays[2] = float(settings["h12period"]) 
-        if "h1period" in settings:
+        if "d1period" in settings:
             delays[3] = float(settings["d1period"]) 
-        if "h1period" in settings:
+        if "d2period" in settings:
             delays[4] = float(settings["d2period"]) 
-        if "h1period" in settings:
+        if "d4period" in settings:
             delays[5] = float(settings["d4period"]) 
-        if "h1period" in settings:
-            delays[6] = float(settings["d7period"])       
-        
+        if "d7period" in settings:
+            delays[6] = float(settings["d7period"])      
+        if "candleperiod" in settings:
+            delays[7] = float(settings["candleperiod"])           
+        if "1h_downdelta" in settings:
+            h1deltas[0] = float(settings["1h_downdelta"])  
+        if "1h_updelta" in settings:
+            h1deltas[1] = float(settings["1h_updelta"])  
         if "lsperiod" in settings:
             lsperiod = float(settings["lsperiod"])*60
         if "cmperiod" in settings:
@@ -366,43 +375,47 @@ def get_sys_settings():
         for i in range(10):
             if "cmckey" + str(i+1) in settings:
                 cmckeys.append(settings["cmckey" + str(i+1)])
-    return proxyurl, cmckeys, priceperiod, delays, lsperiod, cmperiod
+    return proxyurl, cmckeys, priceperiod, delays, lsperiod, cmperiod, h1deltas
 def get_candles_h(symbol, down, up):
     
     symbolstr = symbol['symbol']+'USDT'
    
     interval = "1h"
-    duration = 14  # in days
+    duration = 7  # in days
 
     # Calculate start and end times
     end_time = int(datetime.datetime.now().timestamp() * 1000)
     start_time = end_time - ((duration * 24+1) * 60 * 60 * 1000)
 
     # Fetch the candles
-    candles = get_candle(symbolstr, interval, start_time, end_time)
+    isOkay = False
+    while isOkay is False:
+        candles = get_candle(symbolstr, interval, start_time, end_time)
 
-    # Process and print the fetched candles
-    
-    
-    i=0
-    c7=c14=0
-    if candles is not None:
-        for candle in candles:
-            
-            open_price = float(candle[1])        
-            close_price = float(candle[4])        
-            if((close_price - open_price)/open_price*100 > up or (close_price - open_price)/open_price*100 < down):
-                if i>=7*24:
+        # Process and print the fetched candles
+        
+        i=0
+        c2=c7=0
+        
+        if candles is not None:
+            for candle in candles:
+                
+                open_price = float(candle[1])        
+                close_price = float(candle[4])        
+                if((close_price - open_price)/open_price*100 > up or (close_price - open_price)/open_price*100 < down):
+                    if i>=2*24:
+                        c2+=1
                     c7+=1
-                c14+=1
-            i+=1
-    symbol['c7'] = c7
-    symbol['c14'] = c14
-    h_count = {}
-    h_count['c7'] = c7
-    h_count['c14'] = c14
-    
-    return symbol
+                i+=1
+            symbol['c2'] = c2
+            symbol['c7'] = c7
+            h_count = {}
+            h_count['c2'] = c2
+            h_count['c7'] = c7
+            isOkay = True
+            return symbol
+        else:
+            time.sleep(60)
 def get_candles_3m(symbol, down, up):
     
     symbolstr = symbol['symbol']+'USDT'
@@ -492,7 +505,7 @@ def get_h_changedata(index):
     array_count = int(len(cryptoServerModule.all_symbols)/cryptoServerModule.sub_array_size)+1
     while True:
         
-        proxyurl, cmckeys, priceperiod, delays, lsperiod, cmperiod  = get_sys_settings()
+        proxyurl, cmckeys, priceperiod, delays, lsperiod, cmperiod, h1deltas  = get_sys_settings()
         proxies = proxyurl
         sub_array = []
         for i in range(cryptoServerModule.sub_array_size):
@@ -543,7 +556,7 @@ def save_err_log(code, type, data):
     cursor.close()
     
 def get_candles_mh():
-    proxyurl, cmckeys,  priceperiod, delays, lsperiod, cmperiod  = get_sys_settings()
+    proxyurl, cmckeys,  priceperiod, delays, lsperiod, cmperiod, h1deltas  = get_sys_settings()
     proxies = proxyurl
     # get_all_candles_h(cryptoServerModule.all_candles)
     
@@ -556,7 +569,7 @@ def get_candles_mh():
     
     pi = 0
     while True:
-        proxyurl, cmckeys,  priceperiod, delays, lsperiod, cmperiod  = get_sys_settings()
+        proxyurl, cmckeys,  priceperiod, delays, lsperiod, cmperiod, h1deltas  = get_sys_settings()
         proxies = proxyurl
         
         get_fundingRate(pi, proxies)
@@ -688,7 +701,7 @@ def get_price(proxiesarr):
     api_url = "https://api.binance.com/api/v3/ticker/price"
     pi = 0
     
-    proxyurl, cmckeys,  priceperiod, delays, lsperiod, cmperiod  = get_sys_settings()
+    proxyurl, cmckeys,  priceperiod, delays, lsperiod, cmperiod, h1deltas  = get_sys_settings()
     while True:
         
         pi=(pi+1)%(len(proxiesarr)+1)
@@ -768,7 +781,7 @@ def get_longshortrate():
     url = "https://fapi.binance.com/futures/data/globalLongShortAccountRatio"
     ipstr = ["local", "Proxy1", "Proxy2", "Proxy3", "Proxy4", "Proxy5", "Proxy6"]
     while True:
-        proxyurl, cmckeys, priceperiod, delays, lsperiod, cmperiod  = get_sys_settings()
+        proxyurl, cmckeys, priceperiod, delays, lsperiod, cmperiod, h1deltas  = get_sys_settings()
         proxiesarr = proxyurl
         for symbol in cryptoServerModule.future_symbols:
 
