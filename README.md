@@ -242,6 +242,11 @@
         home/views.py
     -> updated contents
         update all bugs and new updating requirments
-
+- commit version 'update-22'
+    -> updated app contents
+        home/cryptoServerModule.py
+        home/templates/admin/systemsetting.html
+    -> updated contents
+        update cc error
         
 </pre>
