@@ -394,19 +394,23 @@ def get_candles_h(symbol, down, up):
 
         # Process and print the fetched candles
         
-        i=0
+        
         c2=c7=0
         
         if candles is not None:
-            for candle in candles:
-                
-                open_price = float(candle[1])        
-                close_price = float(candle[4])        
+            for i in range(1,len(candles)):
+                index = len(candles)-i-1
+                open_price = float(candles[index][1])        
+                close_price = float(candles[index][4])  
+                # if symbolstr == "BTCUSDT":
+                    
+                    # print(datetime.datetime.fromtimestamp(float(candles[index][0])/1000),"-",datetime.datetime.fromtimestamp(float(candles[index][6])/1000))
+
                 if((close_price - open_price)/open_price*100 > up or (close_price - open_price)/open_price*100 < down):
-                    if i>=2*24:
+                    if i<=2*24:
                         c2+=1
                     c7+=1
-                i+=1
+                
             symbol['c2'] = c2
             symbol['c7'] = c7
             h_count = {}
