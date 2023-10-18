@@ -248,5 +248,13 @@
         home/templates/admin/systemsetting.html
     -> updated contents
         update cc error
+- commit version 'update-23'
+    -> updated app contents
+        home/cryptoServerModule.py
+        home/cryptoTelegramServer.py
+    -> updated contents
+        update cc refresh error
+
+
         
 </pre>
