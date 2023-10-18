@@ -146,6 +146,8 @@ def get_tlg_users():
     
     cursor.execute(query)
     result = cursor.fetchall()
+    column_names = [desc[0] for desc in cursor.description]
+    ad_user_index = column_names.index('userid_id')
     userresult = []
     if(len(result) > 0):
         for usersetting in result:
@@ -164,14 +166,14 @@ def get_tlg_users():
     cursor.close()
     if(len(usersetting) > 0):
         if (len(useradresult) > 0):
-            return userresult, useradresult
+            return userresult, useradresult, ad_user_index
         else:
-            return userresult, None
+            return userresult, None, None
     else:
         if (len(useradresult) > 0):
-            return None, useradresult
+            return None, useradresult, ad_user_index
         else:
-            return None, None
+            return None, None, None
 def get_current_coindatas():
     cnx = connect_mysql()
     cursor = cnx.cursor()
@@ -355,7 +357,7 @@ async def start_server(client):
     tlg_user_coindata = {}
     tlg_user_adv_coindata = {}
     while True:
-        tlg_users, ad_tlg_users = get_tlg_users()
+        tlg_users, ad_tlg_users, ad_user_index = get_tlg_users()
         limitseconds = get_notify_peroid()
         cur_coindatas, coindataindex = get_current_coindatas()
         if (tlg_users is not None):
@@ -413,9 +415,9 @@ async def start_server(client):
                                         time.sleep(3)
         if (ad_tlg_users is not None):
             for user in ad_tlg_users:
-                userinfo,telegram_index, limit_index = get_user_info(user[2])    
+                userinfo,telegram_index, limit_index = get_user_info(user[ad_user_index])    
                 if(userinfo is not None):
-                    adv_coindatas = get_advanced_coins_of_user(cur_coindatas[0:int(userinfo[limit_index])], user[2], coindataindex)
+                    adv_coindatas = get_advanced_coins_of_user(cur_coindatas[0:int(userinfo[limit_index])], user[ad_user_index], coindataindex)
                     if adv_coindatas is not None and len(adv_coindatas) > 0:
                         
                         recipient_username = userinfo[telegram_index]

@@ -295,17 +295,18 @@ def get_candle(symbol, interval, start_time, end_time):
         
         return None
 def get_all_candles_h(symbols):
-    proxyurl, cmckeys,  priceperiod, delays, lsperiod, cmperiod, h1deltas  = get_sys_settings()
-    
-    
-    threads = []
-    for i in range(int(len(symbols)/cryptoServerModule.thread_count)+1):
-        thread = threading.Thread(target=get_sub_candels_h, args=(symbols[min(i*cryptoServerModule.thread_count, len(symbols)):min((i+1)*cryptoServerModule.thread_count,len(symbols))], i,h1deltas[0], h1deltas[1],))
-        thread.start()
-        threads.append(thread)
-    for thread in threads:
-        thread.join()
-    time.sleep(delays[7]*3600)
+    while True:
+        proxyurl, cmckeys,  priceperiod, delays, lsperiod, cmperiod, h1deltas  = get_sys_settings()
+        
+        
+        threads = []
+        for i in range(int(len(symbols)/cryptoServerModule.thread_count)+1):
+            thread = threading.Thread(target=get_sub_candels_h, args=(symbols[min(i*cryptoServerModule.thread_count, len(symbols)):min((i+1)*cryptoServerModule.thread_count,len(symbols))], i,h1deltas[0], h1deltas[1],))
+            thread.start()
+            threads.append(thread)
+        for thread in threads:
+            thread.join()
+        time.sleep(delays[7]*3600)
 
 def get_all_candles_3m(symbols):
     proxyurl,cmckeys,  priceperiod, delays, lsperiod, cmperiod, h1deltas  = get_sys_settings()
@@ -407,10 +408,18 @@ def get_candles_h(symbol, down, up):
                     # print(datetime.datetime.fromtimestamp(float(candles[index][0])/1000),"-",datetime.datetime.fromtimestamp(float(candles[index][6])/1000))
 
                 if((close_price - open_price)/open_price*100 > up or (close_price - open_price)/open_price*100 < down):
+                    if symbolstr == "BTCUSDT":
+                    
+                         print(datetime.datetime.fromtimestamp(float(candles[index][0])/1000),"-",datetime.datetime.fromtimestamp(float(candles[index][6])/1000))
+                         print("open_price",open_price)
+                         print("close_price",close_price)
+                         print((close_price - open_price)/open_price*100)
                     if i<=2*24:
                         c2+=1
                     c7+=1
-                
+            if symbolstr == "BTCUSDT":                    
+                print("Now",datetime.datetime.now())  
+                print("c2",c2,"c7",c7)       
             symbol['c2'] = c2
             symbol['c7'] = c7
             h_count = {}
