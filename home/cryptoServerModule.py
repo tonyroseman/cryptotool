@@ -132,6 +132,8 @@ def get_top_symbols_current():
                             # all_candles[index] =volumedata
                     except ValueError:
                         continue
+                    except KeyError:
+                        print(coin)
                 ki = (ki+1)%len(cmckeys)
                 pi = (pi+1)%len(proxyurl)
                 # print("price : ",all_candles[0])

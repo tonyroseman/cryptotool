@@ -698,15 +698,20 @@ def system_setting(request):
     if(len(systemsettingsdatas) > 0):
         
         systemsettingsdata = systemsettingsdatas[0]
-        data = json.loads(systemsettingsdata.data.replace("'", "\"")),
-       
-    
-    context = {        
+        data = json.loads(systemsettingsdata.data.replace("'", "\""))
+    context = {}
+    if data is not None:   
+        context = {        
         'msg': "",
         'data':data[0],
-
         
-    }
+        }
+    else:
+       context = {        
+        'msg': "",
+        
+        
+        }
     
     return render(request, 'admin/systemsetting.html', context)
 
