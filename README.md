@@ -254,6 +254,10 @@
         home/cryptoTelegramServer.py
     -> updated contents
         update cc refresh error
+- commit version 'update-24'
+    
+    -> updated contents
+        update without tlg noti delay
 
 
         
