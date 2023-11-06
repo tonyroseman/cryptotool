@@ -93,6 +93,12 @@
                 
             }
         }
+        function numberRender2(data, type, row) {
+            if(data != undefined){
+                return '' +  Math.round(data * 100) / 100;
+                
+            }
+        }
         function FundingRateRender(data, type, row) {
             if(data != undefined){
                 if(row.c1000 == 0)
@@ -158,15 +164,15 @@
                     { data: 'c2' },
                     { data: 'c7' },
                     { data: 'r1h' ,
-                        render: numberRender},
+                        render: numberRender1},
                     { data: 'r4h' ,
-                        render: numberRender},
+                        render: numberRender1},
                     { data: 'b1h' ,
-                        render: numberRender},
+                        render: numberRender2},
                     { data: 'b4h' ,
-                        render: numberRender},
+                        render: numberRender2},
                     { data: 'f7d' ,
-                        render: numberRender},
+                        render: numberRender2},
                     {
                         data: 'time',
                         render: function(data, type, row) {

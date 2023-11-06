@@ -165,10 +165,10 @@
         function fibnumberRender(data, type, row) {
             if(data != undefined){
                 if (data >= 0){
-                    return '<font color="green">▲ </font>' +  Math.round(data * 10000) / 10000;
+                    return '<font color="green">▲ </font>' +  Math.round(data * 100) / 100;
                 }
                 else{
-                    return '<font color="red">▼ </font>' +  Math.round(data * 10000) / 10000;
+                    return '<font color="red">▼ </font>' +  Math.round(data * 100) / 100;
                 }
                 
                 
@@ -177,6 +177,12 @@
         function numberRender1(data, type, row) {
             if(data != undefined){
                 return '' +  Math.round(data * 10) / 10;
+                
+            }
+        }
+        function numberRender2(data, type, row) {
+            if(data != undefined){
+                return '' +  Math.round(data * 100) / 100;
                 
             }
         }
@@ -247,13 +253,13 @@
                     { data: 'c7' ,
                         render: numberRender},
                     { data: 'r1h' ,
-                        render: numberRender},
+                        render: numberRender1},
                     { data: 'r4h' ,
-                        render: numberRender},
+                        render: numberRender1},
                     { data: 'b1h' ,
-                        render: numberRender},
+                        render: numberRender2},
                     { data: 'b4h' ,
-                        render: numberRender},
+                        render: numberRender2},
                     { data: 'f7d' ,
                         render: fibnumberRender},
 
