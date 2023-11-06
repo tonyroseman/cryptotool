@@ -418,9 +418,9 @@ async def start_server(client):
         if (ad_tlg_users is not None):
             for user in ad_tlg_users:
                 
-                userinfo,telegram_index, limit_index = get_user_info(user[3])    
+                userinfo,telegram_index, limit_index = get_user_info(user[2])    
                 if(userinfo is not None):
-                    adv_coindatas = get_advanced_coins_of_user(cur_coindatas[0:int(userinfo[limit_index])], user[3], coindataindex)
+                    adv_coindatas = get_advanced_coins_of_user(cur_coindatas[0:int(userinfo[limit_index])], user[2], coindataindex)
                     if adv_coindatas is not None and len(adv_coindatas) > 0:
                         
                         recipient_username = userinfo[telegram_index]
