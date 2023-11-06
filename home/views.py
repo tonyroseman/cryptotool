@@ -438,6 +438,7 @@ def user_settings(request, userid):
     msg = ''
     data = None
     coins=""
+    
     try:
       user = CustomUser.objects.get(id=userid)
       usersettingsdata = UserSettingsData.objects.get(userid=userid)
@@ -450,9 +451,7 @@ def user_settings(request, userid):
       expression = " ".join(expression.split())
       if "coins" in data:
         coins = data['coins']
-    except UserSettingsData.DoesNotExist:
-      msg = 'Settings does not exist'
-    context = {        
+      context = {        
         'data': data,
         'coins':coins,
         'msg' : msg,
@@ -460,9 +459,30 @@ def user_settings(request, userid):
         'isadtlg':useradsettingsdata.istlg,
         'expression':expression,
 
-    }
+      }
     
-    return render(request, 'pages/usersettings.html', context)
+      return render(request, 'pages/usersettings.html', context)
+    except UserSettingsData.DoesNotExist:
+      msg = 'Settings does not exist'
+      useradsettingsdata = UserAdvancedSettingsData.objects.get(userid=userid)
+      addata = json.loads(useradsettingsdata.data.replace("'", "\""))
+      sm = SettingsModule(settingdata=addata)
+      
+      expression = sm.getExpression()
+      expression = " ".join(expression.split())
+      
+      context = {        
+        'data': data,
+        'coins':coins,
+        'msg' : msg,
+        'username': user.username,
+        'isadtlg':useradsettingsdata.istlg,
+        'expression':expression,
+
+      }
+    
+      return render(request, 'pages/usersettings.html', context)
+    
 @login_required(login_url='/accounts/auth-signin')
 @user_passes_test(is_user_active, login_url='/accounts/auth-signin')
 def user_advanced_settings(request, userid):
@@ -700,10 +720,11 @@ def system_setting(request):
         systemsettingsdata = systemsettingsdatas[0]
         data = json.loads(systemsettingsdata.data.replace("'", "\""))
     context = {}
+    print(data)
     if data is not None:   
         context = {        
-        'msg': "",
-        'data':data[0],
+          'msg': "",
+          'data':data,
         
         }
     else:

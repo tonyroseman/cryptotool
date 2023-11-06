@@ -255,10 +255,17 @@
     -> updated contents
         update cc refresh error
 - commit version 'update-24'
+<<<<<<< HEAD
     
     -> updated contents
         update without tlg noti delay
 
+=======
+    -> updated app contents
+        
+    -> updated contents
+        
+>>>>>>> 9b2b689 ('update-25')
 
         
 </pre>

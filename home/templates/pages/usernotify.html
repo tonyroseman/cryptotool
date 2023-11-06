@@ -26,17 +26,20 @@
         <thead>
             <tr>
                 <th rowspan="2" >No.</th>
-                <th rowspan="2" >Symbol</th>
-                <th rowspan="2" >Current<br> Price<br>(USD)</th>
-                
-                <th rowspan="2" >Market <br>cap<br>(Mils $)</th>
-                <th rowspan="2" >Volume <br>24H<br>(Mils $)</th>
-                <th rowspan="2" >Volume <br>change<br>24H (%)</th>
-                <th rowspan="2" >Volume/<br>Market<br> cap</th>
-                <th rowspan="2" >Funding <br>rate <br>(%)</th>
-                <th rowspan="2" >Long <br>Short<br>Ratio</th>
-                <th colspan="11" >% change</th>
-                <th colspan="2" >Candle count 1H</th>
+                    <th rowspan="2" >Symbol</th>
+                    <th rowspan="2" >Current<br> Price<br>(USD)</th>
+                    
+                    <th rowspan="2" >Market <br>cap<br>(mil $)</th>
+                    <th rowspan="2" >Volume <br>24H<br>(mil $)</th>
+                    <th rowspan="2" >Volume <br>change<br>24H (%)</th>
+                    <th rowspan="2" >Volume/<br>Market<br> cap</th>
+                    <th rowspan="2" >Funding <br>rate <br>(%)</th>
+                    <th rowspan="2" >Long <br>Short<br>Ratio</th>
+                    <th colspan="11" style="border-left: 1px solid rgba(0, 0, 0, 0.3)">% Change</th>
+                    <th colspan="2" style="border-left: 1px solid rgba(0, 0, 0, 0.3)">Candle 1H</th>
+                    <th colspan="2" style="border-left: 1px solid rgba(0, 0, 0, 0.3)">RSI</th>
+                    <th colspan="2" style="border-left: 1px solid rgba(0, 0, 0, 0.3)">Bollinger<br>band</th>
+                    <th colspan="1" style="border-left: 1px solid rgba(0, 0, 0, 0.3)">Fibonacci<br>Retracement</th>
                 
 
                 
@@ -44,7 +47,7 @@
             </tr>
             <tr>
                 
-                <th >1'</th>                    
+                <th style="border-left: 1px solid rgba(0, 0, 0, 0.3)">1'</th>                    
                 <th >3'</th>                    
                 <th >5'</th>
                 <th >15'</th>
@@ -55,8 +58,13 @@
                 <th >2D</th>
                 <th >4D</th>
                 <th >7D</th>
-                <th >2D</th>
+                <th style="border-left: 1px solid rgba(0, 0, 0, 0.3)">2D</th>
                 <th >7D</th>
+                <th style="border-left: 1px solid rgba(0, 0, 0, 0.3)">1H</th>
+                <th >4H</th>
+                <th style="border-left: 1px solid rgba(0, 0, 0, 0.3)">1H</th>
+                <th >4H</th>
+                <th style="border-left: 1px solid rgba(0, 0, 0, 0.3)">7D</th>
                 <th >Sending Time</th>
                 
                 <!-- Add more table headers as needed -->
@@ -149,7 +157,16 @@
                         render: numberRender},
                     { data: 'c2' },
                     { data: 'c7' },
-
+                    { data: 'r1h' ,
+                        render: numberRender},
+                    { data: 'r4h' ,
+                        render: numberRender},
+                    { data: 'b1h' ,
+                        render: numberRender},
+                    { data: 'b4h' ,
+                        render: numberRender},
+                    { data: 'f7d' ,
+                        render: numberRender},
                     {
                         data: 'time',
                         render: function(data, type, row) {
@@ -197,7 +214,7 @@
                     // Redraw the DataTable
                     // console.log(response.data.length);
                     coindataTable.draw(false);
-                    coindataTable.order([[22, 'desc']]).draw(false);// Redraw the DataTable
+                    coindataTable.order([[27, 'desc']]).draw(false);// Redraw the DataTable
                     // coindataTable.draw();
                     $("li.paginate_button.page-item").blur();
                 },

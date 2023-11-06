@@ -32,15 +32,18 @@
                     <th rowspan="2" >Volume/<br>Market<br> cap</th>
                     <th rowspan="2" >Funding <br>rate <br>(%)</th>
                     <th rowspan="2" >Long <br>Short<br>Ratio</th>
-                    <th colspan="11" >% change</th>
-                    <th colspan="2" >Candle count 1H</th>
+                    <th colspan="11" style="border-left: 1px solid rgba(0, 0, 0, 0.3)">% Change</th>
+                    <th colspan="2" style="border-left: 1px solid rgba(0, 0, 0, 0.3)">Candle 1H</th>
+                    <th colspan="2" style="border-left: 1px solid rgba(0, 0, 0, 0.3)">RSI</th>
+                    <th colspan="2" style="border-left: 1px solid rgba(0, 0, 0, 0.3)">Bollinger<br>band</th>
+                    <th colspan="1" style="border-left: 1px solid rgba(0, 0, 0, 0.3)">Fibonacci<br>Retracement</th>
                     
                     
                     
                     <!-- Add more table headers as needed -->
                 </tr>
                 <tr>
-                    <th >1'</th>                    
+                    <th style="border-left: 1px solid rgba(0, 0, 0, 0.3)">1'</th>                    
                     <th >3'</th>                    
                     <th >5'</th>
                     <th >15'</th>
@@ -51,8 +54,13 @@
                     <th >2D</th>
                     <th >4D</th>
                     <th >7D</th>
-                    <th >2D</th>
+                    <th style="border-left: 1px solid rgba(0, 0, 0, 0.3)">2D</th>
                     <th >7D</th>
+                    <th style="border-left: 1px solid rgba(0, 0, 0, 0.3)">1H</th>
+                    <th >4H</th>
+                    <th style="border-left: 1px solid rgba(0, 0, 0, 0.3)">1H</th>
+                    <th >4H</th>
+                    <th style="border-left: 1px solid rgba(0, 0, 0, 0.3)">7D</th>
                     <!-- Add more table headers as needed -->
                 </tr>
             </thead>
@@ -576,6 +584,121 @@
                             }
                             
                     }},
+                    { data: 'r1h' ,
+                        render: function(data, type, row) {
+                            if(row.ad != undefined && row.ad == 1 && row.ad_r1h != undefined && row.ad_r1h == true){
+                                var backgroundColor = 'lightblue'; // Example color value
+                                
+                                // Return the cell content with the specified background color
+                                return '<span style="background-color: ' + backgroundColor + ';display: block; width: 100%; height: 100%;">' + Math.round(data * 10000) / 10000; + '</span>';
+                            }
+                            else if(row.fr1h != undefined && row.fr1h == true){
+                                var backgroundColor = 'pink'; // Example color value
+                                if(row.allok != undefined && row.allok == true){
+                                    backgroundColor = 'lightgreen'; // Example color value
+                                }
+                                // Return the cell content with the specified background color
+                                return '<span style="background-color: ' + backgroundColor + ';display: block; width: 100%; height: 100%;">' + Math.round(data * 10000) / 10000; + '</span>';
+                            }
+                            else{
+                                if(data != undefined){
+                                        return Math.round(data * 10000) / 10000;
+                                }
+                            }
+                            
+                    }},
+                    { data: 'r4h' ,
+                        render: function(data, type, row) {
+                            if(row.ad != undefined && row.ad == 1 && row.ad_r4h != undefined && row.ad_r4h == true){
+                                var backgroundColor = 'lightblue'; // Example color value
+                                
+                                // Return the cell content with the specified background color
+                                return '<span style="background-color: ' + backgroundColor + ';display: block; width: 100%; height: 100%;">' + Math.round(data * 10000) / 10000; + '</span>';
+                            }
+                            else if(row.fr4h != undefined && row.fr4h == true){
+                                var backgroundColor = 'pink'; // Example color value
+                                if(row.allok != undefined && row.allok == true){
+                                    backgroundColor = 'lightgreen'; // Example color value
+                                }
+                                // Return the cell content with the specified background color
+                                return '<span style="background-color: ' + backgroundColor + ';display: block; width: 100%; height: 100%;">' + Math.round(data * 10000) / 10000; + '</span>';
+                            }
+                            else{
+                                if(data != undefined){
+                                        return Math.round(data * 10000) / 10000;
+                                }
+                            }
+                            
+                    }},
+                    { data: 'b1h' ,
+                        render: function(data, type, row) {
+                            if(row.ad != undefined && row.ad == 1 && row.ad_b1h != undefined && row.ad_b1h == true){
+                                var backgroundColor = 'lightblue'; // Example color value
+                                
+                                // Return the cell content with the specified background color
+                                return '<span style="background-color: ' + backgroundColor + ';display: block; width: 100%; height: 100%;">' + Math.round(data * 10000) / 10000; + '</span>';
+                            }
+                            else if(row.fb1h != undefined && row.fb1h == true){
+                                var backgroundColor = 'pink'; // Example color value
+                                if(row.allok != undefined && row.allok == true){
+                                    backgroundColor = 'lightgreen'; // Example color value
+                                }
+                                // Return the cell content with the specified background color
+                                return '<span style="background-color: ' + backgroundColor + ';display: block; width: 100%; height: 100%;">' + Math.round(data * 10000) / 10000; + '</span>';
+                            }
+                            else{
+                                if(data != undefined){
+                                        return Math.round(data * 10000) / 10000;
+                                }
+                            }
+                            
+                    }},
+                    { data: 'b4h' ,
+                        render: function(data, type, row) {
+                            if(row.ad != undefined && row.ad == 1 && row.ad_b4h != undefined && row.ad_b4h == true){
+                                var backgroundColor = 'lightblue'; // Example color value
+                                
+                                // Return the cell content with the specified background color
+                                return '<span style="background-color: ' + backgroundColor + ';display: block; width: 100%; height: 100%;">' + Math.round(data * 10000) / 10000; + '</span>';
+                            }
+                            else if(row.fb4h != undefined && row.fb4h == true){
+                                var backgroundColor = 'pink'; // Example color value
+                                if(row.allok != undefined && row.allok == true){
+                                    backgroundColor = 'lightgreen'; // Example color value
+                                }
+                                // Return the cell content with the specified background color
+                                return '<span style="background-color: ' + backgroundColor + ';display: block; width: 100%; height: 100%;">' + Math.round(data * 10000) / 10000; + '</span>';
+                            }
+                            else{
+                                if(data != undefined){
+                                        return Math.round(data * 10000) / 10000;
+                                }
+                            }
+                            
+                    }},
+                    { data: 'f7d' ,
+                        render: function(data, type, row) {
+                            if(row.ad != undefined && row.ad == 1 && row.ad_f7d != undefined && row.ad_f7d == true){
+                                var backgroundColor = 'lightblue'; // Example color value
+                                
+                                // Return the cell content with the specified background color
+                                return '<span style="background-color: ' + backgroundColor + ';display: block; width: 100%; height: 100%;">' + Math.round(data * 10000) / 10000; + '</span>';
+                            }
+                            else if(row.ff7d != undefined && row.ff7d == true){
+                                var backgroundColor = 'pink'; // Example color value
+                                if(row.allok != undefined && row.allok == true){
+                                    backgroundColor = 'lightgreen'; // Example color value
+                                }
+                                // Return the cell content with the specified background color
+                                return '<span style="background-color: ' + backgroundColor + ';display: block; width: 100%; height: 100%;">' + Math.round(data * 10000) / 10000; + '</span>';
+                            }
+                            else{
+                                if(data != undefined){
+                                        return Math.round(data * 10000) / 10000;
+                                }
+                            }
+                            
+                    }},
                     {
                         data: 'count',
                         visible: false
@@ -726,7 +849,7 @@
                         coindataTable.row.add(rows[i]);
                     }
                     
-                    coindataTable.order([[22, 'desc']]).draw(false);// Redraw the DataTable
+                    coindataTable.order([[27, 'desc']]).draw(false);// Redraw the DataTable
                     // coindataTable.draw();
                     $("li.paginate_button.page-item").blur();
                     

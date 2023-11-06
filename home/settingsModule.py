@@ -292,9 +292,11 @@ class SettingsModule:
                     coin['ad_' +key] = 1
                 else:
                     flag = False
-                    coin['ad_' +key] = 0
+                    if not 'ad_'+key in coin:
+                        coin['ad_' +key] = 0
             else:
-                coin['ad_' +key] = 0
+                if not 'ad_'+key in coin:
+                    coin['ad_' +key] = 0
         if key == 'mc':
             try:
                 if operand == 1:
@@ -310,9 +312,11 @@ class SettingsModule:
                         coin['ad_'+'market_cap'] = 1
                     else:
                         flag = False
-                        coin['ad_'+'market_cap'] = 0
+                        if not 'ad_'+'market_cap' in coin:
+                            coin['ad_'+'market_cap'] = 0
                 else:
-                    coin['ad_'+'market_cap'] = 0    
+                    if not 'ad_'+'market_cap' in coin:
+                        coin['ad_'+'market_cap'] = 0    
             except KeyError:
                 coin['ad_'+'market_cap'] = 0
         return flag

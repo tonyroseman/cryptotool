@@ -69,6 +69,9 @@
 			
 		</div>
 	</div>
+	<div class="col-md-12" style="margin-top: 5px;">
+		<br>
+	</div>
 	<div class="col-md-6" style="margin-top: 5px;">
 		<div class="input-group">
 			<div class="input-group-prepend" >
@@ -160,7 +163,30 @@
 			<input type="text" class="form-control" name="cmckey10" value="{{data.cmckey10}}">
 		</div>
 	</div>
-	
+	<div class="col-md-12" style="margin-top: 5px;">
+		<br>
+	</div>
+	<div class="col-md-6" style="margin-top: 5px;">
+		<div class="input-group">
+			<div class="input-group-prepend" >
+				<span class="input-group-text" style="width: 180px;">Binance API Key</span>
+			</div>
+			
+			<input type="text" class="form-control" name="bncapikey" value="{{data.bncapikey}}">
+		</div>
+	</div>
+	<div class="col-md-6" style="margin-top: 5px;">
+		<div class="input-group">
+			<div class="input-group-prepend" >
+				<span class="input-group-text" style="width: 180px;">Binance API Secret</span>
+			</div>
+			
+			<input type="text" class="form-control" name="bncseckey" value="{{data.bncseckey}}">
+		</div>
+	</div>
+	<div class="col-md-12" style="margin-top: 5px;">
+		<br>
+	</div>
 	<div class="col-md-4" style="margin-top: 5px;">
 		<div class="input-group">
 			
@@ -272,8 +298,33 @@
 			<input type="text" class="form-control" name="lsperiod" value="{{data.lsperiod|default:'60'}}">
 		</div>
 	</div>
-	
-	
+	<div class="col-md-3" style="margin-top: 5px;">
+		<div class="input-group">
+			<div class="input-group-prepend" >
+				<span class="input-group-text" style="width: 250px;">RSI & BB 1H candles period (Hour)</span>
+			</div>
+			
+			<input type="text" class="form-control" name="r1hperiod" value="{{data.r1hperiod|default:'3'}}">
+		</div>
+	</div>
+	<div class="col-md-3" style="margin-top: 5px;">
+		<div class="input-group">
+			<div class="input-group-prepend" >
+				<span class="input-group-text" style="width: 250px;">RSI & BB 4H candles period (Hour)</span>
+			</div>
+			
+			<input type="text" class="form-control" name="r4hperiod" value="{{data.r4hperiod|default:'12'}}">
+		</div>
+	</div>
+	<div class="col-md-3" style="margin-top: 5px;">
+		<div class="input-group">
+			<div class="input-group-prepend" >
+				<span class="input-group-text" style="width: 250px;">Fib 7D period (Hour)</span>
+			</div>
+			
+			<input type="text" class="form-control" name="fibperiod" value="{{data.fibperiod|default:'24'}}">
+		</div>
+	</div>
 	<div class="col-md-3" style="margin-top: 5px;">
 		<div class="input-group">
 			<div class="input-group-prepend" >

@@ -151,6 +151,7 @@ def get_tlg_users():
     userresult = []
     if(len(result) > 0):
         for usersetting in result:
+           
             settingsdata = str(usersetting[1])
             
             data = json.loads(settingsdata[2:len(settingsdata)-1].replace("'", "\""))
@@ -164,7 +165,7 @@ def get_tlg_users():
     
         
     cursor.close()
-    if(len(usersetting) > 0):
+    if(len(userresult) > 0):
         if (len(useradresult) > 0):
             return userresult, useradresult, ad_user_index
         else:
@@ -223,6 +224,7 @@ def get_coins_of_user(coindatas, usersettings, coindataindex):
     count = len(settings.keys())-2
     for coin in coindatas:
         coindata = str(coin[coindataindex])
+        
         data = json.loads(coindata[2:len(coindata)-1].replace("'", "\""))
         
         ok_count = 0
@@ -415,13 +417,15 @@ async def start_server(client):
                                         
         if (ad_tlg_users is not None):
             for user in ad_tlg_users:
-                userinfo,telegram_index, limit_index = get_user_info(user[ad_user_index])    
+                
+                userinfo,telegram_index, limit_index = get_user_info(user[3])    
                 if(userinfo is not None):
-                    adv_coindatas = get_advanced_coins_of_user(cur_coindatas[0:int(userinfo[limit_index])], user[ad_user_index], coindataindex)
+                    adv_coindatas = get_advanced_coins_of_user(cur_coindatas[0:int(userinfo[limit_index])], user[3], coindataindex)
                     if adv_coindatas is not None and len(adv_coindatas) > 0:
                         
                         recipient_username = userinfo[telegram_index]
                         rcp = recipient_username
+                        
                         if(rcp != ""):
                             
                             
@@ -468,14 +472,23 @@ async def start_server(client):
                                     
                                 # update_notifydata(notify['id'])
                             
-        # time.sleep(5)
+        time.sleep(0.5)
         
  
 def connect_mysql():
-     cnx = mysql.connector.connect(user='root', password='root',
-                                host='127.0.0.1',
-                                database='cryptoadmin')
-     return cnx
+    cnx = None
+    isOk = False
+    while isOk is not True:
+        try:
+            cnx = mysql.connector.connect(user='root', password='root',
+                                    host='localhost',
+                                    database='cryptoadmin')
+            isOk = True
+        except mysql.connector.errors.DatabaseError:
+            time.sleep(1)
+    
+        
+    return cnx
 def start_bot():
     while True:
         try:

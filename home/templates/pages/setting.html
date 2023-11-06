@@ -223,6 +223,81 @@
 			<input type="number" step=any class="form-control" name="tc7" value="{{data.tc7}}">
 		</div>
 	</div>
+	<div class="col-md-3" style="margin-top: 5px;">
+		<div class="input-group">
+			<div class="input-group-prepend">
+				<span class="input-group-text" >RSI 1H</span>
+			</div>
+			<select class="custom-select" name="r1h">
+				
+				<option value="1" style="text-align: center;" {% if data.r1h == "1" %}selected{% endif %}> &gt;</option>
+				<option value="2" style="text-align: center;" {% if data.r1h == "2" %}selected{% endif %}> &lt; </option>
+				<option value="3" style="text-align: center;" {% if data.r1h == "3" %}selected{% endif %}>&gt;=</option>
+				<option value="4" style="text-align: center;" {% if data.r1h == "4" %}selected{% endif %}>&lt;=</option>
+			</select>
+			<input type="number" step=any class="form-control" name="tr1h" value="{{data.tr1h}}">
+		</div>
+	</div>
+	<div class="col-md-3" style="margin-top: 5px;">
+		<div class="input-group">
+			<div class="input-group-prepend">
+				<span class="input-group-text" >RSI 4H</span>
+			</div>
+			<select class="custom-select" name="r4h">
+				
+				<option value="1" style="text-align: center;" {% if data.r4h == "1" %}selected{% endif %}> &gt;</option>
+				<option value="2" style="text-align: center;" {% if data.r4h == "2" %}selected{% endif %}> &lt; </option>
+				<option value="3" style="text-align: center;" {% if data.r4h == "3" %}selected{% endif %}>&gt;=</option>
+				<option value="4" style="text-align: center;" {% if data.r4h == "4" %}selected{% endif %}>&lt;=</option>
+			</select>
+			<input type="number" step=any class="form-control" name="tr4h" value="{{data.tr4h}}">
+		</div>
+	</div>
+	<div class="col-md-3" style="margin-top: 5px;">
+		<div class="input-group">
+			<div class="input-group-prepend">
+				<span class="input-group-text" >Bollinger Band 1H</span>
+			</div>
+			<select class="custom-select" name="b1h">
+				
+				<option value="1" style="text-align: center;" {% if data.b1h == "1" %}selected{% endif %}> &gt;</option>
+				<option value="2" style="text-align: center;" {% if data.b1h == "2" %}selected{% endif %}> &lt; </option>
+				<option value="3" style="text-align: center;" {% if data.b1h == "3" %}selected{% endif %}>&gt;=</option>
+				<option value="4" style="text-align: center;" {% if data.b1h == "4" %}selected{% endif %}>&lt;=</option>
+			</select>
+			<input type="number" step=any class="form-control" name="tb1h" value="{{data.tb1h}}">
+		</div>
+	</div>
+	<div class="col-md-3" style="margin-top: 5px;">
+		<div class="input-group">
+			<div class="input-group-prepend">
+				<span class="input-group-text" >Bollinger Band 4H</span>
+			</div>
+			<select class="custom-select" name="b4h">
+				
+				<option value="1" style="text-align: center;" {% if data.b4h == "1" %}selected{% endif %}> &gt;</option>
+				<option value="2" style="text-align: center;" {% if data.b4h == "2" %}selected{% endif %}> &lt; </option>
+				<option value="3" style="text-align: center;" {% if data.b4h == "3" %}selected{% endif %}>&gt;=</option>
+				<option value="4" style="text-align: center;" {% if data.b4h == "4" %}selected{% endif %}>&lt;=</option>
+			</select>
+			<input type="number" step=any class="form-control" name="tb4h" value="{{data.tb4h}}">
+		</div>
+	</div>
+	<div class="col-md-4" style="margin-top: 5px;">
+		<div class="input-group">
+			<div class="input-group-prepend">
+				<span class="input-group-text" >Fibonacci retracement 7D</span>
+			</div>
+			<select class="custom-select" name="f7d">
+				
+				<option value="1" style="text-align: center;" {% if data.f7d == "1" %}selected{% endif %}> &gt;</option>
+				<option value="2" style="text-align: center;" {% if data.f7d == "2" %}selected{% endif %}> &lt; </option>
+				<option value="3" style="text-align: center;" {% if data.f7d == "3" %}selected{% endif %}>&gt;=</option>
+				<option value="4" style="text-align: center;" {% if data.f7d == "4" %}selected{% endif %}>&lt;=</option>
+			</select>
+			<input type="number" step=any class="form-control" name="tf7d" value="{{data.tf7d}}">
+		</div>
+	</div>
 	<div class="col-md-12" style="margin-top: 5px;">
 		<br>
 	</div>

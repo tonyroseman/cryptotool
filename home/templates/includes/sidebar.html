@@ -1,4 +1,4 @@
-<nav class="pcoded-navbar menupos-fixed menu-light ">
+<nav class="pcoded-navbar menupos-fixed menu-light" id="sidebar">
     <div  class="navbar-wrapper  ">
         <div class="navbar-content scroll-div">
             {% include 'includes/menu-list.html' %}
@@ -46,3 +46,12 @@
     <!-- Remove the container if you want to extend the Footer to full width. -->
 
 </nav>
+
+<script>
+    function toggleSidebar(){
+        
+        $('#sidebar').toggleClass('navbar-collapsed');
+        
+    }
+    
+</script>
