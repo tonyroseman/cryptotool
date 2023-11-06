@@ -266,6 +266,12 @@
         extends 3 modules(RSI, BB, FIB)
         adjust20
         adjust21
+- commit version 'update-25'
+    -> updated app contents
+        home\templates\includes\head.html
+
+    -> updated contents
+       fix Popup Hint
         
 
         
