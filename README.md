@@ -269,10 +269,11 @@
 - commit version 'update-25'
     -> updated app contents
         home\templates\includes\head.html
-
+        home/templates/pages/index.html
+        home/templates/pages/records.html
+        home/templates/pages/usernotify.html
     -> updated contents
        fix Popup Hint
-        
-
+       fix number after "."
         
 </pre>
