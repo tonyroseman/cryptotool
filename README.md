@@ -255,17 +255,18 @@
     -> updated contents
         update cc refresh error
 - commit version 'update-24'
-<<<<<<< HEAD
-    
-    -> updated contents
-        update without tlg noti delay
-
-=======
     -> updated app contents
-        
+        home/cryptoServerModule.py        
+        home/cryptoTelegramServer_VPS.py
+        home/settingsModule.py
+        home/templates/*
+        home/views.py
+
     -> updated contents
+        extends 3 modules(RSI, BB, FIB)
+        adjust20
+        adjust21
         
->>>>>>> 9b2b689 ('update-25')
 
         
 </pre>
